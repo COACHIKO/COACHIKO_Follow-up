@@ -6,16 +6,14 @@ import 'package:followupapprefactored/view/screens/client_area/form_complection_
 import 'package:followupapprefactored/view/screens/coach_area/coach_home_page.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
-import 'controller/notification_controller.dart';
-import 'controller/routines_page_controller.dart';
 import 'core/localization/changelocal.dart';
 import 'core/localization/translation.dart';
 import 'core/services/services.dart';
 import 'core/utils/constants/text_strings.dart';
 import 'core/utils/theme/theme.dart';
-import 'data/model/exercise_model.dart';
-import 'data/model/routine_model.dart';
+
 LocaleController localeController = LocaleController();
 MyServices myServices = Get.find();
 Box? mybox;
@@ -33,8 +31,10 @@ void main() async{
   if (!Hive.isAdapterRegistered(0)) {
     Hive.init(appDocumentDirectory.path);
   }
-    Hive.registerAdapter(RoutineAdapter(),);
+  //  Hive.registerAdapter();
     mybox = await openHiveBox("client");
+
+
 
 
   runApp(COACHIKOFollowApp());
@@ -57,7 +57,7 @@ final LocaleController langController = Get.put(LocaleController());
            darkTheme: TAppTheme.darkTheme,
            locale: langController.language,
            translations: MyTranslation(),
-            initialRoute: myServices.sharedPreferences.getInt("user") == null
+            initialRoute: myServices.sharedPreferences.getInt("user") == null ||myServices.sharedPreferences.getBool("rememberMe")==false
                 ? "/forkUsering"
                 : (myServices.sharedPreferences.getInt("isCoach") == 0
                 ? "/homepage"
@@ -69,9 +69,7 @@ final LocaleController langController = Get.put(LocaleController());
               "/formComplection":(context)=> FormComplection(),
              },
             debugShowCheckedModeBanner: false,
-            initialBinding: BindingsBuilder(() {
-              Get.lazyPut(() => NotificationController()); // Bind the NotificationController lazily
-            }),
+
           );
         },
       );

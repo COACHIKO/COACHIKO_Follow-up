@@ -3,12 +3,10 @@ import 'package:followupapprefactored/view/screens/coach_area/player_overview_pa
 import 'package:followupapprefactored/view/widgets/custom_appbar.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import '../../../controller/api_controller.dart';
-import '../../../controller/diet_make_controller.dart';
+ import '../../../controller/coach_controllers/diet_make_controller.dart';
 import '../../../core/utils/constants/colors.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../main.dart';
-import '../auth/fork_usering_page.dart';
 
 
 
@@ -16,7 +14,6 @@ import '../auth/fork_usering_page.dart';
 class AllClientsDisplay extends StatelessWidget {
     AllClientsDisplay({super.key});
 
-final controller = Get.put(ApiController());
 
 final dietMakingController = Get.put(DietMakingController());
 

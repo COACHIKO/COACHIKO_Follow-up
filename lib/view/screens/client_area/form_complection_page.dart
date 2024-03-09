@@ -1,12 +1,11 @@
-import 'package:followupapprefactored/controller/api_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../controller/diet_make_controller.dart';
-import '../../../controller/form_complection_controller.dart';
+import '../../../controller/coach_controllers/diet_make_controller.dart';
+import '../../../controller/client_controllers/form_complection_controller.dart';
 import '../../../core/utils/constants/colors.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/constants/sizes.dart';
@@ -18,7 +17,6 @@ import '../../../main.dart';
 class FormComplection extends StatelessWidget {
    FormComplection({super.key});
   final coachHomeController = Get.find<DietMakingController>();
-  final apiController = Get.put(ApiController());
 
   @override
   Widget build(BuildContext context) {

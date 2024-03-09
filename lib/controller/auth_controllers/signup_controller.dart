@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../api_controller.dart';
+import '../../data/source/web_services/auth_web_services/auth_api_services.dart';
 
 class SignUpController extends GetxController {
+  AuthApiServices apiCalls=AuthApiServices();
+
   RxBool isCoach = false.obs;
   var firstName = ''.obs;
   var secondName = ''.obs;
@@ -20,11 +21,10 @@ class SignUpController extends GetxController {
 
   void signUp() async{
     if (signupkey.currentState!.validate()) {
-      final ApiController apiController = Get.put(ApiController());
 
       if (signupkey.currentState!.validate()) {
         signupkey.currentState!.save();
-        await apiController.register(
+        await apiCalls.register(
           firstName.toString(),
           secondName.toString(),
           isCoach==true.obs?"1":"0",

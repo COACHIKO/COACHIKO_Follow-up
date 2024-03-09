@@ -1,7 +1,8 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controller/excersise_log_controller.dart';
+import '../../controller/client_controllers/excersise_log_controller.dart';
+import '../../view/screens/client_area/routine_log_page.dart';
 
 class NotificationService {
   final ExerciseLoggingController exerciseLoggingController =

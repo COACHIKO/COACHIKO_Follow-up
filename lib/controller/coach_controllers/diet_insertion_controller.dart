@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
-import '../data/model/food_model.dart';
-import '../linkapi.dart';
+import '../../data/model/food_model.dart';
+import '../../linkapi.dart';
 
 class DietQuantitiesController extends GetxController {
   var isLoading = false.obs;

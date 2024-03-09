@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../controller/api_controller.dart';
-import '../../../controller/diet_make_controller.dart';
+import '../../../controller/coach_controllers/diet_make_controller.dart';
 import 'diet_quantities_page.dart';
 
 class FoodListPage extends StatelessWidget {
@@ -10,8 +8,7 @@ class FoodListPage extends StatelessWidget {
 
   FoodListPage({super.key, required this.id});
 
-  final controller = Get.put(ApiController());
-  final coachHomeController = Get.find<DietMakingController>();
+   final coachHomeController = Get.find<DietMakingController>();
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:followupapprefactored/controller/client_controllers/routines_page_controller.dart';
+import 'package:followupapprefactored/view/screens/coach_area/workout_plan_making_page.dart';
 import 'package:get/get.dart';
-import '../../../controller/diet_make_controller.dart';
+import '../../../controller/coach_controllers/diet_make_controller.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/constants/sizes.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
@@ -16,6 +18,7 @@ class PlayerOverviewPage extends StatelessWidget {
   });
 
   final coachHomeController = Get.put(DietMakingController());
+   final routinePageController = Get.put(RoutinesPageController());
 
 
   @override
@@ -114,7 +117,10 @@ class PlayerOverviewPage extends StatelessWidget {
                 SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
-                  onPressed: () {
+                  onPressed: () async{
+
+                    Get.to(WorkoutPlanMaking(id:coachHomeController.coachClients[index].id));
+
                   },
                   child: const Text("Set Workout Plan"),
                 ),

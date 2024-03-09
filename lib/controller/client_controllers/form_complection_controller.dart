@@ -1,18 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:followupapprefactored/controller/coah_home_controller.dart';
 import 'package:get/get.dart';
-
-import '../main.dart';
-import 'api_controller.dart';
-import 'diet_make_controller.dart';
-
+import '../../data/source/web_services/client_web_services/client_formUpdate_service.dart';
+import '../../main.dart';
+import '../coach_controllers/diet_make_controller.dart';
 
 
 class FormComplectionController extends GetxController {
   static FormComplectionController get instance => Get.find();
-
-  final ApiController apiController = Get.put(ApiController());
+   UpdateUserData updateUserData = UpdateUserData();
   final coachHomeController = Get.find<DietMakingController>();
 
   ///                                      VARIABLE LAND                                                     ///
@@ -279,7 +275,7 @@ class FormComplectionController extends GetxController {
     List<String> selectedFoodNames = coachHomeController.filteredFoodList.asMap().entries.where((entry) => coachHomeController.selectedIndexes.contains(entry.key)).map((entry) => entry.value.foodName).toList();
     selectedFoods = selectedFoodNames.join(', ');
 try {
-  await apiController.updateClientData(
+  await updateUserData.updateClientData(
       fatPercentage.obs,
       myServices.sharedPreferences.getInt("user").toString(),
       isSelectedMan ? 0.toString() : 1.toString(),
@@ -301,7 +297,9 @@ try {
       targetFat.toString(),
       1.toString()
   );
-}catch(e){}
+}catch(e){
+  print(e.toString());
+}
 
 
 

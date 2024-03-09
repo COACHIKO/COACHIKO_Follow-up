@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import '../data/model/client_user_model.dart';
-import '../data/model/food_model.dart';
+import '../../data/model/client_user_model.dart';
+import '../../data/model/food_model.dart';
 
 class DietMakingController extends GetxController {
   static DietMakingController get instance => Get.find();

@@ -1,37 +1,40 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controller/excersise_log_controller.dart';
+import '../../../controller/client_controllers/excersise_log_controller.dart';
+import '../../../core/notification/notfication.dart';
+import '../../../core/utils/constants/colors.dart';
+import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
+import '../../../data/model/routine_model.dart';
 import '../../widgets/custom_textformfield.dart';
 
-
 class ExerciseLoggingPage extends StatefulWidget {
-  final String routineName;
-  final List<String> exercises;
-  final List<int> setsPerExercise;
-  final List<int> rest;
-  final List<double> lastWeights;
+
+final Routine routine ;
 
   const ExerciseLoggingPage({
     super.key,
-    required this.routineName,
-    required this.exercises,
-    required this.setsPerExercise,
-    required this.rest,
-    required this.lastWeights,
-  });
+    required this.routine,
+   });
 
   @override
   ExerciseLoggingPageState createState() => ExerciseLoggingPageState();
 }
+
 class ExerciseLoggingPageState extends State<ExerciseLoggingPage> {
-  final ExerciseLoggingController exerciseLoggingController = Get.put(ExerciseLoggingController());
+  final ExerciseLoggingController exerciseLoggingController =
+      Get.put(ExerciseLoggingController());
+  List<int> numberOfSetsPerExercise = [];
+
   @override
   void initState() {
     super.initState();
+    numberOfSetsPerExercise = List<int>.filled(widget.routine.exercises.length, 0);
     exerciseLoggingController.initializeExerciseLogs(widget);
-   }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +43,12 @@ class ExerciseLoggingPageState extends State<ExerciseLoggingPage> {
     return GetBuilder<ExerciseLoggingController>(
       init: ExerciseLoggingController(),
       builder: (controller) => Scaffold(
-         appBar: AppBar(
+        backgroundColor: dark ? Colors.black : Colors.white,
+        appBar: AppBar(
           centerTitle: true,
-          backgroundColor: dark?Colors.black:Colors.white,
+          backgroundColor: dark ? Colors.black : Colors.white,
           title: Text(
-            '${controller.capitalize(widget.routineName)} Workout',
+            '${controller!.capitalize(widget.routine.routineName)} Workout',
           ),
           iconTheme: const IconThemeData(color: Colors.blueAccent),
         ),
@@ -53,34 +57,38 @@ class ExerciseLoggingPageState extends State<ExerciseLoggingPage> {
             Expanded(
               child: ListView.builder(
                 physics: const PageScrollPhysics(),
-                itemCount: widget.exercises.length,
+                itemCount:widget.routine.exercises.length,
                 itemBuilder: (context, indexx) {
-                  String exerciseName = widget.exercises[indexx];
-                  return Column(
+                  Exercise exercise = widget.routine.exercises[indexx];
+
+                   return Column(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: ListTile(
-                          leading: const Image(
-                            image: AssetImage('assets/images/6.png'),
-                            width: 50,
-                          ),
-                          title: Text(
-                            exerciseName,
-                            style: const TextStyle(
-                              fontSize: 19,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                      ),
+                      ListTile(
+                       leading: CircleAvatar(
+                         radius: 25,
+                         child: ClipOval(
+                           child: Image(
+                             image: AssetImage(TImages.excersiseDirectory +
+                                 exercise.exerciseImage),
+                           ),
+                         ),
+                       ),
+                       title: Text(
+                         exercise.exerciseName,
+                         style: const TextStyle(
+                           fontSize: 19,
+                           color: Colors.blue,
+                         ),
+                       ),
+                                              ),
                       Container(
                         padding: const EdgeInsets.only(left: 16),
                         child: const TextField(
                           decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(),
-                            focusColor: Color(0xff505050),
+                            enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
+                            border: InputBorder.none,
+                            focusColor: Color(0xff505050),
                             hintStyle: TextStyle(
                               fontSize: 16,
                               color: Color(0xFF959595),
@@ -99,17 +107,16 @@ class ExerciseLoggingPageState extends State<ExerciseLoggingPage> {
                               size: 22,
                             ),
                             Text(
-                              " Rest Timer: ${
-                                  controller.isClicked.value && indexx < controller.restSecondsList.length
-                                      ? '${controller.restSecondsList[indexx].value ~/ 60} min ${controller.restSecondsList[indexx].value % 60} sec'
-                                      : '${widget.rest[indexx]} min'
-                              }",
-                              style: const TextStyle(color: Colors.blue, fontSize: 18),
+                              " Rest Timer: ${controller.isClicked.value && indexx < controller.restSecondsList.length ? '${controller.restSecondsList[indexx].value ~/ 60} min ${controller.restSecondsList[indexx].value % 60} sec' : '${exercise.rest} min'}",
+                              style: const TextStyle(
+                                  color: Colors.blue, fontSize: 18),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 15,),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       Column(
                         children: [
                           Container(
@@ -126,7 +133,7 @@ class ExerciseLoggingPageState extends State<ExerciseLoggingPage> {
                                   style: TextStyle(color: Color(0xFF959595)),
                                 ),
                                 Text(
-                                  "KG",
+                                  "RIR",
                                   style: TextStyle(color: Color(0xFF959595)),
                                 ),
                                 Text(
@@ -143,19 +150,19 @@ class ExerciseLoggingPageState extends State<ExerciseLoggingPage> {
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: widget.setsPerExercise[indexx],
+                            itemCount: exercise.sets, // Use the number of sets from the exercise object
                             itemBuilder: (context, setIndex) {
-                              ExerciseLog exerciseLog = controller.exerciseLogs[indexx][setIndex];
+                              ExerciseLog exerciseLog = controller.exerciseLogs[indexx][setIndex]; // Access exercise log based on index
 
                               return Container(
-                                color: exerciseLog.iscomplete ? const Color(0xFF2C6111) :dark? Colors.black:Colors.white,
+                                color: exerciseLog.iscomplete ? const Color(0xFF2C6111) : Colors.black,
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(horizontal: 9),
-                                  child: Row(mainAxisAlignment: MainAxisAlignment.start,
-
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-                                        margin: const EdgeInsets.only(left: 5.5),
+                                        margin: const EdgeInsets.only(left: 8),
                                         child: Text(
                                           "${setIndex + 1}",
                                           style: TextStyle(
@@ -167,52 +174,39 @@ class ExerciseLoggingPageState extends State<ExerciseLoggingPage> {
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        padding: const EdgeInsets.only(left: 80, top: 0),
-                                        child: Text(
-                                          "${widget.lastWeights[indexx]}",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: exerciseLog.iscomplete == false
-                                                ? const Color(0xFF959595)
-                                                : Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      Flexible(
+                                        child: Container(
+                                          margin: const EdgeInsets.only(left: 70, top: 0),
+                                          alignment: Alignment.center,
+                                          child: CustomWeightInput(
+                                              isComplete: exerciseLog.iscomplete,
+                                              hintText: "-"),
                                         ),
                                       ),
-
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(left: 40.0),
-                                          child: Row(mainAxisAlignment:MainAxisAlignment.spaceEvenly , children: [Flexible(
-                                            child: Container(
-                                              width: 50,
-                                              //  margin: const EdgeInsets.only(left: 70, top: 0),
-                                              alignment: Alignment.center,
-                                              child: CustomWeightInput(isComplete: exerciseLog.iscomplete, hintText: "-"),
-                                            ),
-                                          ),
-                                            Flexible(
-                                            child: Container(padding: const EdgeInsets.only(left: 5.0),
-
-                                              width: 50,
-
-                                              //   margin: const EdgeInsets.only(left: 40, top: 0),
-                                              child: CustomWeightInput(isComplete: exerciseLog.iscomplete, hintText: "-"),
-                                            ),
-                                          ),],),
+                                      Flexible(
+                                        child: Container(
+                                          margin: const EdgeInsets.only(left: 70, top: 0),
+                                          alignment: Alignment.center,
+                                          child: CustomWeightInput(
+                                              isComplete: exerciseLog.iscomplete,
+                                              hintText: "-"),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Container(
+                                          margin: const EdgeInsets.only(left: 40, top: 0),
+                                          child: CustomWeightInput(
+                                              isComplete: exerciseLog.iscomplete,
+                                              hintText: "-"),
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: () {
-                                          controller.toggleTimer(indexx, setIndex,widget);
-                                        },
+                                        onTap: () => controller.toggleTimer(indexx, setIndex, widget),
                                         child: Icon(
-                                          exerciseLog.iscomplete ? Icons.stop : Icons.play_arrow,size: 30,
+                                          exerciseLog.iscomplete ? Icons.stop : Icons.play_arrow,
                                           color: exerciseLog.iscomplete ? Colors.green : const Color(0xFF959595),
                                         ),
                                       ),
-
                                     ],
                                   ),
                                 ),
@@ -221,8 +215,9 @@ class ExerciseLoggingPageState extends State<ExerciseLoggingPage> {
                           ),
                         ],
                       ),
-                      const Divider(
-                        thickness: .09,color: Colors.blueAccent,
+                       const Divider(
+                        thickness: .09,
+                        color: Colors.blueAccent,
                       ),
                     ],
                   );
@@ -242,4 +237,12 @@ class ExerciseLog {
   bool iscomplete = false;
   int restTimer = 0;
 }
+
+
+
+
+
+
+
+
 

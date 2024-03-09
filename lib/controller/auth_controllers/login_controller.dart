@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../api_controller.dart';
+import '../../data/source/web_services/auth_web_services/auth_api_services.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final ApiController apiController = ApiController(); // Create an instance of ApiController
+  AuthApiServices apiCalls=AuthApiServices();
   var username = ''.obs;
   var password = ''.obs;
   var obscurePassword = true.obs;
@@ -16,8 +16,18 @@ class LoginController extends GetxController {
     rememberMe.value = value ?? false;
   }
   void signIn()async {
-    if (formKey.value.currentState!.validate()) {
-      await apiController.login(username.value.toString(),password.value.toString(),rememberMe.value);
-      await apiController.getFoodData();}
+     if (formKey.value.currentState!.validate()) {
+
+
+         try {
+           await apiCalls.login(username.value.toString(),password.value.toString(),rememberMe.value);
+           //await apiCalls.getFoodData();
+
+        } catch (e) {
+          print(e);
+        }
+
+
+    }
   }
 }

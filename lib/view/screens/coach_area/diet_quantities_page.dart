@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controller/api_controller.dart';
-import '../../../controller/diet_insertion_controller.dart';
-import '../../../controller/diet_preview_controller.dart';
+import '../../../controller/coach_controllers/diet_insertion_controller.dart';
+import '../../../controller/client_controllers/diet_display_page_controller.dart';
 import '../../../core/utils/constants/colors.dart';
 import '../../../data/model/food_model.dart';
 import 'coach_home_page.dart';
@@ -19,7 +18,6 @@ class DietQuantitiesPage extends StatelessWidget {
 
   final DietQuantitiesController dietQuantitiesController = Get.put(DietQuantitiesController());
   final DietDataController dietDataController = Get.put(DietDataController());
-  final ApiController apiController = Get.put(ApiController());
 
   @override
   Widget build(BuildContext context) {

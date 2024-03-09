@@ -9,12 +9,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? leadingOnPressed;
 
   const CustomAppBar({
-    Key? key,
+    super.key,
     required this.showBackArrow,
     this.leadingIcon,
     this.leadingOnPressed,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       )
           : (leadingIcon != null
           ? IconButton(
-        onPressed: leadingOnPressed,
+        onPressed: () => Get.back(),
         icon: Icon(
           leadingIcon,
           color: Colors.white, // تغيير لون الأيقونة هنا إلى الأبيض
