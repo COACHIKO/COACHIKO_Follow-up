@@ -35,5 +35,35 @@ class CoachRoutineInsertion{
       );
     }
   }
+  Future<void> routineDelete(routineId) async {
+    final response = await http.post(
+        Uri.parse("http://192.168.1.6/coachiko/coachArea/delete_routine.php"),
+        body: {
+          "routine_id": routineId.toString(),
+
+        });
+
+    if (response.statusCode == 200) {
+
+      var data = json.decode(response.body);
+      if (data["status"].toString() == "Success"){
+        Fluttertoast.showToast(
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          msg: data["message"].toString(),
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+
+    } else {
+
+      Fluttertoast.showToast(
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        msg: 'Error Occurred',
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
+  }
 
 }

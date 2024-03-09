@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:followupapprefactored/core/utils/constants/image_strings.dart';
@@ -6,10 +7,8 @@ import 'package:get/get.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../data/model/routine_model.dart';
 import '../../../data/source/web_services/coach_web_services/coach_clientsRoutineID_get.dart';
-import '../../../data/source/web_services/coach_web_services/coach_routine_insertion_service.dart';
-import '../../../main.dart';
+import '../../../data/source/web_services/coach_web_services/coach_routine_crud_service.dart';
 import '../../widgets/custom_appbar.dart';
-import '../auth/fork_usering_page.dart';
 
 class WorkoutPlanController extends GetxController {
    Rx<WorkoutData?> clientRoutines = Rx<WorkoutData?>(null);
@@ -83,6 +82,95 @@ class WorkoutPlanController extends GetxController {
       ),
     );
   }
+   void showCustomActionSheet(BuildContext context,routineId,id) {
+     showCupertinoModalPopup(
+       context: context,
+       builder: (context) {
+         return CupertinoActionSheet(
+           cancelButton: CupertinoActionSheetAction(
+             onPressed: () {
+               Navigator.of(context).pop();
+             },
+             child: const Text(
+               "Cancel",
+               style: TextStyle(color: Colors.white),
+             ),
+           ),
+           actions: <CupertinoActionSheetAction>[
+             CupertinoActionSheetAction(
+               onPressed: ()async {
+
+               },
+               child: const Padding(
+                 padding: EdgeInsets.all(8.0),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                     Icon(CupertinoIcons.share),
+                     SizedBox(width: 22),
+                     Text("Share Routine", style: TextStyle(color: Colors.white)),
+                   ],
+                 ),
+               ),
+             ),
+             CupertinoActionSheetAction(
+               onPressed: () {},
+               child: const Padding(
+                 padding: EdgeInsets.all(8.0),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                     Icon(Icons.control_point_duplicate),
+                     SizedBox(width: 22),
+                     Text("Duplicate Routine", style: TextStyle(color: Colors.white)),
+                   ],
+                 ),
+               ),
+             ),
+             CupertinoActionSheetAction(
+               onPressed: () {},
+               child: const Padding(
+                 padding: EdgeInsets.all(8.0),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                     Icon(Icons.edit),
+                     SizedBox(width: 22),
+                     Text("Edit Routine", style: TextStyle(color: Colors.white)),
+                   ],
+                 ),
+               ),
+             ),
+             CupertinoActionSheetAction(
+               onPressed: ()async {
+                 await coachRoutineInsertion.routineDelete(routineId);
+                 await fetchClientRoutines(id);
+
+                 update();
+                 Get.back();
+
+
+               },
+               child: const Padding(
+                 padding: EdgeInsets.all(8.0),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                     Icon(CupertinoIcons.xmark, color: Colors.red),
+                     SizedBox(width: 22),
+                     Text(
+                       "Delete Routine",
+                       style: TextStyle(color: Colors.red),
+                     ),
+                   ],
+                 ),
+               ),
+             ),
+           ],
+         );
+       },
+     );
+   }
 
   @override
   void onClose() {
@@ -90,7 +178,6 @@ class WorkoutPlanController extends GetxController {
     super.onClose();
   }
 }
-
 class WorkoutPlanMaking extends StatelessWidget {
   final int id;
 
@@ -132,7 +219,10 @@ class WorkoutPlanMaking extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildRoutinesList(BuildContext context, List<Routine> routines) {
+    final workoutPlanController = Get.put(WorkoutPlanController());
+
     return ListView.builder(
       itemCount: routines.length,
       itemBuilder: (context, index) {
@@ -159,11 +249,11 @@ class WorkoutPlanMaking extends StatelessWidget {
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             IconButton(
-                              onPressed: () {
-                                myServices.sharedPreferences.clear();
-                                Get.offAll(const ForkUseringPage());
-                              },
-                              icon: const Icon(
+                              onPressed: () async {
+                                  workoutPlanController.showCustomActionSheet(context,routine.routineId,id);
+                                  workoutPlanController.update();
+                               }
+                              ,icon: const Icon(
                                 Icons.more_horiz,
                                 color: CColors.primary,
                               ),
