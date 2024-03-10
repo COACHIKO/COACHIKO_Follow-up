@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/view/screens/auth/fork_usering_page.dart';
+import 'package:followupapprefactored/view/screens/auth_presentation/fork_usering_page.dart';
 import 'package:followupapprefactored/view/screens/client_area/client_home_screen.dart';
 import 'package:followupapprefactored/view/screens/client_area/form_complection_page.dart';
 import 'package:followupapprefactored/view/screens/coach_area/coach_home_page.dart';
+import 'package:followupapprefactored/view/screens/coach_area/routine_presentation/workout_plan_making_page.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';

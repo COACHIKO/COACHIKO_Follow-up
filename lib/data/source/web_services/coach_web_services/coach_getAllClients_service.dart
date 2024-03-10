@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../../controller/coach_controllers/diet_make_controller.dart';
 import '../../../../linkapi.dart';
 import '../../../../main.dart';
-import '../../../../view/screens/coach_area/routine_edit_page.dart';
 import '../../../model/client_user_model.dart';
 class GetAllClients{
 Future<void> getCoachClients() async {

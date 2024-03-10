@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:followupapprefactored/controller/client_controllers/routines_page_controller.dart';
-import 'package:followupapprefactored/view/screens/coach_area/workout_plan_making_page.dart';
 import 'package:get/get.dart';
-import '../../../controller/coach_controllers/diet_make_controller.dart';
-import '../../../core/utils/constants/image_strings.dart';
-import '../../../core/utils/constants/sizes.dart';
-import '../../../core/utils/helpers/helper_functions.dart';
-import '../../../main.dart';
-import 'diet_making_page.dart';
+import '../../../../controller/coach_controllers/diet_make_controller.dart';
+import '../../../../core/utils/constants/image_strings.dart';
+import '../../../../core/utils/constants/sizes.dart';
+import '../../../../main.dart';
+import '../diet_presentation/diet_making_page.dart';
+import '../routine_presentation/workout_plan_making_page.dart';
 
 class PlayerOverviewPage extends StatelessWidget {
     final int index;
@@ -23,7 +22,7 @@ class PlayerOverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dark = THelperFunctions.isDarkMode(context);
+   // var dark = THelperFunctions.isDarkMode(context);
     return Scaffold(appBar: AppBar(
       centerTitle: true,
       title: Text("${coachHomeController.coachClients[index].firstName} ${coachHomeController.coachClients[index].secondName}",),
@@ -118,8 +117,8 @@ class PlayerOverviewPage extends StatelessWidget {
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () async{
+                    Get.to(() => WorkoutPlanMaking(id:coachHomeController.coachClients[index].id));
 
-                    Get.to(WorkoutPlanMaking(id:coachHomeController.coachClients[index].id));
 
                   },
                   child: const Text("Set Workout Plan"),

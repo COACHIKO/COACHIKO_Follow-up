@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/view/screens/auth/signup_screen.dart';
+import 'package:followupapprefactored/view/screens/auth_presentation/signup_screen.dart';
 import 'package:get/get.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/constants/text_strings.dart';
 import 'login_screen.dart';
 class ForkUseringPage extends StatelessWidget {
-  const ForkUseringPage({Key? key}) : super(key: key);
+  const ForkUseringPage({super.key});
   @override
   Widget build(BuildContext context) {
 
@@ -66,7 +66,7 @@ class ForkUseringPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                      Get.to(  SignUp());
+                      Get.to(SignUp());
                   },
 
                   child:  SizedBox(

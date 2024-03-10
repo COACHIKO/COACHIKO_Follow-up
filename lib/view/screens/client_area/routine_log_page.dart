@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controller/client_controllers/excersise_log_controller.dart';
-import '../../../core/notification/notfication.dart';
-import '../../../core/utils/constants/colors.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../data/model/routine_model.dart';
@@ -48,7 +44,7 @@ class ExerciseLoggingPageState extends State<ExerciseLoggingPage> {
           centerTitle: true,
           backgroundColor: dark ? Colors.black : Colors.white,
           title: Text(
-            '${controller!.capitalize(widget.routine.routineName)} Workout',
+            '${controller.capitalize(widget.routine.routineName)} Workout',
           ),
           iconTheme: const IconThemeData(color: Colors.blueAccent),
         ),

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../data/source/web_services/client_web_services/client_formUpdate_service.dart';
+import '../../data/source/web_services/client_web_services/client_form_update_service.dart';
 import '../../main.dart';
 import '../coach_controllers/diet_make_controller.dart';
 

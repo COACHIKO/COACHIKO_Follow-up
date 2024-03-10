@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controller/client_controllers/routines_page_controller.dart';
-import '../../../core/utils/constants/colors.dart';
-import '../../../core/utils/constants/image_strings.dart';
-import '../../../core/utils/helpers/helper_functions.dart';
-import '../../widgets/custom_textformfield.dart';
+import '../../../../controller/client_controllers/routines_page_controller.dart';
+import '../../../../core/utils/helpers/helper_functions.dart';
 
 class EditRoutinePage extends StatefulWidget {
     final routineID;
@@ -33,7 +30,7 @@ final coachHomeController = Get.put(RoutinesPageController());
           // ),
           iconTheme: const IconThemeData(color: Colors.blueAccent),
         ),
-        body: Column(
+        body: const Column(
           children: [
             // Expanded(
             //   child: ListView.builder(

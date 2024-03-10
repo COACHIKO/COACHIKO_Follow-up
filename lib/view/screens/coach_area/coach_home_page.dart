@@ -1,9 +1,12 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icons_flutter/icons_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../controller/coach_controllers/coah_home_controller.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/utils/constants/colors.dart';
+import '../../widgets/custom_icons.dart';
 
 class CoachHome extends StatelessWidget {
   const CoachHome({super.key,});
@@ -39,11 +42,11 @@ class CoachHome extends StatelessWidget {
             : CColors.black.withOpacity(0.1),
         destinations: [
           NavigationDestination(
-            icon: const Icon(Icons.fitness_center),
+            icon:  const Icon(FlutterIcons.dumbbell_faw5s,size: 22,),
             label: "47".tr,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.emoji_food_beverage_outlined),
+            icon:const Icon(FlutterIcons.food_apple_outline_mco),
             label: "54".tr,
           ),
           NavigationDestination(

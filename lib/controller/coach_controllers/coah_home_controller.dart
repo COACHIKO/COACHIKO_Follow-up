@@ -6,7 +6,7 @@ import '../../data/source/web_services/databases_web_services/exercise_database_
 import '../../data/source/web_services/databases_web_services/food_data_base/all_foods_database_get_service.dart';
 import '../../view/screens/client_area/diet_preview_f_client.dart';
 import '../../view/screens/client_area/workout_plan_page.dart';
-import '../../view/screens/coach_area/all_coach_clients.dart';
+import '../../view/screens/coach_area/coach_clients_presentation/all_coach_clients.dart';
 import '../client_controllers/diet_display_page_controller.dart';
 import 'diet_make_controller.dart';
 

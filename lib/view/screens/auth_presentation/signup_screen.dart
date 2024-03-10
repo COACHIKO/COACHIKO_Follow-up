@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
- import '../../../controller/auth_controllers/signup_controller.dart';
+import '../../../controller/auth_controllers/signup_controller.dart';
 import '../../../core/utils/constants/colors.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/constants/sizes.dart';
 import '../../../core/utils/constants/text_strings.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/utils/validators/validation.dart';
-import '../../widgets/custom_appbar.dart';
 
 
 class SignUp extends StatelessWidget {
@@ -129,7 +128,7 @@ class SignUp extends StatelessWidget {
                       SizedBox(height: 8.h),
                     Obx(() => signUpController.isCoach.value == false
                         ? Container(padding: const EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(color:   dark?Color(0xff1f1f1F):Colors.white,borderRadius: BorderRadius.circular(12) ),
+                      decoration: BoxDecoration(color:dark?const Color(0xff1f1f1F):Colors.white,borderRadius: BorderRadius.circular(12) ),
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children:
                       [
                         SizedBox(width: 150,
@@ -196,7 +195,7 @@ class SignUp extends StatelessWidget {
                           ],
                         ),],),
                     )
-                        : Container(decoration: BoxDecoration(color:  dark? Color(0xff1f1f1F):Colors.white,borderRadius: BorderRadius.circular(12) ),
+                        : Container(decoration: BoxDecoration(color:  dark? const Color(0xff1f1f1F):Colors.white,borderRadius: BorderRadius.circular(12) ),
                       child: SizedBox(width: 337.1,height: 65,
                         child: Container(padding: EdgeInsets.symmetric(horizontal: 12.w),
                           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [

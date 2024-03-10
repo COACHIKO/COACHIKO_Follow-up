@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
-import '../../data/model/exercise_model.dart';
 import '../../data/model/routine_model.dart';
-import '../../view/screens/client_area/routine_log_page.dart';
-import '../../view/screens/coach_area/routine_edit_page.dart';
+import '../../view/screens/coach_area/routine_presentation/routine_edit_page.dart';
 
 class RoutinesPageController extends GetxController {
   static RoutinesPageController get instance => Get.find();

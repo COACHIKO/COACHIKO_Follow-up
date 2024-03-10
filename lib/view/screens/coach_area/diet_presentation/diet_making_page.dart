@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controller/coach_controllers/diet_make_controller.dart';
+import '../../../../controller/coach_controllers/diet_make_controller.dart';
 import 'diet_quantities_page.dart';
 
 class FoodListPage extends StatelessWidget {

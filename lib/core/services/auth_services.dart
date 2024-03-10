@@ -10,7 +10,7 @@
 // class AuthService{
 //   ///Google SIGN IN
 //   Future register(String user, String pass, String email) async {
-//     var url = Uri.http("192.168.1.2", '/coachikoapp/auth/logingoogle.php', );
+//     var url = Uri.http("192.168.1.2", '/coachikoapp/auth_presentation/logingoogle.php', );
 //     var response = await http.post(url, body: {
 //       "username": user,
 //       "email": email,

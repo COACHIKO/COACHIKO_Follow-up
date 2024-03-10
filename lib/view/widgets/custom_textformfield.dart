@@ -6,11 +6,11 @@ class CustomWeightInput extends StatefulWidget {
   final Function(String)? onChanged;
 
   const CustomWeightInput({
-    Key? key,
+    super.key,
     required this.isComplete,
     required this.hintText,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   CustomWeightInputState createState() => CustomWeightInputState();

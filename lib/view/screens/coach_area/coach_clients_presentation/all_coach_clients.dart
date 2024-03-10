@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:followupapprefactored/view/screens/coach_area/player_overview_page.dart';
+import 'package:followupapprefactored/view/screens/coach_area/coach_clients_presentation/player_overview_page.dart';
 import 'package:followupapprefactored/view/widgets/custom_appbar.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
- import '../../../controller/coach_controllers/diet_make_controller.dart';
-import '../../../core/utils/constants/colors.dart';
-import '../../../core/utils/helpers/helper_functions.dart';
-import '../../../main.dart';
+import '../../../../controller/coach_controllers/diet_make_controller.dart';
+import '../../../../core/utils/constants/colors.dart';
+import '../../../../core/utils/helpers/helper_functions.dart';
+import '../../../../main.dart';
 
 
 
@@ -31,7 +31,7 @@ final dietMakingController = Get.put(DietMakingController());
             children: [
               ListView.builder(shrinkWrap: true, itemCount: dietMakingController.coachClients.length,itemBuilder: (context, index) {
               return InkWell(onTap: () {Get.to(PlayerOverviewPage(index: index,));},splashColor: Colors.green,splashFactory:InkRipple.splashFactory,
-                child: Card(color:  dark? Color(0xFF1C1C1E):CColors.primary,
+                child: Card(color:  dark? const Color(0xFF1C1C1E):CColors.primary,
                   child: ListTile(
                     title:Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

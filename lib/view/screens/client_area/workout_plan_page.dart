@@ -7,7 +7,7 @@ import '../../../core/utils/constants/colors.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../data/model/routine_model.dart';
 import '../../../main.dart';
-import '../auth/fork_usering_page.dart';
+import '../auth_presentation/fork_usering_page.dart';
 
 class WorkoutPlanPage extends StatelessWidget {
   const WorkoutPlanPage({super.key});
@@ -27,9 +27,9 @@ class WorkoutPlanPage extends StatelessWidget {
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasError) {
-          return Scaffold(
-            appBar: const CustomAppBar(showBackArrow: false, title: "Workout"),
-            body: Center(child: Text('Error: ${snapshot.error}')),
+          return const Scaffold(
+            appBar: CustomAppBar(showBackArrow: false, title: "Workout"),
+            body: Center(child: Text("There's No Routines For You Yet")),
           );
         } else if (snapshot.hasData) {
           return Scaffold(

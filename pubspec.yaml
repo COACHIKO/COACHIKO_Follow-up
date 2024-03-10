@@ -48,6 +48,9 @@ dependencies:
   dio: ^5.4.1
   flutter_offline: ^3.0.1
   flutter_keyboard_visibility: ^6.0.0
+  material_design_icons_flutter: ^7.0.7296
+  eva_icons_flutter: ^3.1.0
+  icons_flutter: ^0.0.4
 
 
 
@@ -82,21 +85,28 @@ flutter:
     - assets/images/on_boarding_images/
 
   #--------------- LOCAL FONTS ------------------#
-  fonts:
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins-Light.ttf
-          weight: 300
-        - asset: assets/fonts/Poppins-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Poppins-Italic.ttf
-          style: italic
-        - asset: assets/fonts/Poppins-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Poppins-MediumItalic.ttf
-          weight: 500
-          style: italic
-        - asset: assets/fonts/Poppins-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Poppins-Bold.ttf
-          weight: 800
+fonts:
+  - family: Poppins
+    fonts:
+      - asset: assets/fonts/Poppins-Light.ttf
+        weight: 300
+      - asset: assets/fonts/Poppins-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/Poppins-Italic.ttf
+        style: italic
+      - asset: assets/fonts/Poppins-Medium.ttf
+        weight: 500
+      - asset: assets/fonts/Poppins-MediumItalic.ttf
+        weight: 500
+        style: italic
+      - asset: assets/fonts/Poppins-SemiBold.ttf
+        weight: 600
+      - asset: assets/fonts/Poppins-Bold.ttf
+        weight: 800
+  - family: MyCustomIcons
+    fonts:
+      - asset: assets/fonts/MyCustomIcons.ttf
+
+
+
+

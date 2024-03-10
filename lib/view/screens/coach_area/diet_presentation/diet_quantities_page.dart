@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controller/coach_controllers/diet_insertion_controller.dart';
-import '../../../controller/client_controllers/diet_display_page_controller.dart';
-import '../../../core/utils/constants/colors.dart';
-import '../../../data/model/food_model.dart';
-import 'coach_home_page.dart';
+
+import '../../../../controller/client_controllers/diet_display_page_controller.dart';
+import '../../../../controller/coach_controllers/diet_insertion_controller.dart';
+import '../../../../core/utils/constants/colors.dart';
+import '../../../../data/model/food_model.dart';
+import '../coach_home_page.dart';
+
 
 class DietQuantitiesPage extends StatelessWidget {
   final List<DietModel> selectedDietList;

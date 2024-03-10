@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:followupapprefactored/core/utils/constants/image_strings.dart';
-import 'package:followupapprefactored/view/screens/coach_area/routine_edit_page.dart';
 import 'package:get/get.dart';
-import '../../../core/utils/helpers/helper_functions.dart';
-import '../../../data/model/routine_model.dart';
-import '../../../data/source/web_services/coach_web_services/coach_clientsRoutineID_get.dart';
-import '../../../data/source/web_services/coach_web_services/coach_routine_crud_service.dart';
-import '../../widgets/custom_appbar.dart';
+import '../../../../core/utils/helpers/helper_functions.dart';
+import '../../../../data/model/routine_model.dart';
+import '../../../../data/source/web_services/coach_web_services/coach_clientsRoutineID_get.dart';
+import '../../../../data/source/web_services/coach_web_services/coach_routine_crud_service.dart';
+import '../../../widgets/custom_appbar.dart';
 
 class WorkoutPlanController extends GetxController {
    Rx<WorkoutData?> clientRoutines = Rx<WorkoutData?>(null);
@@ -268,18 +267,19 @@ class WorkoutPlanMaking extends StatelessWidget {
                         const SizedBox(height: 5),
                         SizedBox(
                           width: double.maxFinite,
-                          child: MaterialButton(
+                          child:  MaterialButton(
                             shape: const OutlineInputBorder(
                               borderRadius: BorderRadius.horizontal(
                                 left: Radius.circular(5),
                                 right: Radius.circular(5),
                               ),
                             ),
-                            onPressed: () async {
-                              Get.to(const EditRoutinePage(routineID: 1));},
+                            onPressed: ()   {
+
+                              Get.to(() => EditExercisePage(selectedExercises: routine.exercises.toList()));
+                              },
                             color: CColors.primary,
-                            child: const Text(
-                              'Start Routine',
+                            child: const Text("Add Exercise",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -298,6 +298,56 @@ class WorkoutPlanMaking extends StatelessWidget {
 
 }
 
+class EditExercisePage extends StatelessWidget {
+  const EditExercisePage({super.key, required this.selectedExercises});
+
+  final List<Exercise> selectedExercises;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Selected Exercises'),
+      ),
+      body: ListView.builder(
+        itemCount: selectedExercises.length + 1, // Add 1 for the expansion tile
+        itemBuilder: (context, index) {
+          if (index == selectedExercises.length) {
+            return const ExpansionTile(
+              title: Text('Set Reps & Rest'),
+              children: [
+                ListTile(
+                  title: Text('Sets'),
+                  // Handle reps setting here
+                ),
+                ListTile(
+                  title: Text('Reps'),
+                  // Handle rest setting here
+                ),
+                ListTile(
+                  title: Text('Rest'),
+                  // Handle rest setting here
+                ),
+              ],
+            );
+          } else {
+            final exercise = selectedExercises[index];
+            return ListTile(
+              title: Text(exercise.exerciseName),
+              subtitle: Text(exercise.targetMuscles),
+              leading: ClipOval(
+                child: Image.asset(
+                  TImages.excersiseDirectory + exercise.exerciseImage,
+                  width: 50,
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+}
 
 
 

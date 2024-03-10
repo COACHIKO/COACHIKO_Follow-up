@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedindex=0;
 
-  final pages = [  WorkoutPlanPage(), WorkoutPlanPage(), WorkoutPlanPage(), WorkoutPlanPage(),];
+  final pages = [  const WorkoutPlanPage(), const WorkoutPlanPage(), const WorkoutPlanPage(), const WorkoutPlanPage(),];
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Colors.black,

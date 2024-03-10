@@ -5,7 +5,7 @@ import '../../../../linkapi.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../../../main.dart';
-import '../../../../view/screens/auth/fork_usering_page.dart';
+import '../../../../view/screens/auth_presentation/fork_usering_page.dart';
 import '../../../../view/screens/client_area/client_home_screen.dart';
 import '../../../../view/screens/coach_area/coach_home_page.dart';
 class AuthApiServices{
