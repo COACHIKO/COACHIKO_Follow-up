@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/view/screens/client_area/workout_plan_page.dart';
+import 'package:followupapprefactored/view/screens/client_area/routine_screens/workout_plan_page.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 

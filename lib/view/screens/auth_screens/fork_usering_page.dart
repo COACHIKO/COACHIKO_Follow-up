@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/view/screens/auth_presentation/signup_screen.dart';
+import 'package:followupapprefactored/view/screens/auth_screens/signup_screen.dart';
 import 'package:get/get.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/constants/text_strings.dart';

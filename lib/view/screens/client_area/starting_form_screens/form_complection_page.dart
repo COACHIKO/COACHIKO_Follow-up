@@ -4,14 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../controller/coach_controllers/diet_make_controller.dart';
-import '../../../controller/client_controllers/form_complection_controller.dart';
-import '../../../core/utils/constants/colors.dart';
-import '../../../core/utils/constants/image_strings.dart';
-import '../../../core/utils/constants/sizes.dart';
-import '../../../core/utils/constants/text_strings.dart';
-import '../../../core/utils/helpers/helper_functions.dart';
-import '../../../main.dart';
+import '../../../../controller/coach_controllers/diet_make_controller.dart';
+import '../../../../controller/client_controllers/form_complection_controller.dart';
+import '../../../../core/utils/constants/colors.dart';
+import '../../../../core/utils/constants/image_strings.dart';
+import '../../../../core/utils/constants/sizes.dart';
+import '../../../../core/utils/constants/text_strings.dart';
+import '../../../../core/utils/helpers/helper_functions.dart';
+import '../../../../main.dart';
 
 
 class FormComplection extends StatelessWidget {

@@ -61,7 +61,7 @@ class TFirebaseException implements Exception {
         return 'The email template is missing the iframe end tag.';
       case 'missing-iframe-src':
         return 'The email template is missing the iframe src attribute.';
-      case 'auth_presentation-domain-config-required':
+      case 'auth_screens-domain-config-required':
         return 'The authDomain configuration is required for the action code verification link.';
       case 'missing-app-credential':
         return 'The app credential is missing. Please provide valid app credentials.';

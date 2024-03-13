@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import '../../../data/model/routine_model.dart';
 import '../../core/utils/helpers/network_manager.dart';
 import '../../data/source/web_services/client_web_services/client_routines_get_service.dart';
-import '../../view/screens/client_area/routine_log_page.dart';
+import '../../view/screens/client_area/routine_screens/routine_log_page.dart';
 
 enum RoutinesState { loading, loaded, error, noData }
 

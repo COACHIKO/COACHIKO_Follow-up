@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:followupapprefactored/view/widgets/custom_appbar.dart';
 import 'package:get/get.dart';
-import '../../../controller/client_controllers/routines_page_controller.dart';
-import '../../../core/utils/constants/colors.dart';
-import '../../../core/utils/helpers/helper_functions.dart';
-import '../../../data/model/routine_model.dart';
-import '../../../main.dart';
-import '../auth_presentation/fork_usering_page.dart';
+import '../../../../controller/client_controllers/routines_page_controller.dart';
+import '../../../../core/utils/constants/colors.dart';
+import '../../../../core/utils/helpers/helper_functions.dart';
+import '../../../../data/model/routine_model.dart';
+import '../../../../main.dart';
+import '../../auth_screens/fork_usering_page.dart';
 
 class WorkoutPlanPage extends StatelessWidget {
 const WorkoutPlanPage({super.key});

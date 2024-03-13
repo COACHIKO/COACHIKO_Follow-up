@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import '../../core/notification/notfication.dart';
-import '../../view/screens/client_area/routine_log_page.dart';
+import '../../view/screens/client_area/routine_screens/routine_log_page.dart';
 
 class ExerciseLoggingController extends GetxController {
   static ExerciseLoggingController get instance => Get.find();
