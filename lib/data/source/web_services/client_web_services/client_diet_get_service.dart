@@ -23,8 +23,8 @@ Future<void> dietGetForClient() async {
     DietApiGet dietApiGet = DietApiGet.fromJson(decodedData);
     dietMakingController.dietData = dietApiGet.data;
    } else {
-    // Handle error
-  }
+
+   }
 }
 
 }

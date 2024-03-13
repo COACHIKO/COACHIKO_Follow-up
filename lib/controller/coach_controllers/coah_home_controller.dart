@@ -7,25 +7,26 @@ import '../../data/source/web_services/databases_web_services/food_data_base/all
 import '../../view/screens/client_area/diet_preview_f_client.dart';
 import '../../view/screens/client_area/workout_plan_page.dart';
 import '../../view/screens/coach_area/coach_clients_presentation/all_coach_clients.dart';
+import '../../view/screens/setting_page.dart';
 import '../client_controllers/diet_display_page_controller.dart';
 import 'diet_make_controller.dart';
 
 class CoachHomeController extends GetxController {
   static CoachHomeController get instance => Get.find();
-  ClientRoutinesGetService clientRoutinesGetService = ClientRoutinesGetService();
+  final Rx<int> selectedIndex = 0.obs;
+
   GetAllClients getAllClients = GetAllClients();
   GetAllFoods getAllFoods = GetAllFoods();
+  ClientRoutinesGetService clientRoutinesGetService = ClientRoutinesGetService();
   GetAllExercisesDataBase getAllExercisesDataBase = GetAllExercisesDataBase();
-  final Rx<int> selectedIndex = 0.obs;
    final DietDataController dietDataController = Get.put(DietDataController());
   final DietMakingController dietMakingController = Get.put(DietMakingController());
-  final RoutinesPageController routinePageController = Get.put(RoutinesPageController());
-
-  final screens = [
+  final RoutinesPageController routinesPageController = Get.put(RoutinesPageController());
+   final screens = [
     const WorkoutPlanPage(),
     const DietPreviewfClient(),
           AllClientsDisplay(),
-    const DietPreviewfClient(),
+    const SettingScreen(),
   ];
 
   @override
@@ -35,9 +36,8 @@ class CoachHomeController extends GetxController {
   }
 
   Future<void> fetchData() async {
-    try {
-      routinePageController.routines = clientRoutinesGetService.getRoutineData();
-      routinePageController.update();
+    try  {
+      routinesPageController.fetchRoutineData();
       await getAllExercisesDataBase.getExercises();
       await dietDataController.fetchData();
       await getAllClients.getCoachClients();

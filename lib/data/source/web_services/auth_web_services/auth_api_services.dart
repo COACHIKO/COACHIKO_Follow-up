@@ -63,12 +63,10 @@ class AuthApiServices{
     if (data["status"].toString() == "Success") {
       if (rememberme == true) {
         myServices.sharedPreferences.setInt("user", data["data"]["id"]);
-        myServices.sharedPreferences
-            .setString("first_name", data["data"]["first_name"]);
-        myServices.sharedPreferences
-            .setString("second_name", data["data"]["second_name"]);
-        myServices.sharedPreferences
-            .setInt("RelatedtoCoachID", data["data"]["RelatedtoCoachID"]);
+        myServices.sharedPreferences.setString("first_name", data["data"]["first_name"]);
+        myServices.sharedPreferences.setString("second_name", data["data"]["second_name"]);
+        myServices.sharedPreferences.setString("email", data["data"]["email"]);
+        myServices.sharedPreferences.setInt("RelatedtoCoachID", data["data"]["RelatedtoCoachID"]);
         myServices.sharedPreferences.setInt("isCoach", data["data"]["isCoach"]);
         myServices.sharedPreferences.setBool("rememberMe", true);
 

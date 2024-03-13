@@ -4,9 +4,7 @@ import 'package:followupapprefactored/view/screens/auth_presentation/fork_userin
 import 'package:followupapprefactored/view/screens/client_area/client_home_screen.dart';
 import 'package:followupapprefactored/view/screens/client_area/form_complection_page.dart';
 import 'package:followupapprefactored/view/screens/coach_area/coach_home_page.dart';
-import 'package:followupapprefactored/view/screens/coach_area/routine_presentation/workout_plan_making_page.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 import 'core/localization/changelocal.dart';
@@ -18,28 +16,33 @@ import 'core/utils/theme/theme.dart';
 LocaleController localeController = LocaleController();
 MyServices myServices = Get.find();
 Box? mybox;
-Future<Box> openHiveBox(String boxname) async {
+Future<Box> openHiveBox(String boxname, {required String path}) async {
   if (!Hive.isBoxOpen(boxname)) {
     Hive.init((await getApplicationDocumentsDirectory()).path);
   }
   return await Hive.openBox(boxname);
 }
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
-  WidgetsFlutterBinding.ensureInitialized();
-  final appDocumentDirectory = await getApplicationDocumentsDirectory();
-  if (!Hive.isAdapterRegistered(0)) {
-    Hive.init(appDocumentDirectory.path);
-  }
-  //  Hive.registerAdapter();
-    mybox = await openHiveBox("client");
-
-
-
+  // Initialize Hive
+  await Hive.initFlutter();
+  // Register adapters if not already registered
+  // if (!Hive.isAdapterRegistered(0)) {
+  //   Hive.registerAdapter(ExerciseAdapter());
+  //   Hive.registerAdapter(RoutineAdapter());
+  //   Hive.registerAdapter(WorkoutDataAdapter());
+  //   // Hive.registerAdapter(FoodDataModelAdapter());
+  //   // Hive.registerAdapter(DietModelAdapter());
+  //   // Hive.registerAdapter(DietApiGetAdapter());
+  //   // Hive.registerAdapter(DietDataAdapter());
+  //
+  // }
+  // Open the Hive box
+ // final appDocumentDirectory = await getApplicationDocumentsDirectory();
+ //  mybox = await openHiveBox("workout_data", path: appDocumentDirectory.path);
 
   runApp(COACHIKOFollowApp());
-
 }
 class COACHIKOFollowApp extends StatelessWidget {
   COACHIKOFollowApp({super.key});

@@ -1,4 +1,3 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_flutter/icons_flutter.dart';
@@ -6,7 +5,6 @@ import 'package:iconsax/iconsax.dart';
 import '../../../controller/coach_controllers/coah_home_controller.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/utils/constants/colors.dart';
-import '../../widgets/custom_icons.dart';
 
 class CoachHome extends StatelessWidget {
   const CoachHome({super.key,});

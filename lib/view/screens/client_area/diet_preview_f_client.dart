@@ -128,14 +128,26 @@ class DietPreviewfClient extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return Column(
                             children: [
-                              Center(
-                                child: Text(
-                                  "${controller.dietData[index].foodName} : ${controller.dietData[index].quantity} g",style: TextStyle(
-                                  fontSize: 11.sp,
-                                  fontWeight: FontWeight.bold,
+                              Container(
+                                height: 45.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color:dark? Colors.white:CColors.dark,
                                 ),
-                                 ),
+                                child:Center(
+                                  child: Text(
+                                    "${controller.dietData[index].foodName} : ${controller.dietData[index].quantity} g",style: TextStyle(
+                                    fontSize: 11.sp,color:dark? Colors.black:CColors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  ),
+                                ),
+
                               ),
+
+
+
+
                               const SizedBox(height: 10,),
                               Container(
                                 height: 35.h,

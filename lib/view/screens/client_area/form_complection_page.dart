@@ -1447,11 +1447,11 @@ class ChooseCard extends StatelessWidget {
   final String image; // Add explicit type String for image
 
   const ChooseCard({
-    Key? key, // Add Key key parameter
+    super.key, // Add Key key parameter
     required this.controller,
     required this.text,
     required this.image,
-  }) : super(key: key); // Pass key to super constructor
+  }); // Pass key to super constructor
 
   @override
   Widget build(BuildContext context) {

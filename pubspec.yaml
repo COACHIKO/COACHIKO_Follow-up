@@ -51,6 +51,9 @@ dependencies:
   material_design_icons_flutter: ^7.0.7296
   eva_icons_flutter: ^3.1.0
   icons_flutter: ^0.0.4
+  flutter_cache_manager_dio: ^4.0.0
+  connectivity_plus: ^5.0.2
+  connectivity: ^3.0.6  # Use the latest version of the connectivity package
 
 
 

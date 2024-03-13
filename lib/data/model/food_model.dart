@@ -1,3 +1,5 @@
+import 'package:hive/hive.dart';
+
 class FoodDataModel {
   final int id;
   final String foodName;
@@ -108,5 +110,113 @@ class DietData {
 
 
     );
+  }
+}
+
+
+
+class FoodDataModelAdapter extends TypeAdapter<FoodDataModel> {
+  @override
+  final typeId = 3; // Unique identifier for this type in Hive.
+
+  @override
+  FoodDataModel read(BinaryReader reader) {
+    return FoodDataModel(
+      id: reader.readInt(),
+      foodName: reader.readString(),
+      foodNameAr: reader.readString(),
+      calories: reader.readDouble(),
+      protein: reader.readDouble(),
+      carbohydrates: reader.readDouble(),
+      fats: reader.readDouble(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, FoodDataModel obj) {
+    writer.writeInt(obj.id);
+    writer.writeString(obj.foodName);
+    writer.writeString(obj.foodNameAr);
+    writer.writeDouble(obj.calories);
+    writer.writeDouble(obj.protein);
+    writer.writeDouble(obj.carbohydrates);
+    writer.writeDouble(obj.fats);
+  }
+}
+
+class DietModelAdapter extends TypeAdapter<DietModel> {
+  @override
+  final typeId = 4; // Unique identifier for this type in Hive.
+
+  @override
+  DietModel read(BinaryReader reader) {
+    return DietModel(
+      foodData: reader.read() as FoodDataModel,
+      quantity: reader.readInt(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, DietModel obj) {
+    writer.write(obj.foodData);
+    writer.writeInt(obj.quantity);
+  }
+}
+
+class DietApiGetAdapter extends TypeAdapter<DietApiGet> {
+  @override
+  final typeId = 5; // Unique identifier for this type in Hive.
+
+  @override
+  DietApiGet read(BinaryReader reader) {
+    return DietApiGet(
+      status: reader.readString(),
+      data: reader.readList().cast<DietData>(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, DietApiGet obj) {
+    writer.writeString(obj.status);
+    writer.writeList(obj.data);
+  }
+}
+
+class DietDataAdapter extends TypeAdapter<DietData> {
+  @override
+  final typeId = 6; // Unique identifier for this type in Hive.
+
+  @override
+  DietData read(BinaryReader reader) {
+    return DietData(
+      id: reader.readInt(),
+      foodId: reader.readInt(),
+      quantity: reader.readInt(),
+      protein: reader.readDouble(),
+      calories: reader.readDouble(),
+      carbohydrates: reader.readDouble(),
+      fats: reader.readDouble(),
+      foodName: reader.readString(),
+      tdee: reader.readDouble(),
+      targetProtien: reader.readDouble(),
+      targetCarbohdrate: reader.readDouble(),
+      targetFat: reader.readDouble(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, DietData obj) {
+    writer.writeInt(obj.id);
+    writer.writeInt(obj.foodId);
+    writer.writeInt(obj.quantity);
+    writer.writeDouble(obj.protein);
+    writer.writeDouble(obj.calories);
+    writer.writeDouble(obj.carbohydrates);
+    writer.writeDouble(obj.fats);
+    writer.writeString(obj.foodName);
+    writer.writeDouble(obj.tdee);
+    writer.writeDouble(obj.targetProtien);
+    writer.writeDouble(obj.targetCarbohdrate);
+    writer.writeDouble(obj.targetFat);
   }
 }

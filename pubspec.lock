@@ -177,8 +177,40 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  connectivity_plus:
+  connectivity:
+    dependency: "direct main"
+    description:
+      name: connectivity
+      sha256: a8e91263cf3e25fb5cc95e19dfde4999e32a648ac3b9e8a558a28165731678f8
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.6"
+  connectivity_for_web:
     dependency: transitive
+    description:
+      name: connectivity_for_web
+      sha256: "01a390c1d5adc2ed1fa1f52d120c07fe9fd01166a93f965a832fd6cfc0ea6482"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0+1"
+  connectivity_macos:
+    dependency: transitive
+    description:
+      name: connectivity_macos
+      sha256: "51ae08d5162eca9669b9d8951ed83ce19c5355a81149f94e4dee2740beb93628"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1+2"
+  connectivity_platform_interface:
+    dependency: transitive
+    description:
+      name: connectivity_platform_interface
+      sha256: "2d82e942df9d49f29a24bb07fb5ce085d4a53e47818c62364d2b6deb9e0d7a8e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
+  connectivity_plus:
+    dependency: "direct main"
     description:
       name: connectivity_plus
       sha256: "224a77051d52a11fbad53dd57827594d3bd24f945af28bd70bab376d68d437f0"
@@ -342,6 +374,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_cache_manager:
+    dependency: transitive
+    description:
+      name: flutter_cache_manager
+      sha256: "8207f27539deb83732fdda03e259349046a39a4c767269285f449ade355d54ba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.1"
+  flutter_cache_manager_dio:
+    dependency: "direct main"
+    description:
+      name: flutter_cache_manager_dio
+      sha256: dec00b21ddd5206fe79201274ec53ab848f337a2716f11a5ead8e68a79e11ec0
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   flutter_image_compress:
     dependency: "direct main"
     description:
@@ -1032,6 +1080,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.27.7"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1141,6 +1197,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  sprintf:
+    dependency: transitive
+    description:
+      name: sprintf
+      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
+  sqflite:
+    dependency: transitive
+    description:
+      name: sqflite
+      sha256: a9016f495c927cb90557c909ff26a6d92d9bd54fc42ba92e19d4e79d61e798c6
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.2"
+  sqflite_common:
+    dependency: transitive
+    description:
+      name: sqflite_common
+      sha256: "28d8c66baee4968519fb8bd6cdbedad982d6e53359091f0b74544a9f32ec72d5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.3"
   stack_trace:
     dependency: transitive
     description:
@@ -1173,6 +1253,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      sha256: "539ef412b170d65ecdafd780f924e5be3f60032a1128df156adad6c5b373d558"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0+1"
   term_glyph:
     dependency: transitive
     description:
@@ -1221,6 +1309,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.2"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      sha256: cd210a09f7c18cbe5a02511718e0334de6559871052c90a90c0cca46a4aa81c8
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.3.3"
   vector_math:
     dependency: transitive
     description:

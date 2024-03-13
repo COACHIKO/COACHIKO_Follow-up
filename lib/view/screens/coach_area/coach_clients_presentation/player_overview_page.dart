@@ -6,7 +6,7 @@ import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
 import '../../../../main.dart';
 import '../diet_presentation/diet_making_page.dart';
-import '../routine_presentation/workout_plan_making_page.dart';
+import '../routine_presentation/coach_clients_routine_preview_page.dart';
 
 class PlayerOverviewPage extends StatelessWidget {
     final int index;
@@ -117,13 +117,15 @@ class PlayerOverviewPage extends StatelessWidget {
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () async{
-                    Get.to(() => WorkoutPlanMaking(id:coachHomeController.coachClients[index].id));
+                   await Get.to(() => WorkoutPlanPreview(id:coachHomeController.coachClients[index].id,));
 
 
                   },
                   child: const Text("Set Workout Plan"),
                 ),
-              ),],),),
+              ),
+
+              ],),),
 
 
         ],),

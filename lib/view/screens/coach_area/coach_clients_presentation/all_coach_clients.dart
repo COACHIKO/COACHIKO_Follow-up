@@ -30,7 +30,8 @@ final dietMakingController = Get.put(DietMakingController());
           : Column(
             children: [
               ListView.builder(shrinkWrap: true, itemCount: dietMakingController.coachClients.length,itemBuilder: (context, index) {
-              return InkWell(onTap: () {Get.to(PlayerOverviewPage(index: index,));},splashColor: Colors.green,splashFactory:InkRipple.splashFactory,
+              return InkWell(onTap: () {
+                Get.to(() => PlayerOverviewPage(index: index,));},splashColor: Colors.green,splashFactory:InkRipple.splashFactory,
                 child: Card(color:  dark? const Color(0xFF1C1C1E):CColors.primary,
                   child: ListTile(
                     title:Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,7 +49,7 @@ final dietMakingController = Get.put(DietMakingController());
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Current Stage: ${dietMakingController.coachClients[index].currentStep == 0 ? "Form Completion" :dietMakingController.coachClients[index].currentStep == 1 ? "Plan To Put Now" : "Client On The Plan"}',style: const TextStyle(color: Colors.white),),
-                            InkWell(onTap: () {},child:   dietMakingController.coachClients[index].currentStep == 0 ?const Row(children: [Icon(Icons.notifications,size: 20,color: Colors.white,),Text("Notifiy Client",style: TextStyle(color: Colors.white,fontSize: 11),)],):dietMakingController.coachClients[index].currentStep == 1 ?const Row(children: [Icon(Icons.notifications,size: 20,),Text("Notifiy Client",style: TextStyle(fontSize: 11),)],):const Row(children: [Icon(Icons.notifications,size: 20,),Text("Notifiy Client",style: TextStyle(fontSize: 11),)],))],
+                            InkWell(onTap: () {},child:   dietMakingController.coachClients[index].currentStep == 0 ?const Row(children: [Icon(Icons.notifications,size: 20,color: Colors.white,),Text("Notifiy Client",style: TextStyle(color: Colors.white,fontSize: 11),)],):dietMakingController.coachClients[index].currentStep == 1 ?const Row(children: [Icon(Icons.notifications,size: 20,color: Colors.white,),Text("Notifiy Client",style: TextStyle(fontSize: 11,color:Colors.white),)],):const Row(children: [Icon(Icons.notifications,size: 20,),Text("Notifiy Client",style: TextStyle(fontSize: 11),)],))],
                         ),
                        ],
                     ),
