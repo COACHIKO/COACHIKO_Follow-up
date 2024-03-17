@@ -36,7 +36,7 @@ class ClientHomeController extends GetxController {
       await dietDataController.fetchData();
       await getAllClients.getCoachClients();
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 }

@@ -36,7 +36,7 @@ class LoginController extends GetxController {
            //await apiCalls.getFoodData();
 
         } catch (e) {
-          print(e);
+          //print(e);
         }
 
 

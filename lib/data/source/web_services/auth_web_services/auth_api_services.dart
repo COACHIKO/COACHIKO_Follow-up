@@ -65,6 +65,7 @@ class AuthApiServices{
     if (data["status"].toString() == "Success") {
       if (rememberme == true) {
         myServices.sharedPreferences.setInt("user", data["data"]["id"]);
+        myServices.sharedPreferences.setInt("user", data["data"]["id"]);
         myServices.sharedPreferences.setString("first_name", data["data"]["first_name"]);
         myServices.sharedPreferences.setString("second_name", data["data"]["second_name"]);
         myServices.sharedPreferences.setString("email", data["data"]["email"]);
@@ -73,23 +74,20 @@ class AuthApiServices{
         myServices.sharedPreferences.setBool("rememberMe", true);
 
         if (data["data"]["isCoach"] == 0) {
-          Get.offAll(const clientHome());
+          Get.offAll(const ClientHome());
         } else {
           Get.offAll(const CoachHome());
         }
       } else {
         myServices.sharedPreferences.setInt("user", data["data"]["id"]);
-        myServices.sharedPreferences
-            .setString("first_name", data["data"]["first_name"]);
-        myServices.sharedPreferences
-            .setString("second_name", data["data"]["second_name"]);
-        myServices.sharedPreferences
-            .setInt("RelatedtoCoachID", data["data"]["RelatedtoCoachID"]);
+        myServices.sharedPreferences.setString("first_name", data["data"]["first_name"]);
+        myServices.sharedPreferences.setString("second_name", data["data"]["second_name"]);
+        myServices.sharedPreferences.setInt("RelatedtoCoachID", data["data"]["RelatedtoCoachID"]);
         myServices.sharedPreferences.setInt("isCoach", data["data"]["isCoach"]);
         myServices.sharedPreferences.setBool("rememberMe", false);
 
         if (data["data"]["isCoach"] == 0) {
-          Get.offAll(const clientHome());
+          Get.offAll(const ClientHome());
         } else {
           Get.offAll(const CoachHome());
         }

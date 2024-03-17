@@ -6,8 +6,8 @@ import '../../../controller/client_controllers/client_home_controller.dart';
  import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/utils/constants/colors.dart';
 
-class clientHome extends StatelessWidget {
-  const clientHome({super.key,});
+class ClientHome extends StatelessWidget {
+  const ClientHome({super.key,});
 
   @override
   Widget build(BuildContext context) {

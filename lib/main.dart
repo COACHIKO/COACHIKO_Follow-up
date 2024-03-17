@@ -47,10 +47,10 @@ final LocaleController langController = Get.put(LocaleController());
             initialRoute: myServices.sharedPreferences.getInt("user") == null ||myServices.sharedPreferences.getBool("rememberMe")==false
                 ? "/forkUsering"
                 : (myServices.sharedPreferences.getInt("isCoach") == 0
-                ? "/homepage"
+                ? "/clientHome"
                 : "/coach"),
             routes:{
-              "/homepage":(context)=>const clientHome(),
+              "/clientHome":(context)=>const ClientHome(),
               "/forkUsering":(context)=>const ForkUseringPage(),
               "/coach":(context)=> const CoachHome(),
               "/formComplection":(context)=> FormComplection(),

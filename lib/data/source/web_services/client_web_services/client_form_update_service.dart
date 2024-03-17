@@ -78,7 +78,7 @@ class UpdateUserData{
         throw Exception('Failed to load data: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error: $e');
+      //print('Error: $e');
       Fluttertoast.showToast(
         backgroundColor: Colors.red,
         textColor: Colors.white,

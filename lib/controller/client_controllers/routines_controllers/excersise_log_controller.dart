@@ -23,7 +23,7 @@ class ExerciseLoggingController extends GetxController {
       }
     } else {
       // Handle invalid data (empty sets or rest durations)
-      print('Warning: Invalid data provided. Check sets and rest durations.');
+      //print('Warning: Invalid data provided. Check sets and rest durations.');
     }
   }
 

@@ -12,7 +12,7 @@ class MyServices extends GetxService {
    notificationService.initializeNotification();
    FirebaseMessaging.onMessage.listen((event) {
      if(event.notification!=null){
-       print("======= Forground Message =======");
+       //print("======= Forground Message =======");
 
         notificationService.showNotification(title: event.notification!.title.toString(), body: event.notification!.body.toString());
 

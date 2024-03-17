@@ -110,8 +110,7 @@ const WorkoutPlanPage({super.key});
                               ),
                             ),
                             onPressed: () async {
-                              myServices.notificationService.showNotification(title: "title", body: "body");
-                             // controller.startRoutine(routine);
+                              controller.startRoutine(routine);
 
                             },
                             color: CColors.primary,

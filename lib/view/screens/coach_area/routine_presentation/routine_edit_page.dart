@@ -4,6 +4,7 @@ import '../../../../controller/client_controllers/routines_controllers/routines_
 import '../../../../core/utils/helpers/helper_functions.dart';
 
 class EditRoutinePage extends StatefulWidget {
+    // ignore: prefer_typing_uninitialized_variables
     final routineID;
 
       const EditRoutinePage({super.key, required this.routineID});

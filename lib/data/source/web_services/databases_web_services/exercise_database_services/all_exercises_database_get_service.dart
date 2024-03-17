@@ -28,7 +28,7 @@ class  AllExercisesDataBase{
         assignExercises(mappedExercises);
       } catch (e) {
         // Handle any exceptions that might occur during decoding or mapping
-        print('Error: $e');
+       // print('Error: $e');
       }
     } else {
       // Throw an exception if the response status code is not 200

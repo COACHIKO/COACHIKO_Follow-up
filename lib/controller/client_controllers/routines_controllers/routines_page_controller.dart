@@ -57,7 +57,7 @@ class RoutinesPageController extends GetxController {
         update();
       } else {
         // Handle other exceptions
-        print('Unhandled exception: $e');
+        //print('Unhandled exception: $e');
         state.value = RoutinesState.noData;
       }
     }
