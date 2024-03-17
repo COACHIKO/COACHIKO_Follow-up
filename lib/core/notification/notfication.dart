@@ -1,11 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../controller/client_controllers/excersise_log_controller.dart';
 
 class NotificationService {
-  final ExerciseLoggingController exerciseLoggingController =
-  Get.put(ExerciseLoggingController());
 
   Future<void> initializeNotification() async {
     await AwesomeNotifications().initialize(
@@ -66,29 +62,7 @@ class NotificationService {
     debugPrint('onDismissActionReceivedMethod');
   }
 
-  Future<void> onActionReceivedMethod(
-      ReceivedAction receivedAction) async {
-    debugPrint('onActionReceivedMethod');
-    if (receivedAction.buttonKeyPressed == "add15") {
-      final int? index = int.tryParse(
-          receivedAction.payload?['index'] ?? ''); // Parse index from payload
-      if (index != null) {
-        exerciseLoggingController.timerStart(15, index);
-      }
-    } else if (receivedAction.buttonKeyPressed == "add30") {
-      final int? index = int.tryParse(
-          receivedAction.payload?['index'] ?? ''); // Parse index from payload
-      if (index != null) {
-        exerciseLoggingController.timerStart(30, index);
-      }
-    } else {
-      final int? index = int.tryParse(
-          receivedAction.payload?['index'] ?? ''); // Parse index from payload
-      if (index != null) {
-        exerciseLoggingController.timerStart(60, index);
-      }
-    }
-  }
+  static Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {}
 
   Future<void> showNotification({
     required final String title,

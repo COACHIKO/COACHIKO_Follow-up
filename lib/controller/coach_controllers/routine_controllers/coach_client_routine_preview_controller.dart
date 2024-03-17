@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../data/model/routine_model.dart';
+import '../../../data/model/routine_models/workout_data_model.dart';
 import '../../../data/source/web_services/coach_web_services/coach_clientsRoutineID_get.dart';
 import '../../../data/source/web_services/coach_web_services/coach_routine_crud_service.dart';
+import '../../../data/source/web_services/databases_web_services/exercise_database_services/all_exercises_database_get_service.dart';
 
 class WorkoutPlanPreviewController extends GetxController {
+  AllExercisesDataBase allExercisesDataBase = AllExercisesDataBase();
   Rx<WorkoutData?> clientRoutines = Rx<WorkoutData?>(null);
-
+@override
+  void onInit() {
+  allExercisesDataBase.getExercises();
+     super.onInit();
+  }
   GetRoutinesSpecificId getRoutinesSpecificId = GetRoutinesSpecificId();
   CoachRoutineInsertion coachRoutineInsertion = CoachRoutineInsertion();
   Future<void> fetchClientRoutines(int id) async {
@@ -23,7 +29,6 @@ class WorkoutPlanPreviewController extends GetxController {
     update();
 
   }
-
   void createRoutine(BuildContext context, int clientId) async {
     TextEditingController controller = TextEditingController();
 

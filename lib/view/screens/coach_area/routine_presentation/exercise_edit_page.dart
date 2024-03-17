@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:followupapprefactored/view/screens/coach_area/routine_presentation/exercise_search_page.dart';
-
 import 'package:get/get.dart';
-
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/image_strings.dart';
-import '../../../../data/model/routine_model.dart';
+import '../../../../data/model/routine_models/exercise_model.dart';
 import '../../../../data/source/web_services/coach_web_services/coach_assign_exercise_to_routine.dart';
 
 class EditExerciseController extends GetxController {

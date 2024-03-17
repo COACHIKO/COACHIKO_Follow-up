@@ -6,33 +6,37 @@ import '../../view/screens/client_area/routine_screens/workout_plan_page.dart';
 import '../../view/screens/coach_area/coach_clients_presentation/all_coach_clients.dart';
 import '../../view/screens/setting_page.dart';
 import '../client_controllers/diet_controllers/diet_display_page_controller.dart';
+import '../coach_controllers/diet_making_controllers/diet_make_controller.dart';
 
-
-class CoachHomeController extends GetxController {
-  static CoachHomeController get instance => Get.find();
+class ClientHomeController extends GetxController {
+  static ClientHomeController get instance => Get.find();
   final Rx<int> selectedIndex = 0.obs;
 
   GetAllClients getAllClients = GetAllClients();
-   ClientRoutinesGetService clientRoutinesGetService = ClientRoutinesGetService();
-    final DietDataController dietDataController = Get.put(DietDataController());
-    final screens = [
+  //GetAllFoods getAllFoods = GetAllFoods();
+  ClientRoutinesGetService clientRoutinesGetService = ClientRoutinesGetService();
+  final DietDataController dietDataController = Get.put(DietDataController());
+  final DietMakingController dietMakingController = Get.put(DietMakingController());
+   final screens = [
     const WorkoutPlanPage(),
     const DietPreviewfClient(),
-          AllClientsDisplay(),
+    AllClientsDisplay(),
     const SettingScreen(),
   ];
 
   @override
   void onInit() {
     super.onInit();
-     fetchData();
+    fetchData();
   }
 
-  Future<void> fetchData() async {
 
+  Future<void> fetchData() async {
+    try  {
       await dietDataController.fetchData();
       await getAllClients.getCoachClients();
-
+    } catch (e) {
+      print(e);
     }
-  
+  }
 }

@@ -1,67 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/view/screens/client_area/routine_screens/workout_plan_page.dart';
 import 'package:get/get.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:icons_flutter/icons_flutter.dart';
+import 'package:iconsax/iconsax.dart';
+import '../../../controller/client_controllers/client_home_controller.dart';
+ import '../../../core/utils/helpers/helper_functions.dart';
+import '../../../core/utils/constants/colors.dart';
 
+class clientHome extends StatelessWidget {
+  const clientHome({super.key,});
 
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int selectedindex=0;
-
-  final pages = [  const WorkoutPlanPage(), const WorkoutPlanPage(), const WorkoutPlanPage(), const WorkoutPlanPage(),];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.black,
-        body:  pages[selectedindex],
-        bottomNavigationBar:  Container(
-          padding:  EdgeInsets.symmetric(horizontal: 15.w,vertical: 20.h),
-          child: GNav(
-            rippleColor: Colors.grey.shade800, hoverColor: Colors.grey.shade700, haptic: true,tabBorderRadius: 10,
-            tabShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), blurRadius: 8)], gap: 8, curve: Curves.bounceIn,
-            color: Colors.grey[800], activeColor: Colors.white, iconSize: 24,tabBackgroundColor: Colors.black.withOpacity(0.1),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            tabs:  [
-              GButton(
-                icon: Icons.fitness_center_rounded,
-                text: '47'.tr,
-              ),
-              GButton(
-                icon: Icons.set_meal,
-                text: '48'.tr,
-              ),
-              GButton(
-                icon: Icons.stacked_line_chart,
-                text: '49'.tr,
-              ),
-              GButton(
-                icon: Icons.account_box_outlined,
-                text: '50'.tr,
-              )
-            ],
-            selectedIndex: selectedindex,
-            onTabChange: (value) {
-              setState(() {
-                selectedindex=value;
+    final controller = Get.put(ClientHomeController());
 
-              });
+    final darkMode = THelperFunctions.isDarkMode(context);
 
-            },
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          // Simulate a delay to show loading indicator
+          await Future.delayed(const Duration(milliseconds: 300));
 
+          await controller.fetchData();
+        },
+        child: Obx(
+              () => controller.screens[controller.selectedIndex.value],
+        ),
+      ),
+      bottomNavigationBar: Obx(() => NavigationBar(
+        height: 80,
+        elevation: 0,
+        selectedIndex: controller.selectedIndex.value,
+        onDestinationSelected: (index) =>
+        controller.selectedIndex.value = index,
+        backgroundColor:
+        darkMode ? CColors.black : Colors.white,
+        indicatorColor: darkMode
+            ? CColors.white.withOpacity(0.1)
+            : CColors.black.withOpacity(0.1),
+        destinations: [
+          NavigationDestination(
+            icon:  const Icon(FlutterIcons.dumbbell_faw5s,size: 22,),
+            label: "47".tr,
           ),
-        )
-
-
-    );}}
-
-
-
-
+          NavigationDestination(
+            icon:const Icon(FlutterIcons.food_apple_outline_mco),
+            label: "54".tr,
+          ),
+          NavigationDestination(
+            icon: const Icon(Iconsax.people),
+            label: "51".tr,
+          ),
+          NavigationDestination(
+            icon: const Icon(Iconsax.user),
+            label: "50".tr,
+          ),
+        ],
+      )),
+    );
+  }
+}

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import '../../data/model/client_user_model.dart';
-import '../../data/model/food_model.dart';
+import '../../../data/model/client_user_model.dart';
+import '../../../data/model/diet_models/food_model.dart';
+import '../../../data/source/web_services/databases_web_services/food_data_base/all_foods_database_get_service.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class DietMakingController extends GetxController {
   static DietMakingController get instance => Get.find();
+  FoodDataBase foodDataBase = FoodDataBase();
   List<ClientUser> coachClients = [];
   List<FoodDataModel> foodList = [];
   List<DietData> dietData = [];
@@ -14,9 +18,10 @@ class DietMakingController extends GetxController {
   RxList<DietModel> selectedDietList = <DietModel>[].obs;
   late TextEditingController search;
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
-    search = TextEditingController();
+   await foodDataBase.getFoodData();
+     search = TextEditingController();
   }
   @override
   void onClose() {
@@ -70,4 +75,32 @@ class DietMakingController extends GetxController {
 
     update(); // Update UI after adding to diet list
   }
+  sendMessage(title,message,token)async{
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'key=AAAArxpC8tI:APA91bEw_Xt-nUYuI2bOVaNNUliTbg6aaRZi2y6S3X8-dcSyNh4ZiwK8LNl64oaLKZJe-UL2x-86xyWQ16siEDNVeMY_Z-KzSRBZ2hri2lyKVdtX3V8XAmy_QR8jzxxiKseDE64aPXBK'
+    };
+    var request = http.Request('POST', Uri.parse('https://fcm.googleapis.com/fcm/send'));
+    request.body = json.encode({
+      "to": token,
+      "notification": {
+        "title": title,
+        "body": message,
+        "mutable_content": true,
+        "sound": "Tri-tone"
+      }
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
+
 }

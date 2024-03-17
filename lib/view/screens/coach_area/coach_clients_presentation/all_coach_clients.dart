@@ -3,7 +3,7 @@ import 'package:followupapprefactored/view/screens/coach_area/coach_clients_pres
 import 'package:followupapprefactored/view/widgets/custom_appbar.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import '../../../../controller/coach_controllers/diet_make_controller.dart';
+import '../../../../controller/coach_controllers/diet_making_controllers/diet_make_controller.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../main.dart';
@@ -49,7 +49,10 @@ final dietMakingController = Get.put(DietMakingController());
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Current Stage: ${dietMakingController.coachClients[index].currentStep == 0 ? "Form Completion" :dietMakingController.coachClients[index].currentStep == 1 ? "Plan To Put Now" : "Client On The Plan"}',style: const TextStyle(color: Colors.white),),
-                            InkWell(onTap: () {},child:   dietMakingController.coachClients[index].currentStep == 0 ?const Row(children: [Icon(Icons.notifications,size: 20,color: Colors.white,),Text("Notifiy Client",style: TextStyle(color: Colors.white,fontSize: 11),)],):dietMakingController.coachClients[index].currentStep == 1 ?const Row(children: [Icon(Icons.notifications,size: 20,color: Colors.white,),Text("Notifiy Client",style: TextStyle(fontSize: 11,color:Colors.white),)],):const Row(children: [Icon(Icons.notifications,size: 20,),Text("Notifiy Client",style: TextStyle(fontSize: 11),)],))],
+                            InkWell(onTap: () {
+                              dietMakingController.sendMessage("I'm your Coach", "Dont Forget To Finsh Your Form", dietMakingController.coachClients[index].fireBaseToken);
+
+                            },child:   dietMakingController.coachClients[index].currentStep == 0 ?const Row(children: [Icon(Icons.notifications,size: 20,color: Colors.white,),Text("Notifiy Client",style: TextStyle(color: Colors.white,fontSize: 11),)],):dietMakingController.coachClients[index].currentStep == 1 ?const Row(children: [Icon(Icons.notifications,size: 20,color: Colors.white,),Text("Notifiy Client",style: TextStyle(fontSize: 11,color:Colors.white),)],):const Row(children: [Icon(Icons.notifications,size: 20,),Text("Notifiy Client",style: TextStyle(fontSize: 11),)],))],
                         ),
                        ],
                     ),

@@ -54,6 +54,9 @@ dependencies:
   flutter_cache_manager_dio: ^4.0.0
   connectivity_plus: ^5.0.2
   connectivity: ^3.0.6  # Use the latest version of the connectivity package
+  dartz: ^0.10.1
+  firebase_core: ^2.27.1
+  firebase_messaging: ^14.7.20
 
 
 

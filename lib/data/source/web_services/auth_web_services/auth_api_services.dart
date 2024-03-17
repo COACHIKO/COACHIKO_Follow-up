@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../../../main.dart';
 import '../../../../view/screens/auth_screens/fork_usering_page.dart';
 import '../../../../view/screens/client_area/client_home_screen.dart';
-import '../../../../view/screens/coach_area/coach_home_page.dart';
+import '../../../../view/screens/coach_area/coach_home_screen.dart';
 class AuthApiServices{
   Future<void> register(
       String firstName,
@@ -49,7 +49,7 @@ class AuthApiServices{
   }
 
   /// login Function
-  Future<void> login(String user, String pass, rememberme) async {
+  Future<void> login(String user, String pass,token, rememberme) async {
     var url = Uri.http(
       AppLink.server,
       AppLink.signInKey,
@@ -57,6 +57,8 @@ class AuthApiServices{
     var response = await http.post(url, body: {
       "username": user,
       "password": pass,
+      "token": token,
+
     });
     var data = json.decode(response.body);
 
@@ -71,7 +73,7 @@ class AuthApiServices{
         myServices.sharedPreferences.setBool("rememberMe", true);
 
         if (data["data"]["isCoach"] == 0) {
-          Get.offAll(const HomePage());
+          Get.offAll(const clientHome());
         } else {
           Get.offAll(const CoachHome());
         }
@@ -87,7 +89,7 @@ class AuthApiServices{
         myServices.sharedPreferences.setBool("rememberMe", false);
 
         if (data["data"]["isCoach"] == 0) {
-          Get.offAll(const HomePage());
+          Get.offAll(const clientHome());
         } else {
           Get.offAll(const CoachHome());
         }

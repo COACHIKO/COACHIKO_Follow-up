@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:followupapprefactored/view/widgets/custom_appbar.dart';
 import 'package:get/get.dart';
-import '../../../../controller/client_controllers/routines_page_controller.dart';
+import '../../../../controller/client_controllers/routines_controllers/routines_page_controller.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
-import '../../../../data/model/routine_model.dart';
+import '../../../../data/model/routine_models/routine_model.dart';
+import '../../../../data/model/routine_models/workout_data_model.dart';
 import '../../../../main.dart';
 import '../../auth_screens/fork_usering_page.dart';
 
@@ -109,7 +110,9 @@ const WorkoutPlanPage({super.key});
                               ),
                             ),
                             onPressed: () async {
-                              controller.startRoutine(routine);
+                              myServices.notificationService.showNotification(title: "title", body: "body");
+                             // controller.startRoutine(routine);
+
                             },
                             color: CColors.primary,
                             child: const Text(

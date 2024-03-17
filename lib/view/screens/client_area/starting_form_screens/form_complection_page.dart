@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../../controller/coach_controllers/diet_make_controller.dart';
-import '../../../../controller/client_controllers/form_complection_controller.dart';
+import '../../../../controller/coach_controllers/diet_making_controllers/diet_make_controller.dart';
+import '../../../../controller/client_controllers/starting_form_controllers/form_complection_controller.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/constants/sizes.dart';
@@ -54,7 +54,7 @@ class FormComplection extends StatelessWidget {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      controllerget.womanselected();
+                                      controllerget.womanSelected();
                                       controllerget.update();
                                       controllerget.controller.nextPage(
                                           duration: const Duration(
@@ -81,7 +81,7 @@ class FormComplection extends StatelessWidget {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      controllerget.manselected();
+                                      controllerget.manSelected();
 
                                       controllerget.controller.nextPage(
                                           duration: const Duration(
@@ -160,39 +160,39 @@ class FormComplection extends StatelessWidget {
 
                           InkWell(
                             onTap: () {
-                              controllerget.LoseWheightselected();
+                              controllerget.loseWeightSelected();
 
                               controllerget.controller.nextPage(
                                   duration: const Duration(
                                       milliseconds: 500),
                                   curve: Curves.easeInOut);
                             },
-                            child:ChooseCard(controller: controllerget.isSelectedLoseWheight, text: "Lose Weight", image: 'assets/3.png'),
+                            child:ChooseCard(controller: controllerget.isSelectedLoseWeight, text: "Lose Weight", image: 'assets/3.png'),
                           ),
 
                           SizedBox(height: 22.h),
                           InkWell(
                             onTap: () {
-                              controllerget.GainWheightselected();
+                              controllerget.gainWeightSelected();
 
                               controllerget.controller.nextPage(
                                   duration: const Duration(
                                       milliseconds: 500),
                                   curve: Curves.easeInOut);
                             },
-                            child:ChooseCard(controller: controllerget.isSelectedGainWheight, text: "Gain Weight", image: 'assets/4.png'),
+                            child:ChooseCard(controller: controllerget.isSelectedGainWeight, text: "Gain Weight", image: 'assets/4.png'),
                           ),
                           SizedBox(height: 22.h),
                           InkWell(
                             onTap: () {
-                              controllerget.MintainWheightselected();
+                              controllerget.maintainWeightSelected();
 
                               controllerget.controller.nextPage(
                                   duration: const Duration(
                                       milliseconds: 500),
                                   curve: Curves.easeInOut);
                             },
-                            child:ChooseCard(controller: controllerget.isSelectedMentainWheight, text: "Maintain Weight", image: 'assets/3.png',),
+                            child:ChooseCard(controller: controllerget.isSelectedMaintainWeight, text: "Maintain Weight", image: 'assets/3.png',),
                           ),
                         ],
                       ),
@@ -352,35 +352,35 @@ class FormComplection extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  controllerget.LowCostDietIsSelected();
+                                  controllerget.lowCostDietIsSelected();
                                   controllerget.controller.nextPage(
                                       duration: const Duration(
                                           milliseconds: 500),
                                       curve: Curves.easeInOut);
                                 },
-                                child: ChooseCard(controller: controllerget.Poormoney, text: "22".tr, image: "assets/11.png",)),
+                                child: ChooseCard(controller: controllerget.poorMoney, text: "22".tr, image: "assets/11.png",)),
                               SizedBox(height: 22.h),
                               InkWell(
                                 onTap: () {
                                   controllerget
-                                      .MediumCostDietIsSelected();
+                                      .mediumCostDietIsSelected();
                                   controllerget.controller.nextPage(
                                       duration: const Duration(
                                           milliseconds: 500),
                                       curve: Curves.easeInOut);
                                 },
-                                child: ChooseCard(controller: controllerget.Mediummoney, text: "23".tr, image: "assets/12.png",),
+                                child: ChooseCard(controller: controllerget.mediumMoney, text: "23".tr, image: "assets/12.png",),
                               ),
                               SizedBox(height: 22.h),
                               InkWell(
                                 onTap: () {
-                                  controllerget.HighCostDietIsSelected();
+                                  controllerget.highCostDietIsSelected();
                                   controllerget.controller.nextPage(
                                       duration: const Duration(
                                           milliseconds: 500),
                                       curve: Curves.easeInOut);
                                 },
-                                child: ChooseCard(controller: controllerget.Richmoney, text: "24".tr, image: "assets/13.png",),
+                                child: ChooseCard(controller: controllerget.richMoney, text: "24".tr, image: "assets/13.png",),
                               ),
                             ],
                           ),
@@ -788,7 +788,7 @@ class FormComplection extends StatelessWidget {
                                 ):Column(
                                   children: [
 
-                                    Form(key: controllerget.womanformKey.value,
+                                    Form(key: controllerget.womanFormKey.value,
                                       child: Column(
                                         children: [
                                           SizedBox(
@@ -1182,7 +1182,7 @@ class FormComplection extends StatelessWidget {
                                         BorderRadius.circular(15)),
                                     onPressed: () {
 
-                                      controllerget.validateMesuresForm();
+                                      controllerget.validateMeasuresForm();
 
                                      },
                                     child:  const Text("Next",
@@ -1301,11 +1301,11 @@ class FormComplection extends StatelessWidget {
                                            Text("your waist is ${controllerget.waist}cm your neck is ${controllerget.neck}cm",style: Theme.of(context).textTheme.bodyMedium,),
                                            const SizedBox(height: 10,),
 
-                                           controllerget.arms.value !=""?Text("Your arm is ${controllerget.arms}",style: Theme.of(context).textTheme.bodyMedium,):
-                                           controllerget.chest !=""? Text("Your chest is ${controllerget.chest}",style: Theme.of(context).textTheme.bodyMedium,):
-                                           controllerget.calves !=""?Text("Your calves is ${controllerget.calves}",style: Theme.of(context).textTheme.bodyMedium,):
-                                           controllerget.hip !=""?Text("Your calves is ${controllerget.hip}",style: Theme.of(context).textTheme.bodyMedium,):
-                                           Text("Your Goal is ${controllerget.isSelectedLoseWheight? "Lose Weight" : controllerget.isSelectedMentainWheight? "Maintain Weight": "Gain Weight" }"),
+                                           controllerget.arms.value.isNotEmpty?Text("Your arm is ${controllerget.arms}",style: Theme.of(context).textTheme.bodyMedium,):
+                                           controllerget.chest.isNotEmpty? Text("Your chest is ${controllerget.chest}",style: Theme.of(context).textTheme.bodyMedium,):
+                                           controllerget.calves.isNotEmpty?Text("Your calves is ${controllerget.calves}",style: Theme.of(context).textTheme.bodyMedium,):
+                                           controllerget.hip.isNotEmpty?Text("Your calves is ${controllerget.hip}",style: Theme.of(context).textTheme.bodyMedium,):
+                                           Text("Your Goal is ${controllerget.isSelectedLoseWeight? "Lose Weight" : controllerget.isSelectedMaintainWeight? "Maintain Weight": "Gain Weight" }"),
                                            const SizedBox(height: 10,),
 
                                            Text(controllerget.isLowActivitySelected ? "You Don't Train At All" :
@@ -1314,7 +1314,7 @@ class FormComplection extends StatelessWidget {
                                            controllerget.isHeavyActivitySelected ? "You Train 6 Times" : "Twice a Day"),
                                            const SizedBox(height: 10,),
 
-                                           Text("Your Budget is ${controllerget.Poormoney? "Low" : controllerget.Mediummoney? "Medium": "High" }"),
+                                           Text("Your Budget is ${controllerget.poorMoney? "Low" : controllerget.mediumMoney? "Medium": "High" }"),
 
 
                                            Container(
@@ -1403,7 +1403,7 @@ class FormComplection extends StatelessWidget {
                         if(controllerget.controller.page==0){
                           if(controllerget.isSelectedMan==true||controllerget.isSelectedWoMan==true){controllerget.controller.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);}else{}
                         }else if (controllerget.controller.page==1){
-                          if(controllerget.isSelectedLoseWheight==true||controllerget.isSelectedGainWheight ==true||controllerget.isSelectedMentainWheight==true){
+                          if(controllerget.isSelectedLoseWeight==true||controllerget.isSelectedGainWeight ==true||controllerget.isSelectedMaintainWeight==true){
                             controllerget.controller.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
                           }else{}
                         }else if(controllerget.controller.page==2){
@@ -1414,11 +1414,11 @@ class FormComplection extends StatelessWidget {
                         }else if(controllerget.controller.page==3){
                           if(controllerget.birthdayDate!=DateTime(1950, 1, 1)){controllerget.controller.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);}else{}
                         }else if (controllerget.controller.page==4){
-                          if(controllerget.Poormoney==true||controllerget.Mediummoney ==true||controllerget.Richmoney==true){
+                          if(controllerget.poorMoney==true||controllerget.mediumMoney ==true||controllerget.richMoney==true){
                             controllerget.controller.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
                           }else{}
                         }else if (controllerget.controller.page==5){
-                          controllerget.validateMesuresForm();
+                          controllerget.validateMeasuresForm();
                         }else if (controllerget.controller.page==6){
                           controllerget.finshClientForm();
 
@@ -1486,8 +1486,6 @@ class ChooseCard extends StatelessWidget {
     );
   }
 }
-
-
 Icon getIconBasedOnLanguage() {
   if (localeController.language== const Locale("en")) {
     return const Icon(CupertinoIcons.chevron_forward);
@@ -1495,7 +1493,6 @@ Icon getIconBasedOnLanguage() {
     return const Icon(CupertinoIcons.chevron_back);
   }
 }
-
 Icon getIconBackchervon() {
   if (localeController.language== const Locale("en")) {
     return const Icon(CupertinoIcons.chevron_back);
@@ -1503,81 +1500,6 @@ Icon getIconBackchervon() {
     return const Icon(CupertinoIcons.chevron_forward);
   }
 }
-
-
-
-
-
-
-
-//
-// if (controller.page == 0 &&
-// controllerget.isSelectedMan == true ||controller.page == 0 &&
-// controllerget.isSelectedWoMan == true) {
-// controller.nextPage(
-// duration: const Duration(milliseconds: 500),
-// curve: Curves.easeInOut);
-// } else if (controller.page == 1 &&
-// controllerget.isSelectedLoseWheight ==
-// true ||
-// controller.page == 1 &&
-// controllerget.isSelectedMentainWheight ==
-// true ||
-// controller.page == 1 &&
-// controllerget.isSelectedGainWheight ==
-// true) {
-// controller.nextPage(
-// duration: const Duration(milliseconds: 500),
-// curve: Curves.easeInOut);
-// } else if (controller.page == 2 &&
-// controllerget.isLowActivitySelected ==
-// true ||
-// controller.page == 2 &&
-// controllerget.isLightActivitySelected ==
-// true ||
-// controller.page == 2 &&
-// controllerget.isModerateActivitySelected ==
-// true ||
-// controller.page == 2 &&
-// controllerget.isHeavyActivitySelected ==
-// true ||
-// controller.page == 2 &&
-// controllerget.isExtreemActivitySelected ==
-// true) {
-// controller.nextPage(
-// duration: const Duration(milliseconds: 500),
-// curve: Curves.easeInOut);
-// } else if (controller.page == 3) {
-// controller.nextPage(
-// duration: const Duration(milliseconds: 500),
-// curve: Curves.easeInOut);
-// } else if (controller.page == 4 &&
-// controllerget.birthdayDate == DateTime(1950, 1, 1)) {
-// controller.nextPage(
-// duration: const Duration(milliseconds: 500),
-// curve: Curves.easeInOut);
-// } else if (controller.page == 5 &&
-// controllerget.Poormoney == true ||
-// controller.page == 5 &&
-// controllerget.Richmoney == true ||
-// controller.page == 5 &&
-// controllerget.Mediummoney == true) {
-// controller.nextPage(
-// duration: const Duration(milliseconds: 500),
-// curve: Curves.easeInOut);
-// } else if (controller.page == 6) {
-// if(controllerget.isSelectedMan){
-//
-// }else{
-//
-// }
-// }
-// if (controllerget.neck != 0 &&
-// controllerget.waist != 0) {
-// controller.nextPage(
-// duration: const Duration(milliseconds: 500),
-// curve: Curves.easeInOut);
-// }else{}
 
 
 

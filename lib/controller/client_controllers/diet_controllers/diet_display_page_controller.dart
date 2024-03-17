@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import '../../data/model/food_model.dart';
-import '../../data/source/web_services/client_web_services/client_diet_get_service.dart';
-import '../coach_controllers/diet_make_controller.dart';
+import '../../../data/model/diet_models/food_model.dart';
+import '../../../data/source/web_services/client_web_services/client_diet_get_service.dart';
+import '../../coach_controllers/diet_making_controllers/diet_make_controller.dart';
 
 class DietDataController extends GetxController {
   ClientDietGet clientDietGet = ClientDietGet();

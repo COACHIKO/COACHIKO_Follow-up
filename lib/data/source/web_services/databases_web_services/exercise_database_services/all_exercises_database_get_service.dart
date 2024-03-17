@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../../../controller/coach_controllers/routine_controllers/exercise_search_controller.dart';
-import '../../../../model/routine_model.dart';
-class GetAllExercisesDataBase{
+import '../../../../model/routine_models/exercise_model.dart';
+class  AllExercisesDataBase{
   final exerciseDataBaseController = Get.put(ExerciseSearchPageController());
 
   Future<void> getExercises() async {

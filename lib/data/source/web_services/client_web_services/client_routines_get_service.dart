@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
-import '../../../../controller/client_controllers/routines_page_controller.dart';
+import '../../../../controller/client_controllers/routines_controllers/routines_page_controller.dart';
 import '../../../../main.dart';
-import '../../../model/routine_model.dart';
+import '../../../model/routine_models/workout_data_model.dart';
 
 class ClientRoutinesGetService {
   Future<WorkoutData> getRoutineData(state) async {
@@ -21,9 +20,8 @@ class ClientRoutinesGetService {
         throw Exception('Failed to load routine data: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching routine data: $e');
       state.value = RoutinesState.error;
-      throw Exception('Error fetching routine data');
+      throw Exception(e.toString());
     }
   }
 }

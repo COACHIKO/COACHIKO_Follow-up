@@ -6,6 +6,7 @@ class ClientUser {
   final String username;
   final String email;
   final String password;
+  final String fireBaseToken;
   final int isCoach;
   /// User Subscription Data
   final DateTime subscriptionDate;
@@ -40,6 +41,7 @@ class ClientUser {
     required this.username,
     required this.email,
     required this.password,
+    required this.fireBaseToken,
     required this.isCoach,
     required this.isActive,
     required this.subscriptionDate,
@@ -102,6 +104,7 @@ class ClientUser {
       email: json['email'] ?? '',
       password: json['password'] ?? '',
       preferedFoods: json['preferedFoods'] ?? "",
+      fireBaseToken: json['token'] ?? "",
 
       /// Date Values
       subscriptionDate: json['subscriptionDate'] != null ? DateTime.parse(json['subscriptionDate']).toLocal() : DateTime.now(),

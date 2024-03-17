@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import '../../../data/model/routine_model.dart';
+import '../../../data/model/routine_models/exercise_model.dart';
 
 class ExerciseSearchPageController extends GetxController {
   static ExerciseSearchPageController get instance => Get.find();
+
   RxList<Exercise> exercises = <Exercise>[].obs;
   RxList<Exercise> selectedExercises = <Exercise>[].obs;
   RxString searchController = ''.obs;

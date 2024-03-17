@@ -1,47 +1,30 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/view/screens/auth_screens/fork_usering_page.dart';
 import 'package:followupapprefactored/view/screens/client_area/client_home_screen.dart';
 import 'package:followupapprefactored/view/screens/client_area/starting_form_screens/form_complection_page.dart';
-import 'package:followupapprefactored/view/screens/coach_area/coach_home_page.dart';
+import 'package:followupapprefactored/view/screens/coach_area/coach_home_screen.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:path_provider/path_provider.dart';
 import 'core/localization/changelocal.dart';
 import 'core/localization/translation.dart';
 import 'core/services/services.dart';
 import 'core/utils/constants/text_strings.dart';
 import 'core/utils/theme/theme.dart';
-
+import 'firebase_options.dart';
 LocaleController localeController = LocaleController();
-MyServices myServices = Get.find();
-Box? mybox;
-Future<Box> openHiveBox(String boxname, {required String path}) async {
-  if (!Hive.isBoxOpen(boxname)) {
-    Hive.init((await getApplicationDocumentsDirectory()).path);
-  }
-  return await Hive.openBox(boxname);
+final myServices = Get.put(MyServices());
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+
 }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await initialServices();
-  // Initialize Hive
-  await Hive.initFlutter();
-  // Register adapters if not already registered
-  // if (!Hive.isAdapterRegistered(0)) {
-  //   Hive.registerAdapter(ExerciseAdapter());
-  //   Hive.registerAdapter(RoutineAdapter());
-  //   Hive.registerAdapter(WorkoutDataAdapter());
-  //   // Hive.registerAdapter(FoodDataModelAdapter());
-  //   // Hive.registerAdapter(DietModelAdapter());
-  //   // Hive.registerAdapter(DietApiGetAdapter());
-  //   // Hive.registerAdapter(DietDataAdapter());
-  //
-  // }
-  // Open the Hive box
- // final appDocumentDirectory = await getApplicationDocumentsDirectory();
- //  mybox = await openHiveBox("workout_data", path: appDocumentDirectory.path);
-
   runApp(COACHIKOFollowApp());
 }
 class COACHIKOFollowApp extends StatelessWidget {
@@ -67,7 +50,7 @@ final LocaleController langController = Get.put(LocaleController());
                 ? "/homepage"
                 : "/coach"),
             routes:{
-              "/homepage":(context)=>const HomePage(),
+              "/homepage":(context)=>const clientHome(),
               "/forkUsering":(context)=>const ForkUseringPage(),
               "/coach":(context)=> const CoachHome(),
               "/formComplection":(context)=> FormComplection(),
@@ -79,3 +62,6 @@ final LocaleController langController = Get.put(LocaleController());
       );
     }}
 
+// Platform  Firebase App Id
+// android   1:752059871954:android:edcec9e1179f36c191f30b
+// ios       1:752059871954:ios:bd85afffc0782d6e91f30b

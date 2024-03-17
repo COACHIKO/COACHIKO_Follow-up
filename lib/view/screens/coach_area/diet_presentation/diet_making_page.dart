@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../controller/coach_controllers/diet_make_controller.dart';
+import '../../../../controller/coach_controllers/diet_making_controllers/diet_make_controller.dart';
 import 'diet_quantities_page.dart';
 
 class FoodListPage extends StatelessWidget {
@@ -26,45 +26,75 @@ class FoodListPage extends StatelessWidget {
 
             decoration: const InputDecoration(
               hintText: 'Search...',
-               focusedBorder: UnderlineInputBorder(
+               focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.horizontal(left: Radius.circular(12),right: Radius.circular(12)),
                 borderSide: BorderSide(color: Colors.blueAccent),
               ),
-              enabledBorder: UnderlineInputBorder(
-               ),
+
             ),
           ),
           const SizedBox(height: 10,),
-          Expanded(
-            child:  ListView.builder(
-              shrinkWrap: true,
-              itemCount: coachHomeController.filteredFoodList.length,
-              itemBuilder: (context, index) {
-                bool isSelected = coachHomeController.selectedIndexes.contains(index);
-                return GestureDetector(
-                  onTap: () {
-                    coachHomeController.toggleSelection(index);
-                    coachHomeController.update();
-                  },
-                  child: Card(
-                    color: isSelected ? Colors.blueAccent : const Color(0xFF1C1C1E),
-                    child: ListTile(
-                      title: Text(
-                        coachHomeController.filteredFoodList[index].foodName,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            )),
-          ElevatedButton(
-            onPressed: (){
-              Get.to(DietQuantitiesPage(selectedDietList: coachHomeController.selectedDietList, id: id,)) ;
-            },
-            child: const Text('Add Quantities'),
-          ),
+          BuildFilterdList(coachHomeController: coachHomeController,),
+          Button(id: id,coachHomeController: coachHomeController,),
         ],
+      ),));
+  }
+}
+class Button extends StatelessWidget {
+ final DietMakingController coachHomeController;
+    const Button({
+    super.key,
+    required this.id,
+    required this.coachHomeController,
+  });
+
+  final int id;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: SizedBox( width:  double.maxFinite,
+        child: ElevatedButton(
+          onPressed: (){
+            Get.to(DietQuantitiesPage(selectedDietList: coachHomeController.selectedDietList, id: id,)) ;
+          },
+          child: const Text('Add Quantities'),
+        ),
       ),
-            ));
+    );
+  }
+}
+class BuildFilterdList extends StatelessWidget {
+  final DietMakingController coachHomeController;
+    const BuildFilterdList({
+   required this.coachHomeController,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child:ListView.builder(
+        shrinkWrap: true,
+        itemCount: coachHomeController.filteredFoodList.length,
+        itemBuilder: (context, index) {
+          bool isSelected = coachHomeController.selectedIndexes.contains(index);
+          return GestureDetector(
+            onTap: () {
+              coachHomeController.toggleSelection(index);
+              coachHomeController.update();
+            },
+            child: Card(
+              color: isSelected ? Colors.blueAccent : const Color(0xFF1C1C1E),
+              child: ListTile(
+                title: Text(
+                  coachHomeController.filteredFoodList[index].foodName,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          );
+        },
+      ));
   }
 }

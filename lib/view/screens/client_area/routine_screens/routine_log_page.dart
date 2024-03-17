@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../controller/client_controllers/excersise_log_controller.dart';
+import '../../../../controller/client_controllers/routines_controllers/excersise_log_controller.dart';
 import '../../../../core/utils/constants/image_strings.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
-import '../../../../data/model/routine_model.dart';
+import '../../../../data/model/routine_models/exercise_model.dart';
+import '../../../../data/model/routine_models/routine_model.dart';
 import '../../../widgets/custom_textformfield.dart';
 
 class ExerciseLoggingPage extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../controller/client_controllers/routines_page_controller.dart';
+import '../../../../controller/client_controllers/routines_controllers/routines_page_controller.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
 
 class EditRoutinePage extends StatefulWidget {

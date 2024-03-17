@@ -47,50 +47,6 @@ class Exercise {
   }
 }
 
-class Routine {
-  final String routineId;
-  final String routineName;
-  final List<Exercise> exercises;
-
-  Routine({
-    required this.routineId,
-    required this.routineName,
-    required this.exercises,
-  });
-
-  factory Routine.fromJson(String routineName, Map<String, dynamic> json) {
-    List<Exercise> exercises = (json['exercises'] as List<dynamic>?)
-            ?.map((exerciseJson) => Exercise.fromJson(exerciseJson))
-            .toList() ??
-        [];
-
-    return Routine(
-      routineId: json['routine_id'] ?? '',
-      routineName: routineName,
-      exercises: exercises,
-    );
-  }
-}
-
-class WorkoutData {
-  final List<Routine> routines;
-
-  WorkoutData({required this.routines});
-
-  factory WorkoutData.fromJson(Map<String, dynamic> json) {
-    List<Routine> routines = [];
-    json.forEach((routineName, routineData) {
-      Routine routine = Routine.fromJson(routineName, routineData);
-      routines.add(routine);
-    });
-
-    return WorkoutData(
-      routines: routines,
-    );
-  }
-}
-
-
 class ExerciseAdapter extends TypeAdapter<Exercise> {
   @override
   final typeId = 0; // Unique identifier for the model
@@ -127,43 +83,5 @@ class ExerciseAdapter extends TypeAdapter<Exercise> {
     writer.write(obj.lastWeight);
     writer.write(obj.rest);
     writer.write(obj.isSelected);
-  }
-}
-
-class RoutineAdapter extends TypeAdapter<Routine> {
-  @override
-  final typeId = 1; // Unique identifier for the model
-
-  @override
-  Routine read(BinaryReader reader) {
-    return Routine(
-      routineId: reader.read(),
-      routineName: reader.read(),
-      exercises: reader.readList().cast<Exercise>(),
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, Routine obj) {
-    writer.write(obj.routineId);
-    writer.write(obj.routineName);
-    writer.writeList(obj.exercises);
-  }
-}
-
-class WorkoutDataAdapter extends TypeAdapter<WorkoutData> {
-  @override
-  final typeId = 2; // Unique identifier for the model
-
-  @override
-  WorkoutData read(BinaryReader reader) {
-    return WorkoutData(
-      routines: reader.readList().cast<Routine>(),
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, WorkoutData obj) {
-    writer.writeList(obj.routines);
   }
 }

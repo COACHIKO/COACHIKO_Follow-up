@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import '../../core/notification/notfication.dart';
-import '../../view/screens/client_area/routine_screens/routine_log_page.dart';
+import '../../../view/screens/client_area/routine_screens/routine_log_page.dart';
 
 class ExerciseLoggingController extends GetxController {
   static ExerciseLoggingController get instance => Get.find();
@@ -52,11 +51,8 @@ class ExerciseLoggingController extends GetxController {
 
   /// Action to be performed when the timer finishes (e.g., notification).
   void onTimerFinish(int numOfSec, int exerciseIndex) {
-    final notificationService = NotificationService(); // (Assuming notification service implementation)
-    notificationService.showNotification(
-      title: "Your Rest Is Over.",
-      body: "Time To Lift More.",
-    );
+   // final notificationService = NotificationService(); // (Assuming notification service implementation)
+
   }
 
   /// Toggles timer for the specified exercise and set.

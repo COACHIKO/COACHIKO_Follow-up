@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../data/source/web_services/client_web_services/client_form_update_service.dart';
-import '../../main.dart';
-import '../coach_controllers/diet_make_controller.dart';
+import '../../../data/source/web_services/client_web_services/client_form_update_service.dart';
+import '../../../main.dart';
+import '../../coach_controllers/diet_making_controllers/diet_make_controller.dart';
 
 
 class FormComplectionController extends GetxController {
@@ -21,9 +21,9 @@ class FormComplectionController extends GetxController {
   late bool gender; //true is man //false woman
 
   /// Goal Selection
-  bool isSelectedLoseWheight = false;
-  bool isSelectedGainWheight = false;
-  bool isSelectedMentainWheight = false;
+  bool isSelectedLoseWeight = false;
+  bool isSelectedGainWeight = false;
+  bool isSelectedMaintainWeight = false;
 
   /// Activity Selection
   bool   isLowActivitySelected = false;
@@ -48,30 +48,30 @@ class FormComplectionController extends GetxController {
   var hip =  ''.obs;
   var chest =  ''.obs;
   var formKey = GlobalKey<FormState>().obs;
-  var womanformKey = GlobalKey<FormState>().obs;
+  var womanFormKey = GlobalKey<FormState>().obs;
   /// BODY MESUREMENT
 
   ///  BODY COMPOSTION
   double fatPercentage = 0;
-  double fatwheight = 0;
-  double leanbodymass = 0;
+  double fatWeight = 0;
+  double leanBodyMass = 0;
 
   ///  TARGET GOAL
-  late bool wheightloss = isSelectedLoseWheight;
+  late bool wheightloss = isSelectedLoseWeight;
 
-  late bool wheightgain = isSelectedGainWheight;
+  late bool wheightgain = isSelectedGainWeight;
 
-  late bool wheightmintain = isSelectedMentainWheight;
+  late bool weightMaintain = isSelectedMaintainWeight;
 
   /// DIET MONEY FACTOR
-  bool Poormoney = false;
+  bool poorMoney = false;
 
-  bool Mediummoney = false;
+  bool mediumMoney = false;
 
-  bool Richmoney = false;
+  bool richMoney = false;
 
   /// BODY NEEDS
-  late double MinProtienValue = leanbodymass * 1;
+  late double minProtienValue = leanBodyMass * 1;
   double targetProtein = 0;
   double targetCarbs = 0;
   double targetFat = 0;
@@ -86,7 +86,7 @@ class FormComplectionController extends GetxController {
   ///                                      FUNCTION LAND STARTS HERE                                                     ///
 
   /// GENDER SELECT
-  void womanselected() {
+  void womanSelected() {
     isSelectedMan = false;
     isSelectedWoMan = true;
     update();
@@ -95,7 +95,7 @@ class FormComplectionController extends GetxController {
     }
   }
 
-  void manselected() {
+  void manSelected() {
     isSelectedWoMan = false;
     isSelectedMan = true;
     update();
@@ -105,24 +105,24 @@ class FormComplectionController extends GetxController {
   }
 
   /// Goal Selection Function
-  void LoseWheightselected() {
-    isSelectedLoseWheight = true;
-    isSelectedGainWheight = false;
-    isSelectedMentainWheight = false;
+  void loseWeightSelected() {
+    isSelectedLoseWeight = true;
+    isSelectedGainWeight = false;
+    isSelectedMaintainWeight = false;
     update();
   }
 
-  void GainWheightselected() {
-    isSelectedGainWheight = true;
-    isSelectedLoseWheight = false;
-    isSelectedMentainWheight = false;
+  void gainWeightSelected() {
+    isSelectedGainWeight = true;
+    isSelectedLoseWeight = false;
+    isSelectedMaintainWeight = false;
     update();
   }
 
-  void MintainWheightselected() {
-    isSelectedMentainWheight = true;
-    isSelectedGainWheight = false;
-    isSelectedLoseWheight = false;
+  void maintainWeightSelected() {
+    isSelectedMaintainWeight = true;
+    isSelectedGainWeight = false;
+    isSelectedLoseWeight = false;
     update();
   }
 
@@ -191,24 +191,24 @@ class FormComplectionController extends GetxController {
   /// Age Calculating Function
 
   /// money
-  void LowCostDietIsSelected() {
-    Poormoney = true;
-    Mediummoney = false;
-    Richmoney = false;
+  void lowCostDietIsSelected() {
+    poorMoney = true;
+    mediumMoney = false;
+    richMoney = false;
     update();
   }
 
-  void MediumCostDietIsSelected() {
-    Poormoney = false;
-    Mediummoney = true;
-    Richmoney = false;
+  void mediumCostDietIsSelected() {
+    poorMoney = false;
+    mediumMoney = true;
+    richMoney = false;
     update();
   }
 
-  void HighCostDietIsSelected() {
-    Poormoney = false;
-    Mediummoney = false;
-    Richmoney = true;
+  void highCostDietIsSelected() {
+    poorMoney = false;
+    mediumMoney = false;
+    richMoney = true;
     update();
   }
 
@@ -231,14 +231,14 @@ class FormComplectionController extends GetxController {
      else if (isSelectedWoMan == true && isSelectedMan == false && double.parse(waist.value)!=0 && double.parse(neck.value)!=0 && double.parse(tall.value)!=0) {
       fatPercentage = 163.205 * log(double.parse(waist.value) + double.parse(hip.value) - double.parse(neck.value)) - 97.684 * log(double.parse(tall.value)) - 78.387;
     }
-     leanbodymass =double.parse(weight.value) * (1 - fatPercentage / 100);
-     fatwheight=double.parse(weight.value)-leanbodymass;
+     leanBodyMass =double.parse(weight.value) * (1 - fatPercentage / 100);
+     fatWeight=double.parse(weight.value)-leanBodyMass;
      return fatPercentage;
   }
   double bmrCalculation(){
     bodyFatCalculate();
     if(fatPercentage!=0){
-      basalMetabolicRate  = 370 + (21.6 *leanbodymass);
+      basalMetabolicRate  = 370 + (21.6 *leanBodyMass);
     }else if(fatPercentage==0&&isSelectedMan==true){
       basalMetabolicRate = 66.5 + (13.75 * double.parse(weight.value)) + (5.003 * double.parse(tall.value) ) - (6.75 * age);
     }else{
@@ -253,8 +253,8 @@ class FormComplectionController extends GetxController {
   String selectedFoods='';
 
   /// FOODS EVERY INFORMATION
-  void validateMesuresForm() {
-    if (isSelectedMan? formKey.value.currentState!.validate():womanformKey.value.currentState!.validate()) {
+  void validateMeasuresForm() {
+    if (isSelectedMan? formKey.value.currentState!.validate():womanFormKey.value.currentState!.validate()) {
 
 
       if (weight.value.isNotEmpty  && waist.value.isNotEmpty) {
@@ -279,11 +279,11 @@ try {
       fatPercentage.obs,
       myServices.sharedPreferences.getInt("user").toString(),
       isSelectedMan ? 0.toString() : 1.toString(),
-      isSelectedLoseWheight ? 0.toString() : isSelectedGainWheight ? 1.toString() : 2.toString(),
+      isSelectedLoseWeight ? 0.toString() : isSelectedGainWeight ? 1.toString() : 2.toString(),
       isLowActivitySelected ? 0.toString() : isLightActivitySelected ? 1.toString() : isModerateActivitySelected ? 2.toString(): isHeavyActivitySelected ? 3.toString() : 4.toString(), birthdayDate.toIso8601String(),
       weight.value.toString(),
       tall.value.toString(),
-      Poormoney ? "0" : Mediummoney ? "1" : "2",
+      poorMoney ? "0" : mediumMoney ? "1" : "2",
       waist.value,
       neck.value,
       hip.value,
@@ -298,7 +298,7 @@ try {
       1.toString()
   );
 }catch(e){
-  print(e.toString());
+  //print(e.toString());
 }
 
 

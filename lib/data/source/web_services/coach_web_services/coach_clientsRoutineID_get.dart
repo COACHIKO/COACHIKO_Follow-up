@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../../model/routine_model.dart';
+import '../../../model/routine_models/workout_data_model.dart';
 
 class GetRoutinesSpecificId{
 

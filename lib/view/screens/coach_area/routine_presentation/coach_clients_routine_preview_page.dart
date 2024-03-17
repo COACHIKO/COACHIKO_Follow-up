@@ -3,7 +3,7 @@ import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:get/get.dart';
 import '../../../../controller/coach_controllers/routine_controllers/coach_client_routine_preview_controller.dart';
 import '../../../../core/utils/helpers/helper_functions.dart';
-import '../../../../data/model/routine_model.dart';
+import '../../../../data/model/routine_models/routine_model.dart';
 import '../../../widgets/custom_appbar.dart';
 import 'exercise_edit_page.dart';
 import 'exercise_search_page.dart';
