@@ -111,8 +111,9 @@ const WorkoutPlanPage({super.key});
                             ),
                             onPressed: () async {
                               controller.startRoutine(routine);
+                              //print(myServices.sharedPreferences.getInt("currentStep"));
 
-                            },
+                              },
                             color: CColors.primary,
                             child: const Text(
                               'Start Routine',

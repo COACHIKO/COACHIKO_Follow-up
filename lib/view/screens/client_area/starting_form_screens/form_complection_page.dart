@@ -15,8 +15,8 @@ import '../../../../main.dart';
 
 
 class FormComplection extends StatelessWidget {
-   FormComplection({super.key});
-  final coachHomeController = Get.find<DietMakingController>();
+   const FormComplection({super.key});
+ // final coachHomeController = Get.put(DietMakingController);
 
   @override
   Widget build(BuildContext context) {
@@ -1329,8 +1329,7 @@ class FormComplection extends StatelessWidget {
                                                        borderRadius:
                                                        BorderRadius.circular(15)),
                                                    onPressed: () {
-
-                                                    // Get.offAllNamed(newRouteName);
+                                                      Get.offAllNamed(myServices.sharedPreferences.getInt("isCoach") == 1?"/CoachHome":"/ClientHome");
 
 
                                                    },

@@ -8,12 +8,14 @@ class ClientRoutinesGetService {
   Future<WorkoutData> getRoutineData(state) async {
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.1.6/coachiko/get_routine_data_new.php"),
+        Uri.parse(
+            "http://192.168.1.6/coachikoFollowApp/clientArea/get_routine_data.php"),
         body: {"user": myServices.sharedPreferences.getInt("user").toString()},
       );
 
       if (response.statusCode == 200) {
-        final workoutData = WorkoutData.fromJson(jsonDecode(response.body)['data']);
+        final workoutData =
+            WorkoutData.fromJson(jsonDecode(response.body)['data']);
         state.value = RoutinesState.loaded;
         return workoutData;
       } else {

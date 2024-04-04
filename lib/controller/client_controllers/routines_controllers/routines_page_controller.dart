@@ -21,7 +21,7 @@ class RoutinesPageController extends GetxController {
     super.onInit();
   }
 
-  // requestPermission()async{
+  // requestPermission()async{a
   //   FirebaseMessaging messaging = FirebaseMessaging.instance;
   //
   //   NotificationSettings settings = await messaging.requestPermission(

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/view/screens/auth_screens/signup_screen.dart';
 import 'package:get/get.dart';
 import '../../../core/utils/constants/image_strings.dart';
 import '../../../core/utils/constants/text_strings.dart';
-import 'login_screen.dart';
+
 class ForkUseringPage extends StatelessWidget {
   const ForkUseringPage({super.key});
   @override
   Widget build(BuildContext context) {
-
-   // AuthService authService = AuthService();
+    // AuthService authService = AuthService();
     return Scaffold(
-      body: Scaffold(backgroundColor: Colors.black,
-        body:Stack(children: [
+        body: Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
           Container(
             height: double.infinity,
             width: double.infinity,
@@ -26,16 +26,18 @@ class ForkUseringPage extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(top: 520.h),
-            padding: EdgeInsets.symmetric(horizontal: 14.w,),
-             child: Column(
+            padding: EdgeInsets.symmetric(
+              horizontal: 14.w,
+            ),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(style: const ButtonStyle(backgroundColor:MaterialStatePropertyAll(Colors.white),),
-                  onPressed: ()async =>() {
-
-                  },
-
+                ElevatedButton(
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.white),
+                  ),
+                  onPressed: () async => () {},
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -60,34 +62,40 @@ class ForkUseringPage extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 const SizedBox(
                   height: 5,
                 ),
                 ElevatedButton(
                   onPressed: () {
-                      Get.to(SignUp());
+                    Get.toNamed("/signup");
                   },
-
-                  child:  SizedBox(
+                  child: SizedBox(
                     width: double.infinity,
-
-                    child: Text(textAlign: TextAlign.center,
+                    child: Text(
+                      textAlign: TextAlign.center,
                       CTexts.signInWithEmail,
-
                     ),
                   ),
                 ),
-                  SizedBox(
+                SizedBox(
                   height: 5.h,
                 ),
-
-                InkWell(onTap: () {Get.to(  LoginPage());},child:Text(CTexts.haveAccLogin,style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white),))
+                InkWell(
+                    onTap: () {
+                      Get.toNamed("/login");
+                    },
+                    child: Text(
+                      CTexts.haveAccLogin,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelLarge!
+                          .copyWith(color: Colors.white),
+                    ))
               ],
             ),
           ),
         ],
-      ),)
-    );
+      ),
+    ));
   }
 }

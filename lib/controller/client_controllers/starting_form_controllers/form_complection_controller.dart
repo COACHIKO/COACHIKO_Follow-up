@@ -5,11 +5,16 @@ import '../../../data/source/web_services/client_web_services/client_form_update
 import '../../../main.dart';
 import '../../coach_controllers/diet_making_controllers/diet_make_controller.dart';
 
-
 class FormComplectionController extends GetxController {
   static FormComplectionController get instance => Get.find();
-   UpdateUserData updateUserData = UpdateUserData();
-  final coachHomeController = Get.find<DietMakingController>();
+  UpdateUserData updateUserData = UpdateUserData();
+  final DietMakingController intializeCoachHome =
+      Get.put(DietMakingController());
+
+  final DietMakingController coachHomeController =
+      Get.find<DietMakingController>();
+
+  // final coachHomeController = Get.lazyPut(() => DietMakingController);
 
   ///                                      VARIABLE LAND                                                     ///
 
@@ -26,11 +31,11 @@ class FormComplectionController extends GetxController {
   bool isSelectedMaintainWeight = false;
 
   /// Activity Selection
-  bool   isLowActivitySelected = false;
-  bool   isLightActivitySelected = false;
-  bool   isModerateActivitySelected = false;
-  bool   isHeavyActivitySelected = false;
-  bool   isExtreemActivitySelected = false;
+  bool isLowActivitySelected = false;
+  bool isLightActivitySelected = false;
+  bool isModerateActivitySelected = false;
+  bool isHeavyActivitySelected = false;
+  bool isExtreemActivitySelected = false;
   double activityFactor = 0.0;
 
   /// Age Calculating
@@ -42,13 +47,14 @@ class FormComplectionController extends GetxController {
   var weight = ''.obs;
   var tall = ''.obs;
   var waist = ''.obs;
-  var neck =  ''.obs;
-  var arms =  ''.obs;
-  var calves =  ''.obs;
-  var hip =  ''.obs;
-  var chest =  ''.obs;
+  var neck = ''.obs;
+  var arms = ''.obs;
+  var calves = ''.obs;
+  var hip = ''.obs;
+  var chest = ''.obs;
   var formKey = GlobalKey<FormState>().obs;
   var womanFormKey = GlobalKey<FormState>().obs;
+
   /// BODY MESUREMENT
 
   ///  BODY COMPOSTION
@@ -77,7 +83,7 @@ class FormComplectionController extends GetxController {
   double targetFat = 0;
   double basalMetabolicRate = 0;
   double totalDailyEnergyExpenditure = 0;
-
+  String selectedFoods = '';
 
   /// Selected FOODS
 
@@ -172,7 +178,6 @@ class FormComplectionController extends GetxController {
     update();
   }
 
-
   void activityFactorDetect() {
     if (isLowActivitySelected == true) {
       activityFactor = 1.200;
@@ -214,7 +219,7 @@ class FormComplectionController extends GetxController {
 
   /// BODY NEEDS CALCULATION FUNCTIONS
 
-  int    calculateAge() {
+  int calculateAge() {
     final now = DateTime.now();
     int age = now.year - birthdayDate.year;
     if (now.month < birthdayDate.month ||
@@ -223,91 +228,126 @@ class FormComplectionController extends GetxController {
     }
     return age;
   }
+
   double bodyFatCalculate() {
-     calculateAge();
-     if (isSelectedMan == true && isSelectedWoMan == false && double.parse(waist.value)!=0 && double.parse(neck.value)!=0 && double.parse(tall.value)!=0) {
-      fatPercentage = 86.010 * log(double.parse(waist.value) - double.parse(neck.value)) - 70.041 * log(double.parse(tall.value)) + 36.76;
+    calculateAge();
+    if (isSelectedMan == true &&
+        isSelectedWoMan == false &&
+        double.parse(waist.value) != 0 &&
+        double.parse(neck.value) != 0 &&
+        double.parse(tall.value) != 0) {
+      fatPercentage =
+          86.010 * log(double.parse(waist.value) - double.parse(neck.value)) -
+              70.041 * log(double.parse(tall.value)) +
+              36.76;
+    } else if (isSelectedWoMan == true &&
+        isSelectedMan == false &&
+        double.parse(waist.value) != 0 &&
+        double.parse(neck.value) != 0 &&
+        double.parse(tall.value) != 0) {
+      fatPercentage = 163.205 *
+              log(double.parse(waist.value) +
+                  double.parse(hip.value) -
+                  double.parse(neck.value)) -
+          97.684 * log(double.parse(tall.value)) -
+          78.387;
     }
-     else if (isSelectedWoMan == true && isSelectedMan == false && double.parse(waist.value)!=0 && double.parse(neck.value)!=0 && double.parse(tall.value)!=0) {
-      fatPercentage = 163.205 * log(double.parse(waist.value) + double.parse(hip.value) - double.parse(neck.value)) - 97.684 * log(double.parse(tall.value)) - 78.387;
-    }
-     leanBodyMass =double.parse(weight.value) * (1 - fatPercentage / 100);
-     fatWeight=double.parse(weight.value)-leanBodyMass;
-     return fatPercentage;
+    leanBodyMass = double.parse(weight.value) * (1 - fatPercentage / 100);
+    fatWeight = double.parse(weight.value) - leanBodyMass;
+    return fatPercentage;
   }
-  double bmrCalculation(){
+
+  double bmrCalculation() {
     bodyFatCalculate();
-    if(fatPercentage!=0){
-      basalMetabolicRate  = 370 + (21.6 *leanBodyMass);
-    }else if(fatPercentage==0&&isSelectedMan==true){
-      basalMetabolicRate = 66.5 + (13.75 * double.parse(weight.value)) + (5.003 * double.parse(tall.value) ) - (6.75 * age);
-    }else{
-      basalMetabolicRate = 655.1 + (9.563 * double.parse(weight.value)) + (1.850 * double.parse(tall.value)) - (4.676 * age);
+    if (fatPercentage != 0) {
+      basalMetabolicRate = 370 + (21.6 * leanBodyMass);
+    } else if (fatPercentage == 0 && isSelectedMan == true) {
+      basalMetabolicRate = 66.5 +
+          (13.75 * double.parse(weight.value)) +
+          (5.003 * double.parse(tall.value)) -
+          (6.75 * age);
+    } else {
+      basalMetabolicRate = 655.1 +
+          (9.563 * double.parse(weight.value)) +
+          (1.850 * double.parse(tall.value)) -
+          (4.676 * age);
     }
     return basalMetabolicRate;
-   }
-  void tdeeCalculator(){
+  }
+
+  void tdeeCalculator() {
     bmrCalculation();
-    totalDailyEnergyExpenditure=basalMetabolicRate*activityFactor;
-   }
-  String selectedFoods='';
+    totalDailyEnergyExpenditure = basalMetabolicRate * activityFactor;
+  }
 
   /// FOODS EVERY INFORMATION
   void validateMeasuresForm() {
-    if (isSelectedMan? formKey.value.currentState!.validate():womanFormKey.value.currentState!.validate()) {
-
-
-      if (weight.value.isNotEmpty  && waist.value.isNotEmpty) {
+    if (isSelectedMan
+        ? formKey.value.currentState!.validate()
+        : womanFormKey.value.currentState!.validate()) {
+      if (weight.value.isNotEmpty && waist.value.isNotEmpty) {
         tdeeCalculator();
-        controller.nextPage(duration: const Duration(milliseconds: 500),curve: Curves.easeInOut);
+        controller.nextPage(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut);
       }
     }
-
-
-
-
-
   }
 
-
-
-  finshClientForm()async{
-    List<String> selectedFoodNames = coachHomeController.filteredFoodList.asMap().entries.where((entry) => coachHomeController.selectedIndexes.contains(entry.key)).map((entry) => entry.value.foodName).toList();
+  finshClientForm() async {
+    List<String> selectedFoodNames = coachHomeController.filteredFoodList
+        .asMap()
+        .entries
+        .where(
+            (entry) => coachHomeController.selectedIndexes.contains(entry.key))
+        .map((entry) => entry.value.foodName)
+        .toList();
     selectedFoods = selectedFoodNames.join(', ');
-try {
-  await updateUserData.updateClientData(
-      fatPercentage.obs,
-      myServices.sharedPreferences.getInt("user").toString(),
-      isSelectedMan ? 0.toString() : 1.toString(),
-      isSelectedLoseWeight ? 0.toString() : isSelectedGainWeight ? 1.toString() : 2.toString(),
-      isLowActivitySelected ? 0.toString() : isLightActivitySelected ? 1.toString() : isModerateActivitySelected ? 2.toString(): isHeavyActivitySelected ? 3.toString() : 4.toString(), birthdayDate.toIso8601String(),
-      weight.value.toString(),
-      tall.value.toString(),
-      poorMoney ? "0" : mediumMoney ? "1" : "2",
-      waist.value,
-      neck.value,
-      hip.value,
-      totalDailyEnergyExpenditure.obs.toString(),
-      selectedFoods,
-      chest.value,
-      arms.value.toString(),
-      waist.value,
-      targetProtein.toString(),
-      targetCarbs.toString(),
-      targetFat.toString(),
-      1.toString()
-  );
-}catch(e){
-  //print(e.toString());
-}
+    try {
+      await updateUserData.updateClientData(
+          fatPercentage.obs,
+          myServices.sharedPreferences.getInt("user").toString(),
+          isSelectedMan ? 0.toString() : 1.toString(),
+          isSelectedLoseWeight
+              ? 0.toString()
+              : isSelectedGainWeight
+                  ? 1.toString()
+                  : 2.toString(),
+          isLowActivitySelected
+              ? 0.toString()
+              : isLightActivitySelected
+                  ? 1.toString()
+                  : isModerateActivitySelected
+                      ? 2.toString()
+                      : isHeavyActivitySelected
+                          ? 3.toString()
+                          : 4.toString(),
+          birthdayDate.toIso8601String(),
+          weight.value.toString(),
+          tall.value.toString(),
+          poorMoney
+              ? "0"
+              : mediumMoney
+                  ? "1"
+                  : "2",
+          waist.value,
+          neck.value,
+          hip.value,
+          totalDailyEnergyExpenditure.obs.toString(),
+          selectedFoods,
+          chest.value,
+          arms.value.toString(),
+          waist.value,
+          targetProtein.toString(),
+          targetCarbs.toString(),
+          targetFat.toString(),
+          1.toString());
+      myServices.sharedPreferences.setInt("currentStep", 1.toInt());
+    } catch (e) {
+      //print(e.toString());
+    }
 
-
-
-
-    controller.nextPage(duration: const Duration(milliseconds: 500),curve: Curves.easeInOut);
-
+    controller.nextPage(
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
-
-
-
 }
