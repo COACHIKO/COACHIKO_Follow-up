@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/source/web_services/client_web_services/client_form_update_service.dart';
 import '../../../main.dart';
-import '../../coach_controllers/diet_making_controllers/diet_make_controller.dart';
+import '../../../view/screens/coach_area/diet_presentation/diet_making_page.dart';
 
 class FormComplectionController extends GetxController {
   static FormComplectionController get instance => Get.find();

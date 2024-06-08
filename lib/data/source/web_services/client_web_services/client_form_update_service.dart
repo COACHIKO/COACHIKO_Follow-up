@@ -5,33 +5,34 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../linkapi.dart';
 
-class UpdateUserData{
+class UpdateUserData {
   Future<void> updateClientData(
-      fatPercentage,
-      id,
-      genderSelect,
-      goalSelect,
-      String activitySelect,
-      birthdayDate,
-      weight,
-      tall,
-      costSelect,
-      waist,
-      neck,
-      hip,
-      tdee,
-      preferredFoods,
-      chest,
-      arms,
-      wrist,
-      targetProtein,
-      targetCarb,
-      targetFat,
-      currentStep,
-      ) async {
+    fatPercentage,
+    id,
+    genderSelect,
+    goalSelect,
+    String activitySelect,
+    birthdayDate,
+    weight,
+    tall,
+    costSelect,
+    waist,
+    neck,
+    hip,
+    tdee,
+    preferredFoods,
+    chest,
+    arms,
+    wrist,
+    targetProtein,
+    targetCarb,
+    targetFat,
+    currentStep,
+  ) async {
     try {
       var url = Uri.http(
-        AppLink.server, '/coachikoFollowApp/client_user_data_insert_update.php',
+        AppLink.server,
+        '/coachikoFollowApp/client_user_data_insert_update.php',
       );
       var response = await http.post(url, body: {
         "fatPercentage": fatPercentage.toString(),
@@ -87,5 +88,4 @@ class UpdateUserData{
       );
     }
   }
-
 }

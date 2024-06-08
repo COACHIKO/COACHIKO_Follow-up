@@ -1,4 +1,4 @@
-class ClientUser {
+class ClientData {
   /// User Personal Data
   final int id;
   final String firstName;
@@ -8,11 +8,13 @@ class ClientUser {
   final String password;
   final String fireBaseToken;
   final int isCoach;
+
   /// User Subscription Data
   final DateTime subscriptionDate;
   final int isActive;
   final int currentStep;
   final int subscriptionLenth;
+
   /// Physical User Data
   final DateTime birthdayDate;
   final int genderSelect;
@@ -34,7 +36,7 @@ class ClientUser {
   final double fatPercentage;
   final String preferedFoods;
 
-  ClientUser({
+  ClientData({
     required this.id,
     required this.firstName,
     required this.secondName,
@@ -68,9 +70,8 @@ class ClientUser {
     required this.preferedFoods,
   });
 
-  factory ClientUser.fromJson(Map<String, dynamic> json) {
-    return ClientUser(
-
+  factory ClientData.fromJson(Map<String, dynamic> json) {
+    return ClientData(
       /// Integer vaLues
       id: json['id'] ?? 0,
       isCoach: json['isCoach'] ?? 0,
@@ -107,9 +108,12 @@ class ClientUser {
       fireBaseToken: json['token'] ?? "",
 
       /// Date Values
-      subscriptionDate: json['subscriptionDate'] != null ? DateTime.parse(json['subscriptionDate']).toLocal() : DateTime.now(),
-      birthdayDate: json['birthdayDate'] != null ? DateTime.parse(json['birthdayDate']).toLocal() : DateTime.now(),
+      subscriptionDate: json['subscriptionDate'] != null
+          ? DateTime.parse(json['subscriptionDate']).toLocal()
+          : DateTime.now(),
+      birthdayDate: json['birthdayDate'] != null
+          ? DateTime.parse(json['birthdayDate']).toLocal()
+          : DateTime.now(),
     );
   }
-
 }

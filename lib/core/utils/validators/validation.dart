@@ -1,6 +1,4 @@
-
 class CValidator {
-
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email is required.';
@@ -43,8 +41,6 @@ class CValidator {
     // if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
     //   return 'Password must contain at least one special character.';
     // }
-
-
 
     return null;
   }
@@ -90,8 +86,9 @@ class CValidator {
     return null;
   }
 
-
-  static String? validateFirstName(String? value,) {
+  static String? validateFirstName(
+    String? value,
+  ) {
     if (value == null || value.isEmpty) {
       return 'First Name is required.';
     }
@@ -110,7 +107,10 @@ class CValidator {
 
     return null;
   }
-  static String? validateSecondName(String? value,) {
+
+  static String? validateSecondName(
+    String? value,
+  ) {
     if (value == null || value.isEmpty) {
       return 'Second Name is required.';
     }
@@ -129,11 +129,54 @@ class CValidator {
 
     return null;
   }
-  static String? validateUsernameOrEmail(String? value,) {
+
+  static String? validateUsernameOrEmail(
+    String? value,
+  ) {
     if (value == null || value.isEmpty) {
       return 'Username Or Email is required.';
     }
 // Add more custom validators as needed for your specific requirements.
-return null;
+    return null;
+  }
+
+  static String? validateSets(
+    String? value,
+  ) {
+    if (value == null || value.isEmpty) {
+      return 'Sets is required.';
+    }
+
+    return null;
+  }
+
+  static String? validateReps(
+    String? value,
+  ) {
+    if (value == null || value.isEmpty) {
+      return 'Reps is required.';
+    }
+
+    return null;
+  }
+
+  static String? validateRest(
+    String? value,
+  ) {
+    if (value == null || value.isEmpty) {
+      return 'Rest is required.';
+    }
+
+    return null;
+  }
+
+  static String? validateRir(
+    String? value,
+  ) {
+    if (value == null || value.isEmpty) {
+      return 'RIR is required.';
+    }
+
+    return null;
   }
 }

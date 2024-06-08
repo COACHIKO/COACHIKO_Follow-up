@@ -1,20 +1,23 @@
 import 'dart:convert';
+import 'package:followupapprefactored/view/screens/coach_area/diet_presentation/diet_making_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 import '../../../../../controller/coach_controllers/diet_making_controllers/diet_make_controller.dart';
 import '../../../../../linkapi.dart';
- import '../../../../model/diet_models/food_model.dart';
+import '../../../../model/diet_models/food_model.dart';
+
 final dietMakingController = Get.put(DietMakingController());
 
-class FoodDataBase{
+class FoodDataBase {
   Future<void> getFoodData() async {
-    final response = await http.get(Uri.parse(AppLink.getDietDataAPI));
+    final response = await http.get(Uri.parse(AppLink.getDietData));
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      dietMakingController.foodList = data.map((item) => FoodDataModel.fromJson(item)).toList();
-      dietMakingController.filteredFoodList.assignAll(dietMakingController.foodList);
-
+      dietMakingController.foodList =
+          data.map((item) => FoodDataModel.fromJson(item)).toList();
+      dietMakingController.filteredFoodList
+          .assignAll(dietMakingController.foodList);
     } else {}
   }
 }

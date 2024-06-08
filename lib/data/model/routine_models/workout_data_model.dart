@@ -1,38 +1,38 @@
-import 'package:hive/hive.dart';
+// import 'package:followupapprefactored/features/modules/client/features/routine/data/models/routine_response.dart';
+// import 'package:hive/hive.dart';
 
-import 'routine_model.dart';
+// class WorkoutData {
+//   final List<Routine> routines;
 
-class WorkoutData {
-  final List<Routine> routines;
+//   WorkoutData({required this.routines});
 
-  WorkoutData({required this.routines});
+//   factory WorkoutData.fromJson(Map<String, dynamic> json) {
+//     List<Routine> routines = [];
+//     json.forEach((routineName, routineData) {
+//       Routine routine =
+//           Routine.fromJson(routineName as Map<String, dynamic>, routineData);
+//       routines.add(routine);
+//     });
 
-  factory WorkoutData.fromJson(Map<String, dynamic> json) {
-    List<Routine> routines = [];
-    json.forEach((routineName, routineData) {
-      Routine routine = Routine.fromJson(routineName, routineData);
-      routines.add(routine);
-    });
+//     return WorkoutData(
+//       routines: routines,
+//     );
+//   }
+// }
 
-    return WorkoutData(
-      routines: routines,
-    );
-  }
-}
-class WorkoutDataAdapter extends TypeAdapter<WorkoutData> {
-  @override
-  final typeId = 2; // Unique identifier for the model
+// class WorkoutDataAdapter extends TypeAdapter<WorkoutData> {
+//   @override
+//   final typeId = 2; // Unique identifier for the model
 
-  @override
-  WorkoutData read(BinaryReader reader) {
-    return WorkoutData(
-      routines: reader.readList().cast<Routine>(),
-    );
-  }
+//   @override
+//   WorkoutData read(BinaryReader reader) {
+//     return WorkoutData(
+//       routines: reader.readList().cast<Routine>(),
+//     );
+//   }
 
-  @override
-  void write(BinaryWriter writer, WorkoutData obj) {
-    writer.writeList(obj.routines);
-  }
-}
-
+//   @override
+//   void write(BinaryWriter writer, WorkoutData obj) {
+//     writer.writeList(obj.routines);
+//   }
+// }

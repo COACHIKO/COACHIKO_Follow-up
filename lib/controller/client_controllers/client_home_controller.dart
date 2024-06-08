@@ -1,12 +1,9 @@
 import 'package:get/get.dart';
-import '../../data/source/web_services/client_web_services/client_routines_get_service.dart';
 import '../../data/source/web_services/coach_web_services/coach_getAllClients_service.dart';
-import '../../view/screens/client_area/diet_screens/client_diet_display_page.dart';
-import '../../view/screens/client_area/routine_screens/workout_plan_page.dart';
-import '../../view/screens/coach_area/coach_clients_presentation/all_coach_clients.dart';
+import '../../features/modules/client/routine/routine_get/ui/workout_plan_page.dart';
+import '../../features/modules/coach/all_clients_display/ui/all_clients_display.dart';
+import '../../view/screens/coach_area/diet_presentation/diet_making_page.dart';
 import '../../view/screens/setting_page.dart';
-import '../client_controllers/diet_controllers/diet_display_page_controller.dart';
-import '../coach_controllers/diet_making_controllers/diet_make_controller.dart';
 
 class ClientHomeController extends GetxController {
   static ClientHomeController get instance => Get.find();
@@ -14,13 +11,13 @@ class ClientHomeController extends GetxController {
 
   GetAllClients getAllClients = GetAllClients();
   //GetAllFoods getAllFoods = GetAllFoods();
-  ClientRoutinesGetService clientRoutinesGetService = ClientRoutinesGetService();
-  final DietDataController dietDataController = Get.put(DietDataController());
-  final DietMakingController dietMakingController = Get.put(DietMakingController());
-   final screens = [
+
+  final DietMakingController dietMakingController =
+      Get.put(DietMakingController());
+  final screens = [
     const WorkoutPlanPage(),
-    const DietPreviewfClient(),
-    AllClientsDisplay(),
+    // const DietPreviewfClient(),
+    const MyClients(),
     const SettingScreen(),
   ];
 
@@ -30,12 +27,8 @@ class ClientHomeController extends GetxController {
     fetchData();
   }
 
-
   Future<void> fetchData() async {
-    try  {
-      await dietDataController.fetchData();
-      await getAllClients.getCoachClients();
-    } catch (e) {
+    try {} catch (e) {
       //print(e);
     }
   }

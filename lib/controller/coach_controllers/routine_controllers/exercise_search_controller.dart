@@ -1,5 +1,5 @@
+import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/models/routine_response.dart';
 import 'package:get/get.dart';
-import '../../../data/model/routine_models/exercise_model.dart';
 
 class ExerciseSearchPageController extends GetxController {
   static ExerciseSearchPageController get instance => Get.find();
@@ -11,6 +11,7 @@ class ExerciseSearchPageController extends GetxController {
     exercises[index].isSelected = !exercises[index].isSelected;
     update();
   }
+
   void filterExercises() {
     if (searchController.isEmpty) {
       // If query is empty, show all exercises
@@ -18,9 +19,9 @@ class ExerciseSearchPageController extends GetxController {
     } else {
       // Filter exercises based on the query
       selectedExercises.assignAll(exercises.where((exercise) =>
-      exercise.exerciseName
-          .toLowerCase()
-          .contains(searchController.toLowerCase()) ||
+          exercise.exerciseName
+              .toString()
+              .contains(searchController.toLowerCase()) ||
           exercise.targetMuscles
               .toLowerCase()
               .contains(searchController.toLowerCase()) ||

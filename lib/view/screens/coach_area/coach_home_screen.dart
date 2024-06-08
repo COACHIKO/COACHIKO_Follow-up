@@ -7,7 +7,9 @@ import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/utils/constants/colors.dart';
 
 class CoachHome extends StatelessWidget {
-  const CoachHome({super.key,});
+  const CoachHome({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,42 +23,44 @@ class CoachHome extends StatelessWidget {
           // Simulate a delay to show loading indicator
           await Future.delayed(const Duration(milliseconds: 300));
 
-          await controller.fetchData();
+          //  await controller.fetchData();
         },
         child: Obx(
-              () => controller.screens[controller.selectedIndex.value],
+          () => controller.screens[controller.selectedIndex.value],
         ),
       ),
       bottomNavigationBar: Obx(() => NavigationBar(
-        height: 80,
-        elevation: 0,
-        selectedIndex: controller.selectedIndex.value,
-        onDestinationSelected: (index) =>
-        controller.selectedIndex.value = index,
-        backgroundColor:
-        darkMode ? CColors.black : Colors.white,
-        indicatorColor: darkMode
-            ? CColors.white.withOpacity(0.1)
-            : CColors.black.withOpacity(0.1),
-        destinations: [
-          NavigationDestination(
-            icon:  const Icon(FlutterIcons.dumbbell_faw5s,size: 22,),
-            label: "47".tr,
-          ),
-          NavigationDestination(
-            icon:const Icon(FlutterIcons.food_apple_outline_mco),
-            label: "54".tr,
-          ),
-          NavigationDestination(
-            icon: const Icon(Iconsax.people),
-            label: "51".tr,
-          ),
-          NavigationDestination(
-            icon: const Icon(Iconsax.user),
-            label: "50".tr,
-          ),
-        ],
-      )),
+            height: 80,
+            elevation: 0,
+            selectedIndex: controller.selectedIndex.value,
+            onDestinationSelected: (index) =>
+                controller.selectedIndex.value = index,
+            backgroundColor: darkMode ? CColors.black : Colors.white,
+            indicatorColor: darkMode
+                ? CColors.white.withOpacity(0.1)
+                : CColors.black.withOpacity(0.1),
+            destinations: [
+              NavigationDestination(
+                icon: const Icon(
+                  FlutterIcons.dumbbell_faw5s,
+                  size: 22,
+                ),
+                label: "47".tr,
+              ),
+              NavigationDestination(
+                icon: const Icon(FlutterIcons.food_apple_outline_mco),
+                label: "54".tr,
+              ),
+              NavigationDestination(
+                icon: const Icon(Iconsax.people),
+                label: "51".tr,
+              ),
+              NavigationDestination(
+                icon: const Icon(Iconsax.user),
+                label: "50".tr,
+              ),
+            ],
+          )),
     );
   }
 }

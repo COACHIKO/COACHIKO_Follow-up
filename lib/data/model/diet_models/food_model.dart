@@ -8,6 +8,7 @@ class FoodDataModel {
   final double protein;
   final double carbohydrates;
   final double fats;
+  bool isSelected = false;
 
   FoodDataModel({
     required this.id,
@@ -49,7 +50,7 @@ class DietApiGet {
   DietApiGet({
     required this.status,
     required this.data,
-   });
+  });
 
   factory DietApiGet.fromJson(Map<String, dynamic> json) {
     return DietApiGet(
@@ -76,7 +77,6 @@ class DietData {
   final double targetCarbohdrate;
   final double targetFat;
 
-
   DietData({
     required this.id,
     required this.foodId,
@@ -90,7 +90,6 @@ class DietData {
     required this.tdee,
     required this.targetProtien,
     required this.targetCarbohdrate,
-
   });
 
   factory DietData.fromJson(Map<String, dynamic> json) {
@@ -107,13 +106,9 @@ class DietData {
       targetProtien: json['targetProtien'].toDouble(),
       targetCarbohdrate: json['targetCarbohdrate'].toDouble(),
       targetFat: json['targetFat'].toDouble(),
-
-
     );
   }
 }
-
-
 
 class FoodDataModelAdapter extends TypeAdapter<FoodDataModel> {
   @override

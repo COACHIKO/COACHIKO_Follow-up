@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/models/routine_response.dart';
 import 'package:followupapprefactored/view/screens/coach_area/routine_presentation/exercise_search_page.dart';
 import 'package:get/get.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/image_strings.dart';
-import '../../../../data/model/routine_models/exercise_model.dart';
 import '../../../../data/source/web_services/coach_web_services/coach_assign_exercise_to_routine.dart';
 
 class EditExerciseController extends GetxController {
-  final AssignExerciseToRoutine assignExerciseToRoutine = AssignExerciseToRoutine();
+  final AssignExerciseToRoutine assignExerciseToRoutine =
+      AssignExerciseToRoutine();
 
   late List<TextEditingController> setsControllers;
   late List<TextEditingController> repsControllers;
@@ -77,13 +78,15 @@ class EditExerciseController extends GetxController {
     }
   }
 }
+
 class EditExercisePage extends StatelessWidget {
   final List<Exercise> selectedExercises;
   final String id;
   final String routineId;
   final EditExerciseController controller = Get.put(EditExerciseController());
 
-  EditExercisePage({super.key,
+  EditExercisePage({
+    super.key,
     required this.selectedExercises,
     required this.id,
     required this.routineId,
@@ -98,12 +101,12 @@ class EditExercisePage extends StatelessWidget {
         title: const Text('Set Workout Plan'),
         iconTheme: const IconThemeData(color: CColors.primary),
       ),
-
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: selectedExercises.length + 1, // Increment itemCount by 1 for the button
+              itemCount: selectedExercises.length +
+                  1, // Increment itemCount by 1 for the button
               itemBuilder: (context, index) {
                 if (index < selectedExercises.length) {
                   final exercise = selectedExercises[index];
@@ -127,14 +130,17 @@ class EditExercisePage extends StatelessWidget {
                 } else {
                   // This is the last index, add the button
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 80.0,vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80.0, vertical: 8),
                     child: SizedBox(
                       width: double.infinity,
                       height: 60,
                       child: OutlinedButton(
                         onPressed: () async {
-                          Get.to(ExerciseSearchPage(id:int.parse(id), routineId:  int.parse(routineId) ));
-                         },
+                          Get.to(ExerciseSearchPage(
+                              id: int.parse(id),
+                              routineId: int.parse(routineId)));
+                        },
                         child: const Text("Add Exercise"),
                       ),
                     ),
@@ -144,8 +150,8 @@ class EditExercisePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 8),
-            child:SizedBox(
+            padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 8),
+            child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
@@ -155,16 +161,14 @@ class EditExercisePage extends StatelessWidget {
                       num: selectedExercises.length.toString(),
                       id: id,
                       routineId: routineId,
-                      exerciseId: exercise.exerciseID,
+                      exerciseId: exercise.exerciseId.toString(),
                       index: i,
                     );
                   }
                 },
-
                 child: const Text("Set Workout Plan"),
               ),
             ),
-
           ),
         ],
       ),
@@ -234,4 +238,3 @@ class EditExercisePage extends StatelessWidget {
     );
   }
 }
-

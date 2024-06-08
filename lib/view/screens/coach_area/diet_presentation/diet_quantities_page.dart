@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../controller/client_controllers/diet_controllers/diet_display_page_controller.dart';
 import '../../../../controller/coach_controllers/routine_controllers/diet_insertion_controller.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../data/model/diet_models/food_model.dart';
 import '../coach_home_screen.dart';
 
-
 class DietQuantitiesPage extends StatelessWidget {
   final List<DietModel> selectedDietList;
   final int id;
 
-   DietQuantitiesPage({
+  DietQuantitiesPage({
     super.key,
     required this.selectedDietList,
     required this.id,
   });
 
-  final DietQuantitiesController dietQuantitiesController = Get.put(DietQuantitiesController());
-  final DietDataController dietDataController = Get.put(DietDataController());
+  final DietQuantitiesController dietQuantitiesController =
+      Get.put(DietQuantitiesController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
+      appBar: AppBar(
         centerTitle: true,
-         title: const Text('Diet Quantities',),
+        title: const Text(
+          'Diet Quantities',
+        ),
       ),
       body: Obx(() {
         if (dietQuantitiesController.isLoading.value) {
@@ -36,7 +36,7 @@ class DietQuantitiesPage extends StatelessWidget {
             itemCount: selectedDietList.length,
             itemBuilder: (context, index) {
               return Card(
-                color:   CColors.primary,
+                color: CColors.primary,
                 child: ListTile(
                   title: Text(
                     selectedDietList[index].foodData.foodName,
@@ -51,7 +51,8 @@ class DietQuantitiesPage extends StatelessWidget {
                       SizedBox(
                         width: 50,
                         child: TextFormField(
-                          initialValue: selectedDietList[index].quantity.toString(),
+                          initialValue:
+                              selectedDietList[index].quantity.toString(),
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
                             int newQuantity = int.tryParse(value) ?? 0;
@@ -75,11 +76,11 @@ class DietQuantitiesPage extends StatelessWidget {
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-
           //widget.selectedDietList.forEach((element) {print("${element.foodData.foodName} : ${element.quantity} ");});
-          await dietQuantitiesController.insertDietData(selectedDietList, id,selectedDietList.length);
-          await dietDataController.fetchData();
-             Get.offAll(const CoachHome());
+          await dietQuantitiesController.insertDietData(
+              selectedDietList, id, selectedDietList.length);
+          // await dietDataController.fetchData();
+          Get.offAll(const CoachHome());
         },
         child: const Icon(Icons.save),
       ),

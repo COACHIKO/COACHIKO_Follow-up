@@ -1,38 +1,40 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:followupapprefactored/core/networking/api_service.dart';
+import 'package:followupapprefactored/features/modules/client/diet/data/repository/diet_repo_impl.dart';
+import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/repository/routine_repo_impl.dart';
+import 'package:followupapprefactored/features/modules/client/routine/routine_get/ui/workout_plan_page.dart';
+import 'package:followupapprefactored/features/modules/coach/all_clients_display/data/repository/clients_repo_impl.dart';
 import 'package:get/get.dart';
-import '../../data/source/web_services/client_web_services/client_routines_get_service.dart';
-import '../../data/source/web_services/coach_web_services/coach_getAllClients_service.dart';
-import '../../view/screens/client_area/diet_screens/client_diet_display_page.dart';
-import '../../view/screens/client_area/routine_screens/workout_plan_page.dart';
-import '../../view/screens/coach_area/coach_clients_presentation/all_coach_clients.dart';
+import '../../features/modules/client/diet/logic/cubit/diet_cubit.dart';
+import '../../features/modules/client/diet/ui/diet_plan.dart';
+import '../../features/modules/client/routine/routine_get/logic/cubit/routine_cubit.dart';
+import '../../features/modules/coach/all_clients_display/logic/cubit/clients_cubit.dart';
+import '../../features/modules/coach/all_clients_display/ui/all_clients_display.dart';
 import '../../view/screens/setting_page.dart';
-import '../client_controllers/diet_controllers/diet_display_page_controller.dart';
-
 
 class CoachHomeController extends GetxController {
   static CoachHomeController get instance => Get.find();
   final Rx<int> selectedIndex = 0.obs;
 
-  GetAllClients getAllClients = GetAllClients();
-   ClientRoutinesGetService clientRoutinesGetService = ClientRoutinesGetService();
-    final DietDataController dietDataController = Get.put(DietDataController());
-    final screens = [
-    const WorkoutPlanPage(),
-    const DietPreviewfClient(),
-          AllClientsDisplay(),
+  final screens = [
+    BlocProvider(
+      create: (context) =>
+          RoutineCubit(routineRepoImp: RoutineRepoImp(ApiService(Dio())))
+            ..getRoutine(),
+      child: const WorkoutPlanPage(),
+    ),
+    BlocProvider(
+      create: (context) =>
+          DietCubit(dietRepoImp: DietRepoImp(ApiService(Dio())))..getDietData(),
+      child: const DietPlanPage(),
+    ),
+    BlocProvider(
+      create: (context) =>
+          ClientsCubit(clientsRepoImp: ClientsDataRepoImp(ApiService(Dio())))
+            ..getAllClientsData(),
+      child: const MyClients(),
+    ),
     const SettingScreen(),
   ];
-
-  @override
-  void onInit() {
-    super.onInit();
-     fetchData();
-  }
-
-  Future<void> fetchData() async {
-
-      await dietDataController.fetchData();
-      await getAllClients.getCoachClients();
-
-    }
-  
 }

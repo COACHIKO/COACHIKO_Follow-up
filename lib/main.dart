@@ -13,7 +13,7 @@ import 'core/services/services.dart';
 import 'core/utils/constants/text_strings.dart';
 import 'core/utils/theme/theme.dart';
 import 'features/auth/login/ui/login_screen.dart';
- import 'features/auth/signup/ui/signup_screen.dart';
+import 'features/auth/signup/ui/signup_screen.dart';
 import 'firebase_options.dart';
 
 LocaleController localeController = LocaleController();
