@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../controller/coach_controllers/diet_making_controllers/diet_make_controller.dart';
 import '../../../../data/model/client_user_model.dart';
 import '../../../../data/model/diet_models/food_model.dart';
 import '../../../../data/source/web_services/databases_web_services/food_data_base/all_foods_database_get_service.dart';
 import 'diet_quantities_page.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 
 class FoodListPage extends StatelessWidget {
   final int id;

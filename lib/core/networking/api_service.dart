@@ -19,6 +19,7 @@ import 'package:followupapprefactored/features/modules/client/routine/routine_ge
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/data/models/exercises_assignment_request_body.dart';
 import '../../features/auth/signup/data/models/signup_request_model.dart';
 import '../../features/modules/client/diet/data/models/diet_request_body.dart';
+import '../../features/modules/client/starting_form/quantities_entering/data/models/form_completion_request_body.dart';
 import '../../features/modules/coach/all_clients_display/data/models/clients_data_request_body.dart';
 import '../../features/modules/coach/diet_making_features/quantities_entering/data/models/quantity_insertion_request_body.dart';
 import '../../features/modules/coach/workout_routine_making_features/display_client_routine/data/models/routine_crud_request_body.dart';
@@ -71,6 +72,16 @@ class ApiService {
     var response = await _dio.post(
         "http://192.168.1.6/CoachikoFollowUpApp_Back_End/client_area/diet_get_for_client.php",
         data: dietRequestBody.toJson());
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> completeForm(
+      {required FormCompletionRequestBody formCompletionRequestBody}) async {
+    var response = await _dio.post(
+        "http://192.168.1.6/coachikoFollowApp/client_user_data_insert_update.php",
+        data: formCompletionRequestBody.toJson());
+    print("response");
+
     return response.data;
   }
 

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/view/screens/auth_screens/fork_usering_page.dart';
 import 'package:followupapprefactored/view/screens/client_area/client_home_screen.dart';
-import 'package:followupapprefactored/view/screens/client_area/starting_form_screens/form_complection_page.dart';
 import 'package:followupapprefactored/view/screens/coach_area/coach_home_screen.dart';
 import 'package:get/get.dart';
 import 'core/localization/changelocal.dart';
@@ -14,6 +13,7 @@ import 'core/utils/constants/text_strings.dart';
 import 'core/utils/theme/theme.dart';
 import 'features/auth/login/ui/login_screen.dart';
 import 'features/auth/signup/ui/signup_screen.dart';
+import 'features/modules/client/starting_form/quantities_entering/ui/form_completion.dart';
 import 'firebase_options.dart';
 
 LocaleController localeController = LocaleController();
@@ -76,7 +76,7 @@ Map<String, Widget Function(BuildContext)> allAppRoutes = {
   "/ClientHome": (context) => const ClientHome(),
   "/forkUsering": (context) => const ForkUseringPage(),
   "/CoachHome": (context) => const CoachHome(),
-  "/formComplection": (context) => const FormComplection(),
+  "/formComplection": (context) => const FormComplectionView(),
 };
 
 String? initialRoute = myServices.sharedPreferences.getInt("user") == null ||

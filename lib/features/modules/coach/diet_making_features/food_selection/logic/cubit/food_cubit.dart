@@ -6,15 +6,25 @@ import 'food_state.dart';
 
 class FoodCubit extends Cubit<FoodsState> {
   final FoodsRepoImpl foodsRepoImpl;
+  List<FoodDataModel> selectedfoods;
   List<FoodDataModel> _allFoods = [];
   final TextEditingController searchController = TextEditingController();
-  FoodCubit({required this.foodsRepoImpl}) : super(FoodStateInitial());
+
+  FoodCubit({required this.foodsRepoImpl, required this.selectedfoods})
+      : super(FoodStateInitial(selectedfoods)) {
+    // Initialize the selected foods
+    _initializeSelectedFoods();
+  }
 
   Future<void> getFoods() async {
     try {
       emit(FoodsStateLoading());
       var foods = await foodsRepoImpl.getFoods();
       _allFoods = foods;
+
+      // Update selection status of foods
+      _updateSelectionStatus();
+
       if (foods.isEmpty) {
         emit(LoadedSuccessfullyFoodsState([]));
       } else {
@@ -48,6 +58,25 @@ class FoodCubit extends Cubit<FoodsState> {
     if (index != -1) {
       _allFoods[index].isSelected = !_allFoods[index].isSelected;
       searchFoods();
+    }
+  }
+
+  void _initializeSelectedFoods() {
+    // Mark initial selected foods and avoid duplicates
+    selectedfoods.map((food) => food.id).toSet();
+    selectedfoods = selectedfoods.toSet().toList();
+    for (var food in selectedfoods) {
+      food.isSelected = true;
+    }
+  }
+
+  void _updateSelectionStatus() {
+    // Ensure _allFoods reflect the selection state
+    final selectedFoodIds = selectedfoods.map((food) => food.id).toSet();
+    for (var food in _allFoods) {
+      if (selectedFoodIds.contains(food.id)) {
+        food.isSelected = true;
+      }
     }
   }
 }

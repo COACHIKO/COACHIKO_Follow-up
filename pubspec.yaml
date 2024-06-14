@@ -17,15 +17,15 @@ dependencies:
   encrypt: ^5.0.3
   equatable: ^2.0.5
   eva_icons_flutter: ^3.1.0
-  firebase_core: ^2.27.1
-  firebase_messaging: ^14.7.21
+  firebase_core: ^3.1.0
+  firebase_messaging: ^15.0.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
   flutter_cache_manager_dio: ^4.0.0
   flutter_image_compress: ^2.1.0
   flutter_keyboard_visibility: ^6.0.0
-  flutter_local_notifications: ^16.2.0
+  flutter_local_notifications: ^17.1.2
   flutter_native_splash: ^2.3.9
   flutter_offline: ^3.0.1
   flutter_screenutil: ^5.9.0
@@ -40,7 +40,7 @@ dependencies:
   http: ^1.1.0
   icons_flutter: ^0.0.4
   iconsax: ^0.0.8
-  image_cropper: ^5.0.1
+  image_cropper: ^7.0.4
   image_picker: ^1.0.7
   intl: ^0.19.0
   json_annotation: ^4.9.0
@@ -58,7 +58,7 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.4.8
 
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
 
