@@ -19,7 +19,8 @@ import 'package:followupapprefactored/features/modules/client/routine/routine_ge
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/data/models/exercises_assignment_request_body.dart';
 import '../../features/auth/signup/data/models/signup_request_model.dart';
 import '../../features/modules/client/diet/data/models/diet_request_body.dart';
-import '../../features/modules/client/starting_form/quantities_entering/data/models/form_completion_request_body.dart';
+import '../../features/modules/client/phases_cases/form_completion/data/models/form_completion_request_body.dart';
+import '../../features/modules/client/phases_cases/waiting_phase/data/models/current_stage_request_body.dart';
 import '../../features/modules/coach/all_clients_display/data/models/clients_data_request_body.dart';
 import '../../features/modules/coach/diet_making_features/quantities_entering/data/models/quantity_insertion_request_body.dart';
 import '../../features/modules/coach/workout_routine_making_features/display_client_routine/data/models/routine_crud_request_body.dart';
@@ -55,6 +56,14 @@ class ApiService {
     var response = await _dio.post(
         "http://192.168.1.6/CoachikoFollowUpApp_Back_End/auth/register.php",
         data: signupRequestBody.toJson());
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> getCurrentStage(
+      {required CurrentStageRequestBody currentStageRequestBody}) async {
+    var response = await _dio.post(
+        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/client_area/get_status.php",
+        data: currentStageRequestBody.toJson());
     return response.data;
   }
 

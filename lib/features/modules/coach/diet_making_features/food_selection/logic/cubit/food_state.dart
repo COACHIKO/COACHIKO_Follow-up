@@ -1,4 +1,4 @@
-import '../../../../../../../data/model/diet_models/food_model.dart';
+import '../../data/models/food_model.dart';
 
 abstract class FoodsState {}
 

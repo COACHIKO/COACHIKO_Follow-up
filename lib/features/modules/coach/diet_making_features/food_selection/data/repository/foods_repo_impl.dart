@@ -1,5 +1,5 @@
 import '../../../../../../../../../../../core/networking/api_service.dart';
-import '../../../../../../../data/model/diet_models/food_model.dart';
+import '../models/food_model.dart';
 import 'foods_repo.dart';
 
 class FoodsRepoImpl implements FoodsRepo {

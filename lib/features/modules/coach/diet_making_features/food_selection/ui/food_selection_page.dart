@@ -6,7 +6,7 @@ import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/features/modules/coach/diet_making_features/quantities_entering/ui/food_quantities_insertion.dart';
 import 'package:get/get.dart';
 import '../../../../../../core/utils/constants/sizes.dart';
-import '../../../../client/starting_form/quantities_entering/logic/cubit/form_completion_cubit.dart';
+import '../../../../client/phases_cases/form_completion/logic/cubit/form_completion_cubit.dart';
 import '../../../all_clients_display/data/models/clients_response.dart';
 import '../data/repository/foods_repo_impl.dart';
 import '../logic/cubit/food_cubit.dart';

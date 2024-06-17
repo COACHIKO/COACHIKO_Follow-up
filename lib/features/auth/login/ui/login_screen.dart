@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
+import 'package:followupapprefactored/features/modules/coach/navigation_bar/ui/coach_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../core/utils/constants/colors.dart';
@@ -13,8 +14,7 @@ import '../../../../../core/utils/validators/validation.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:followupapprefactored/main.dart';
-import 'package:followupapprefactored/view/screens/client_area/client_home_screen.dart';
-import 'package:followupapprefactored/view/screens/coach_area/coach_home_screen.dart';
+
 import '../data/models/login_request_body.dart';
 import '../data/repository/login_repo_impl.dart';
 
@@ -276,13 +276,15 @@ class LoginController extends GetxController {
         myServices.sharedPreferences
             .setInt("RelatedtoCoachID", response.userData!.relatedToCoachID);
         myServices.sharedPreferences
+            .setInt("currentStep", response.userData!.currentStep);
+        myServices.sharedPreferences
             .setInt("isCoach", response.userData!.isCoach == "Coach" ? 1 : 0);
         myServices.sharedPreferences.setBool("rememberMe", rememberMe.value);
 
         if (response.userData!.isCoach == "Client") {
-          Get.offAll(const ClientHome());
+          Get.offAll(const CoachNavigationBar());
         } else {
-          Get.offAll(const CoachHome());
+          Get.offAll(const CoachNavigationBar());
         }
 
         // Show welcome message

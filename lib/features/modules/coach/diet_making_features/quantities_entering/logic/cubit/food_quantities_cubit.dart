@@ -2,8 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../../../../../../../data/model/diet_models/food_model.dart';
+import '../../../food_selection/data/models/food_model.dart';
 import '../../data/models/quantity_insertion_request_body.dart';
 import '../../data/repository/food_quantities_repo_imp.dart';
 import 'food_quantities_state.dart';
@@ -85,7 +84,9 @@ class FoodQuantitiesCubit extends Cubit<FoodQuantitiesStates> {
       textColor: Colors.white,
       fontSize: 16.0,
     );
-  }  Future<void> enterQuantities(
+  }
+
+  Future<void> enterQuantities(
       QuantityInsertionRequestBody quantityInsertionRequestBody) async {
     try {
       var foods = await foodQuantitiesRepoImp
@@ -97,7 +98,6 @@ class FoodQuantitiesCubit extends Cubit<FoodQuantitiesStates> {
       emit(FoodsStateError(e.toString()));
     }
   }
-
 
   Tuple2<String, String> getFoodNamesAndQuantities(selectedFoods) {
     String foodNames = '';
@@ -119,7 +119,6 @@ class FoodQuantitiesCubit extends Cubit<FoodQuantitiesStates> {
 
     return Tuple2(foodNames, quantities);
   }
-
 
   TextEditingController getController(int index) {
     return controllers[index];
