@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,99 +11,6 @@ import '../logic/cubit/current_stage_state.dart';
 
 class CurrentStage extends StatelessWidget {
   const CurrentStage({super.key});
-
-  void showNumberPicker({
-    required BuildContext context,
-    required int minValue,
-    required int maxValue,
-    required Color fontColor,
-    required Function(int) onSelected,
-  }) {
-    int selectedValue = minValue;
-
-    showCupertinoModalPopup(
-      context: context,
-      builder: (context) {
-        return Container(
-          height: 300.h,
-          color: Colors.white,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 200.h,
-                child: CupertinoPicker(
-                  backgroundColor: Colors.white,
-                  itemExtent: 32.0,
-                  onSelectedItemChanged: (int index) {
-                    selectedValue = minValue + index;
-                  },
-                  children: List<Widget>.generate(
-                    maxValue - minValue + 1,
-                    (int index) {
-                      return Center(
-                        child: Text(
-                          '${minValue + index}',
-                          style: TextStyle(color: fontColor),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CupertinoButton(
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoButton(
-                    child: const Text(
-                      'Save',
-                      style: TextStyle(color: CColors.primary),
-                    ),
-                    onPressed: () {
-                      onSelected(selectedValue);
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> showTimePickerDialog({
-    required BuildContext context,
-    required Color fontColor,
-    required Function(TimeOfDay) onSelected,
-  }) async {
-    TimeOfDay? selectedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-              colorScheme: ColorScheme.light(primary: fontColor),
-              buttonTheme:
-                  const ButtonThemeData(textTheme: ButtonTextTheme.primary)),
-          child: child!,
-        );
-      },
-    );
-
-    if (selectedTime != null) {
-      onSelected(selectedTime);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +48,34 @@ class CurrentStage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 70.h,
+                      child: Stepper(
+                        type: StepperType.horizontal,
+                        currentStep: 1,
+                        steps: const [
+                          Step(
+                              state: StepState.complete,
+                              title: Text('Form'),
+                              stepStyle: StepStyle(color: CColors.primary),
+                              content: SizedBox.shrink()),
+                          Step(
+                              title: Text('Waiting'),
+                              content: SizedBox.shrink(),
+                              stepStyle: StepStyle(
+                                  color: CColors.primary,
+                                  indexStyle: TextStyle(color: Colors.white)),
+                              isActive: true),
+                          Step(
+                            title: Text('Ready'),
+                            stepStyle: StepStyle(
+                                color: CColors.white,
+                                indexStyle: TextStyle(color: Colors.black)),
+                            content: SizedBox.shrink(),
+                          ),
+                        ],
+                      ),
+                    ),
                     const Text("You're waiting your coach to put plan for you"),
                     SizedBox(height: 5.h),
                     const Text("But we have some settings to modify"),
@@ -324,6 +258,28 @@ class CurrentStage extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 10.h),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //  const Text("You can notify your coach to put plan for you"),
+                        SizedBox(height: 5.h),
+                        context.read<CurrentStageCubit>().logSettingsExpanded ==
+                                    false ||
+                                myServices.sharedPreferences
+                                            .getInt("numberOfLogs") !=
+                                        null &&
+                                    myServices.sharedPreferences
+                                            .getString("timeToLog") !=
+                                        null
+                            ? Center(
+                                child: CustomMaterialButton(
+                                    onPressed: () {},
+                                    buttonText: "Notifiy Coach"),
+                              )
+                            : SizedBox.shrink()
+                      ],
+                    ),
                   ],
                 ),
               );
@@ -342,30 +298,97 @@ class CurrentStage extends StatelessWidget {
   }
 }
 
-class CustomMaterialButton extends MaterialButton {
-  final String buttonText;
-  final VoidCallback onPressed;
+void showNumberPicker({
+  required BuildContext context,
+  required int minValue,
+  required int maxValue,
+  required Color fontColor,
+  required Function(int) onSelected,
+}) {
+  int selectedValue = minValue;
 
-  CustomMaterialButton(
-      {super.key,
-      required this.onPressed,
-      required this.buttonText,
-      Color super.highlightColor = Colors.blueAccent,
-      Color super.splashColor = Colors.blueAccent,
-      Duration super.animationDuration = const Duration(milliseconds: 100),
-      double super.height = 120,
-      double super.minWidth = 120})
-      : super(
-          onPressed: onPressed,
-          child: Text(
-            buttonText,
-            style: const TextStyle(
-                color: Colors.blueAccent, fontWeight: FontWeight.bold),
-          ),
-          color: Colors.white,
-          shape: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(300))),
-        );
+  showCupertinoModalPopup(
+    context: context,
+    builder: (context) {
+      return Container(
+        height: 300.h,
+        color: Colors.white,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200.h,
+              child: CupertinoPicker(
+                backgroundColor: Colors.white,
+                itemExtent: 32.0,
+                onSelectedItemChanged: (int index) {
+                  selectedValue = minValue + index;
+                },
+                children: List<Widget>.generate(
+                  maxValue - minValue + 1,
+                  (int index) {
+                    return Center(
+                      child: Text(
+                        '${minValue + index}',
+                        style: TextStyle(color: fontColor),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CupertinoButton(
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                CupertinoButton(
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(color: CColors.primary),
+                  ),
+                  onPressed: () {
+                    onSelected(selectedValue);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+Future<void> showTimePickerDialog({
+  required BuildContext context,
+  required Color fontColor,
+  required Function(TimeOfDay) onSelected,
+}) async {
+  TimeOfDay? selectedTime = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.now(),
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(primary: fontColor),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary)),
+        child: child!,
+      );
+    },
+  );
+
+  if (selectedTime != null) {
+    onSelected(selectedTime);
+  }
 }
 
 class CustomCard extends StatelessWidget {
@@ -412,4 +435,30 @@ class CustomCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class CustomMaterialButton extends MaterialButton {
+  final String buttonText;
+  final VoidCallback onPressed;
+
+  CustomMaterialButton(
+      {super.key,
+      required this.onPressed,
+      required this.buttonText,
+      Color super.highlightColor = Colors.blueAccent,
+      Color super.splashColor = Colors.blueAccent,
+      Duration super.animationDuration = const Duration(milliseconds: 100),
+      double super.height = 120,
+      double super.minWidth = 120})
+      : super(
+          onPressed: onPressed,
+          child: Text(
+            buttonText,
+            style: const TextStyle(
+                color: Colors.blueAccent, fontWeight: FontWeight.bold),
+          ),
+          color: Colors.white,
+          shape: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(300))),
+        );
 }

@@ -306,12 +306,21 @@ class FormCompletionCubit extends Cubit<FormComplectionStates> {
     }
   }
 
+  double targetProtien() {
+    return 0.0;
+  }
+
+  double targetCarbohydrate() {
+    return 0.0;
+  }
+
+  double targetFats() {
+    return 0.0;
+  }
+
   String formatFoodNames(String foodNames) {
-    // Split the string into a list of food names, trimming each item
     List<String> foodList =
         foodNames.split(',').map((food) => food.trim()).toList();
-
-    // Check the length of the list to handle different cases
     int length = foodList.length;
     if (length == 0) {
       return '';
@@ -326,16 +335,16 @@ class FormCompletionCubit extends Cubit<FormComplectionStates> {
     }
   }
 
+  void updateUi() {
+    emit(UpdateState());
+  }
+
   String getFoodNames() {
     String foodNames = '';
     for (var food in selectedFoods) {
       foodNames += '${food.foodName},';
     }
     return foodNames;
-  }
-
-  void updateUi() {
-    emit(UpdateState());
   }
 
   /// FORM COMPLETION FUNCTION (SENDING DATA TO SERVER
