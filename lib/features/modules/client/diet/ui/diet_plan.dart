@@ -118,28 +118,28 @@ class LoadedDataUi extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        "${state.dietItems[0].tdee.toInt()}",
+                        "${state.dietData.tdee!.toInt()}",
                         style: TextStyle(
                           fontSize: 11.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "${state.dietItems[0].targetProtein} g",
+                        "${state.dietData.targetProtein!.toInt()} g",
                         style: TextStyle(
                           fontSize: 11.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "${state.dietItems[0].targetCarbohydrate} g",
+                        "${state.dietData.targetProtein!.toInt()} g",
                         style: TextStyle(
                           fontSize: 11.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "${state.dietItems[0].targetFat} g",
+                        "${state.dietData.tdee!.toInt()} g",
                         style: TextStyle(
                           fontSize: 11.sp,
                           fontWeight: FontWeight.bold,
@@ -160,7 +160,7 @@ class LoadedDataUi extends StatelessWidget {
                   ),
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: state.dietItems.length,
+                    itemCount: state.dietData.dietData!.length,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Column(
@@ -173,7 +173,7 @@ class LoadedDataUi extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                "${state.dietItems[index].foodName} : ${state.dietItems[index].quantity} g",
+                                "${state.dietData.dietData![index].foodName} : ${state.dietData.dietData![index].quantity} g",
                                 style: TextStyle(
                                   fontSize: 11.sp,
                                   color: dark ? Colors.black : CColors.white,
@@ -232,28 +232,28 @@ class LoadedDataUi extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "${(state.dietItems[index].calories * state.dietItems[index].quantity).toInt()}",
+                                "${(state.dietData.dietData![index].calories * state.dietData.dietData![index].quantity).toInt()}",
                                 style: TextStyle(
                                   fontSize: 11.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "${(state.dietItems[index].protein * state.dietItems[index].quantity).toInt()} g",
+                                "${(state.dietData.dietData![index].protein * state.dietData.dietData![index].quantity).toInt()} g",
                                 style: TextStyle(
                                   fontSize: 11.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "${state.dietItems[index].carbohydrates * state.dietItems[index].quantity.toInt()} g",
+                                "${state.dietData.dietData![index].carbohydrates * state.dietData.dietData![index].quantity.toInt()} g",
                                 style: TextStyle(
                                   fontSize: 11.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "${(state.dietItems[index].fats * state.dietItems[index].quantity).toInt()} g",
+                                "${(state.dietData.dietData![index].fats * state.dietData.dietData![index].quantity).toInt()} g",
                                 style: TextStyle(
                                   fontSize: 11.sp,
                                   fontWeight: FontWeight.bold,
@@ -264,7 +264,7 @@ class LoadedDataUi extends StatelessWidget {
                           const SizedBox(
                             height: 15,
                           ),
-                          index < state.dietItems.length - 1
+                          index < state.dietData.dietData!.length - 1
                               ? const Divider(
                                   color: Colors.grey,
                                   thickness: 1.0,

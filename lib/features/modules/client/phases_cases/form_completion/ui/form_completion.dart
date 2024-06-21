@@ -1559,9 +1559,9 @@ class FormComplectionBody extends StatelessWidget {
                                                     wrist: controllerget.wrist.text.isEmpty ? 0.0 : double.parse(controllerget.wrist.text),
                                                     tdee: controllerget.tdeeCalculator().toInt(),
                                                     fatPercentage: controllerget.fatPercentage,
-                                                    targetProtien: controllerget.targetProtein.toInt(),
-                                                    targetCarbohdrate: controllerget.targetCarbs.toInt(),
-                                                    targetFat: controllerget.targetFat.toInt(),
+                                                    targetProtien: controllerget.targetProtien(),
+                                                    targetCarbohdrate: controllerget.targetCarbs.toDouble(),
+                                                    targetFat: controllerget.targetFat.toDouble(),
                                                     currentStep: 1,
                                                     birthdayDate: controllerget.birthdayDate.toUtc()));
                                             myServices.sharedPreferences

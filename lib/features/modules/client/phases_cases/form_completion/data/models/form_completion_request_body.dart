@@ -38,11 +38,11 @@ class FormCompletionRequestBody {
   @JsonKey(name: 'fatPercentage')
   final double fatPercentage;
   @JsonKey(name: 'targetProtien')
-  final int targetProtien;
+  final double targetProtien;
   @JsonKey(name: 'targetCarbohdrate')
-  final int targetCarbohdrate;
+  final double targetCarbohdrate;
   @JsonKey(name: 'targetFat')
-  final int targetFat;
+  final double targetFat;
   @JsonKey(name: 'current_step')
   final int currentStep;
   @JsonKey(name: 'birthdayDate')

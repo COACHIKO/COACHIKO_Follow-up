@@ -2,7 +2,7 @@ import '../models/diet_request_body.dart';
 import '../models/diet_response.dart';
 
 abstract class DietRepo {
-  Future<List<DietItem>> getDiet(DietRequestBody dietRequestBody);
+  Future<DietData> getDiet(DietRequestBody dietRequestBody);
 }
 
 

@@ -5,14 +5,13 @@ part 'diet_response.g.dart';
 @JsonSerializable()
 class DietResponse {
   final String? message;
-  @JsonKey(name: 'data')
-  final List<DietItem>? diet;
+  final DietData? data;
   final bool? status;
   final int? code;
 
   DietResponse({
     required this.message,
-    required this.diet,
+    required this.data,
     required this.status,
     required this.code,
   });
@@ -21,6 +20,25 @@ class DietResponse {
       _$DietResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$DietResponseToJson(this);
+}
+
+@JsonSerializable()
+class DietData {
+  @JsonKey(name: 'diet_data')
+  final List<DietItem>? dietData;
+  final double? tdee;
+  @JsonKey(name: 'targetProtien')
+  final double? targetProtein;
+
+  DietData({
+    required this.dietData,
+    required this.tdee,
+    required this.targetProtein,
+  });
+
+  factory DietData.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DataToJson(this);
 }
 
 @JsonSerializable()
@@ -34,13 +52,6 @@ class DietItem {
   final double protein;
   final double carbohydrates;
   final double fats;
-  @JsonKey(name: 'targetProtien')
-  final double targetProtein;
-  @JsonKey(name: 'targetCarbohdrate')
-  final double targetCarbohydrate;
-  @JsonKey(name: 'targetFat')
-  final double targetFat;
-  final double tdee;
 
   DietItem({
     required this.id,
@@ -51,10 +62,6 @@ class DietItem {
     required this.protein,
     required this.carbohydrates,
     required this.fats,
-    required this.targetProtein,
-    required this.targetCarbohydrate,
-    required this.targetFat,
-    required this.tdee,
   });
 
   factory DietItem.fromJson(Map<String, dynamic> json) =>

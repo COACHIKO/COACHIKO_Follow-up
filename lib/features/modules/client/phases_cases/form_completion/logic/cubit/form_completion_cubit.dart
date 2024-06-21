@@ -307,7 +307,41 @@ class FormCompletionCubit extends Cubit<FormComplectionStates> {
   }
 
   double targetProtien() {
-    return 0.0;
+    if (isSelectedLoseWeight) {
+      if (fatPercentage >= 25) {
+        if (poorMoney) {
+          return 1.6 * leanBodyMass;
+        } else if (mediumMoney) {
+          return 1.8 * leanBodyMass;
+        } else {
+          return 2.2 * leanBodyMass;
+        }
+      } else {
+        if (poorMoney) {
+          return 1.6 * double.parse(weight.text);
+        } else if (mediumMoney) {
+          return 1.8 * double.parse(weight.text);
+        } else {
+          return 2.2 * double.parse(weight.text);
+        }
+      }
+    } else if (isSelectedGainWeight) {
+      if (poorMoney) {
+        return 1.6 * double.parse(weight.text);
+      } else if (mediumMoney) {
+        return 1.8 * double.parse(weight.text);
+      } else {
+        return 2.2 * double.parse(weight.text);
+      }
+    } else {
+      if (poorMoney) {
+        return 1.6 * double.parse(weight.text);
+      } else if (mediumMoney) {
+        return 1.8 * double.parse(weight.text);
+      } else {
+        return 2.2 * double.parse(weight.text);
+      }
+    }
   }
 
   double targetCarbohydrate() {

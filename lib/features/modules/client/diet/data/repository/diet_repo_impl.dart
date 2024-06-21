@@ -9,14 +9,14 @@ class DietRepoImp implements DietRepo {
   DietRepoImp(this._apiService);
 
   @override
-  Future<List<DietItem>> getDiet(DietRequestBody dietRequestBody) async {
+  Future<DietData> getDiet(DietRequestBody dietRequestBody) async {
     try {
       var response = await _apiService.getDiet(
           dietRequestBody: DietRequestBody(
               clientId:
                   myServices.sharedPreferences.getInt("user").toString()));
       var parsedData = DietResponse.fromJson(response);
-      return parsedData.diet!;
+      return parsedData.data!;
     } catch (e) {
       throw Exception('Failed to load diet data');
     }

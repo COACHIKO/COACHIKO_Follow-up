@@ -25,9 +25,9 @@ FormCompletionRequestBody _$FormCompletionRequestBodyFromJson(
       wrist: (json['wrist'] as num).toDouble(),
       tdee: (json['tdee'] as num).toInt(),
       fatPercentage: (json['fatPercentage'] as num).toDouble(),
-      targetProtien: (json['targetProtien'] as num).toInt(),
-      targetCarbohdrate: (json['targetCarbohdrate'] as num).toInt(),
-      targetFat: (json['targetFat'] as num).toInt(),
+      targetProtien: (json['targetProtien'] as num).toDouble(),
+      targetCarbohdrate: (json['targetCarbohdrate'] as num).toDouble(),
+      targetFat: (json['targetFat'] as num).toDouble(),
       currentStep: (json['current_step'] as num).toInt(),
       birthdayDate: DateTime.parse(json['birthdayDate'] as String),
     );

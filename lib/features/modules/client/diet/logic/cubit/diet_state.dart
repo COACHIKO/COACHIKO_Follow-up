@@ -13,9 +13,9 @@ class DietInitial extends DietState {}
 class DietLoading extends DietState {}
 
 class DietLoaded extends DietState {
-  final List<DietItem> dietItems;
+  final DietData dietData;
 
-  const DietLoaded({required this.dietItems});
+  const DietLoaded({required this.dietData});
 }
 
 class DietError extends DietState {
