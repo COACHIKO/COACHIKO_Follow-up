@@ -52,6 +52,7 @@ class DietItem {
   final double protein;
   final double carbohydrates;
   final double fats;
+  bool isSelected = false;
 
   DietItem({
     required this.id,

@@ -25,4 +25,8 @@ class DietCubit extends Cubit<DietState> {
       emit(DietError(message: 'Error fetching diet data $e'));
     }
   }
+
+  void UpdateUi() {
+    emit(state);
+  }
 }

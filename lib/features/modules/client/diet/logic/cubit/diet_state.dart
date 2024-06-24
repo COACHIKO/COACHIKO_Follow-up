@@ -28,3 +28,5 @@ class DietError extends DietState {
 }
 
 class DietNoData extends DietState {}
+
+class UpdateUi extends DietState {}

@@ -17,6 +17,7 @@ CurrentStageResponse _$CurrentStageResponseFromJson(
 Map<String, dynamic> _$CurrentStageResponseToJson(
         CurrentStageResponse instance) =>
     <String, dynamic>{
+      'status': instance.status,
       'current_step': instance.currentStep,
       'coach_token': instance.coachToken,
     };
