@@ -1,13 +1,17 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/features/modules/client/diet/data/models/diet_response.dart';
-import 'package:followupapprefactored/features/modules/coach/all_clients_display/data/models/clients_response.dart';
-import 'package:followupapprefactored/features/modules/coach/diet_making_features/food_selection/ui/food_selection_page.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:followupapprefactored/features/modules/client/diet/data/models/diet_response.dart';
+import '../../../../../core/networking/api_service.dart';
 import '../../../../../core/utils/constants/colors.dart';
 import '../../../../../core/utils/helpers/helper_functions.dart';
+import '../../../coach/diet_making_features/food_selection/data/repository/foods_repo_impl.dart';
+import '../../../coach/diet_making_features/food_selection/logic/cubit/food_cubit.dart';
+import '../../../coach/diet_making_features/food_selection/logic/cubit/food_state.dart';
 import '../logic/cubit/diet_cubit.dart';
 import '../logic/cubit/diet_state.dart';
 
@@ -303,20 +307,39 @@ class _FoodsListViewState extends State<FoodsListView> {
       itemBuilder: (context, index) {
         final foodItem = widget.state.dietData.dietData![index];
 
-        return Dismissible(
-          key: Key(foodItem.foodName), // Unique key for each item
-          background: Container(
-            color: Colors.blueGrey,
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Icon(Icons.edit, color: Colors.white),
-          ),
-          direction: DismissDirection.endToStart,
-          onDismissed: (direction) {
-            widget.state.dietData.dietData!.removeAt(index);
+        return Slidable(
+          key: Key(foodItem.foodName),
+          endActionPane: ActionPane(
+            motion: const DrawerMotion(),
+            children: [
+              SlidableAction(
+                borderRadius: const BorderRadius.horizontal(
+                    left: Radius.circular(12), right: Radius.circular(12)),
+                onPressed: (context) {
+                  final selectedFood = widget.state.dietData.dietData![index];
+                  selectedFood.isSelected = true;
 
-            // Get.to(FoodSelection(clientData: ClientData()));
-          },
+                  Get.to(
+                    BlocProvider(
+                      create: (context) => FoodCubit(
+                        foodsRepoImpl: FoodsRepoImpl(ApiService(Dio())),
+                        selectedfoods: [],
+                      )..getFoods(),
+                      child: ConvertFooods(
+                        diet: widget.state.dietData.dietData,
+                      ),
+                    ),
+                  )!
+                      .then((_) {
+                    selectedFood.isSelected = false;
+                  });
+                },
+                backgroundColor: Colors.blueGrey,
+                foregroundColor: Colors.white,
+                label: 'Replace',
+              ),
+            ],
+          ),
           child: GestureDetector(
             onTap: () {
               final foodItem = widget.state.dietData.dietData![index];
@@ -336,7 +359,6 @@ class _FoodsListViewState extends State<FoodsListView> {
 
                 foodItem.isSelected = true;
               }
-
               if (foodItem.isSelected) {
                 // Calculate nutritional information for the selected food item
                 final foodCalories = foodItem.calories * foodItem.quantity;
@@ -399,6 +421,58 @@ class _FoodsListViewState extends State<FoodsListView> {
             ),
           ),
         );
+      },
+    );
+  }
+}
+
+class ConvertFooods extends StatelessWidget {
+  final List<DietItem>? diet;
+  const ConvertFooods({
+    super.key,
+    required this.diet,
+  });
+  @override
+  Widget build(BuildContext context) {
+    var dark = THelperFunctions.isDarkMode(context);
+
+    return BlocBuilder<FoodCubit, FoodsState>(
+      builder: (context, state) {
+        if (state is FoodsStateLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is FoodsStateError) {
+          return Center(child: Text('Error: ${state.error}'));
+        } else if (state is LoadedSuccessfullyFoodsState) {
+          return Scaffold(
+              appBar: AppBar(
+                title: const Text("Foods Exetchange"),
+                leading: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: dark ? Colors.white : Colors.black,
+                    )),
+              ),
+              body: Column(
+                children: [
+                  ListTile(
+                    title: const Text("Select Food"),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      diet!.forEach((element) {
+                        if (element.isSelected) {
+                          print(element.foodName);
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ));
+        } else {
+          return const Center(child: Text('No data found'));
+        }
       },
     );
   }
