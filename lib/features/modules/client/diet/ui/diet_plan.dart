@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,9 +10,11 @@ import 'package:followupapprefactored/features/modules/client/diet/data/models/d
 import '../../../../../core/networking/api_service.dart';
 import '../../../../../core/utils/constants/colors.dart';
 import '../../../../../core/utils/helpers/helper_functions.dart';
+import '../../../coach/diet_making_features/food_selection/data/models/food_model.dart';
 import '../../../coach/diet_making_features/food_selection/data/repository/foods_repo_impl.dart';
 import '../../../coach/diet_making_features/food_selection/logic/cubit/food_cubit.dart';
 import '../../../coach/diet_making_features/food_selection/logic/cubit/food_state.dart';
+import '../../phases_cases/waiting_phase/ui/current_stage_page.dart';
 import '../logic/cubit/diet_cubit.dart';
 import '../logic/cubit/diet_state.dart';
 
@@ -432,9 +435,34 @@ class ConvertFooods extends StatelessWidget {
     super.key,
     required this.diet,
   });
+
   @override
   Widget build(BuildContext context) {
     var dark = THelperFunctions.isDarkMode(context);
+    DietItem? selectedDietItem;
+    FoodDataModel? selectedItem;
+    double? equivalentQuantity;
+    TextEditingController quantityController = TextEditingController();
+
+    void calculateEquivalentQuantity() {
+      if (selectedDietItem != null && selectedItem != null) {
+        double caloriesPerGramDietItem = selectedDietItem!.calories;
+        double caloriesPerGramSelectedItem = selectedItem!.calories;
+        int quantityToSubstitute;
+
+        if (quantityController.text.isEmpty) {
+          quantityToSubstitute = selectedDietItem!.quantity;
+        } else {
+          quantityToSubstitute = int.tryParse(quantityController.text) ??
+              selectedDietItem!.quantity;
+        }
+
+        equivalentQuantity = (quantityToSubstitute * caloriesPerGramDietItem) /
+            caloriesPerGramSelectedItem;
+      } else {
+        equivalentQuantity = null;
+      }
+    }
 
     return BlocBuilder<FoodCubit, FoodsState>(
       builder: (context, state) {
@@ -444,32 +472,129 @@ class ConvertFooods extends StatelessWidget {
           return Center(child: Text('Error: ${state.error}'));
         } else if (state is LoadedSuccessfullyFoodsState) {
           return Scaffold(
-              appBar: AppBar(
-                title: const Text("Foods Exetchange"),
-                leading: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: dark ? Colors.white : Colors.black,
-                    )),
+            appBar: AppBar(
+              title: const Text("Foods Exchange"),
+              leading: IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: dark ? Colors.white : Colors.black,
+                ),
               ),
-              body: Column(
-                children: [
-                  ListTile(
-                    title: const Text("Select Food"),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      diet!.forEach((element) {
-                        if (element.isSelected) {
-                          print(element.foodName);
-                        }
-                      });
-                    },
+            ),
+            body: Column(
+              children: [
+                SizedBox(
+                  height: 100.h,
+                  child: Card(
+                    child: Column(
+                      children: [
+                        DropdownButton<DietItem>(
+                          value: selectedDietItem,
+                          hint: const Text('Choose food to substitute'),
+                          onChanged: (DietItem? newValue) {
+                            selectedDietItem = newValue!;
+                            quantityController.text =
+                                ''; // Clear the TextField when a new item is selected
+                            context.read<FoodCubit>().updateUi();
+                          },
+                          items: diet?.map((DietItem dietItem) {
+                            return DropdownMenuItem<DietItem>(
+                              value: dietItem,
+                              child: Text(dietItem.foodName),
+                            );
+                          }).toList(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 25.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Quantity to substitute"),
+                              SizedBox(
+                                width: 100,
+                                child: TextFormField(
+                                  controller: quantityController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    hintText:
+                                        "${selectedDietItem?.quantity.toString() ?? ""} g",
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ));
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomMaterialButton(
+                            onPressed: () {
+                              calculateEquivalentQuantity();
+                              context.read<FoodCubit>().updateUi();
+                            },
+                            buttonText: equivalentQuantity != null
+                                ? "${equivalentQuantity!.floor()} grams"
+                                : "Calculate",
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 100.h,
+                  child: Card(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 12),
+                          child: Text(
+                            "Choose food to substitute with",
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall!
+                                .copyWith(fontSize: 15),
+                          ),
+                        ),
+                        DropdownSearch<FoodDataModel>(
+                          popupProps: const PopupProps.menu(
+                              showSelectedItems: true, showSearchBox: true),
+                          items: state.foods,
+                          itemAsString: (FoodDataModel u) => u.foodName,
+                          onChanged: (FoodDataModel? newValue) {
+                            selectedItem = newValue;
+                            context.read<FoodCubit>().updateUi();
+                          },
+                          selectedItem: selectedItem,
+                          compareFn: (FoodDataModel a, FoodDataModel b) =>
+                              a.foodName == b.foodName,
+                          filterFn: (FoodDataModel item, String query) {
+                            return item.foodName
+                                .toLowerCase()
+                                .contains(query.toLowerCase());
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
         } else {
           return const Center(child: Text('No data found'));
         }

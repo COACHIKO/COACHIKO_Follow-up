@@ -46,7 +46,7 @@ class DietItem {
   final int id;
   @JsonKey(name: 'food_id')
   final int foodId;
-  final int quantity;
+  late final int quantity;
   final String foodName;
   final double calories;
   final double protein;

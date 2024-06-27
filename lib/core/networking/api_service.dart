@@ -27,18 +27,20 @@ import '../../features/modules/coach/workout_routine_making_features/display_cli
 
 class ApiService {
   final Dio _dio;
-
+//
   ApiService(this._dio);
+  // String baseUrl = "https://d200-156-204-91-232.ngrok-free.app";
+  String baseUrl = "http://192.168.1.6";
 
   Future<List<dynamic>> getFoodsData() async {
     var response = await _dio.get(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/get_data/get_food_data.php");
+        "$baseUrl/CoachikoFollowUpApp_Back_End/get_data/get_food_data.php");
     return response.data;
   }
 
   Future<List<dynamic>> getExercisesData() async {
     var response = await _dio.get(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/get_data/get_excersise_data.php");
+        "$baseUrl/CoachikoFollowUpApp_Back_End/get_data/get_excersise_data.php");
     return response.data;
   }
 
@@ -46,7 +48,7 @@ class ApiService {
   Future<Map<String, dynamic>> login(
       {required LoginRequestBody loginRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/auth/login.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/auth/login.php",
         data: loginRequestBody.toJson());
     return response.data;
   }
@@ -54,7 +56,7 @@ class ApiService {
   Future<Map<String, dynamic>> register(
       {required SignupRequestBody signupRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/auth/register.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/auth/register.php",
         data: signupRequestBody.toJson());
     return response.data;
   }
@@ -62,7 +64,7 @@ class ApiService {
   Future<Map<String, dynamic>> getCurrentStage(
       {required CurrentStageRequestBody currentStageRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/client_area/get_status.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/client_area/get_status.php",
         data: currentStageRequestBody.toJson());
     return response.data;
   }
@@ -71,7 +73,7 @@ class ApiService {
   Future<Map<String, dynamic>> getRoutine(
       {required RoutineRequestBody routineRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/client_area/get_routine_data.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/client_area/get_routine_data.php",
         data: routineRequestBody.toJson());
     return response.data;
   }
@@ -79,7 +81,7 @@ class ApiService {
   Future<Map<String, dynamic>> getDiet(
       {required DietRequestBody dietRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/client_area/diet_get_for_client.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/client_area/diet_get_for_client.php",
         data: dietRequestBody.toJson());
     return response.data;
   }
@@ -87,17 +89,15 @@ class ApiService {
   Future<Map<String, dynamic>> completeForm(
       {required FormCompletionRequestBody formCompletionRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/coachikoFollowApp/client_user_data_insert_update.php",
+        "$baseUrl/coachikoFollowApp/client_user_data_insert_update.php",
         data: formCompletionRequestBody.toJson());
-    print("response");
-
     return response.data;
   }
 
   Future<Map<String, dynamic>> getClients(
       {required ClientsDataRequestBody clientsDataRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/coach_area/get_coach_clients.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/coach_area/get_coach_clients.php",
         data: clientsDataRequestBody.toJson());
     return response.data;
   }
@@ -106,7 +106,7 @@ class ApiService {
       {required QuantityInsertionRequestBody
           quantityInsertionRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/coach_area/diet_insert_for_client.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/coach_area/diet_insert_for_client.php",
         data: quantityInsertionRequestBody.toJson());
     return response.data;
   }
@@ -114,7 +114,7 @@ class ApiService {
   Future<Map<String, dynamic>> routineInsert(
       {required RoutineInsertRequestBody routineInsertRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/coach_area/routine_insertion.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/coach_area/routine_insertion.php",
         data: routineInsertRequestBody.toJson());
     return response.data;
   }
@@ -122,7 +122,7 @@ class ApiService {
   Future<Map<String, dynamic>> routineUpdate(
       {required RoutineUpdateRequestBody routineUpdateRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/coach_area/routine_name_update.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/coach_area/routine_name_update.php",
         data: routineUpdateRequestBody.toJson());
     return response.data;
   }
@@ -130,7 +130,7 @@ class ApiService {
   Future<Map<String, dynamic>> routineDelete(
       {required RoutineDeleteRequestBody routineDeleteRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/coach_area/routine_delete.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/coach_area/routine_delete.php",
         data: routineDeleteRequestBody.toJson());
     return response.data;
   }
@@ -139,7 +139,7 @@ class ApiService {
       {required ExerciseAssignmentRequestBody
           exerciseAssignmentRequestBody}) async {
     var response = await _dio.post(
-        "http://192.168.1.6/CoachikoFollowUpApp_Back_End/coach_area/excersise_assign_to_routine.php",
+        "$baseUrl/CoachikoFollowUpApp_Back_End/coach_area/excersise_assign_to_routine.php",
         data: exerciseAssignmentRequestBody.toJson());
     return response.data;
   }

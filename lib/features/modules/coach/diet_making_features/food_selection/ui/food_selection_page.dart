@@ -39,7 +39,6 @@ class FoodSelection extends StatelessWidget {
 
 class FoodDataWidget extends StatelessWidget {
   final ClientData clientData;
-
   const FoodDataWidget({super.key, required this.clientData});
   @override
   Widget build(BuildContext context) {

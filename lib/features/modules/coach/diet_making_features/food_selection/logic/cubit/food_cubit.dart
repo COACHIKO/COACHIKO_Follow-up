@@ -79,4 +79,8 @@ class FoodCubit extends Cubit<FoodsState> {
       }
     }
   }
+
+  void updateUi() {
+    emit(LoadedSuccessfullyFoodsState(_allFoods));
+  }
 }

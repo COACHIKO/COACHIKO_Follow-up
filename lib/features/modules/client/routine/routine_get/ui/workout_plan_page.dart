@@ -33,7 +33,6 @@ class WorkoutPlanPage extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 160,
                           width: double.maxFinite,
                           child: Card(
                             color:

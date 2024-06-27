@@ -448,7 +448,7 @@ class CustomMaterialButton extends MaterialButton {
       Color super.highlightColor = Colors.blueAccent,
       Color super.splashColor = Colors.blueAccent,
       Duration super.animationDuration = const Duration(milliseconds: 100),
-      double super.height = 120,
+      double super.height = 80,
       double super.minWidth = 120})
       : super(
           onPressed: onPressed,
@@ -459,6 +459,6 @@ class CustomMaterialButton extends MaterialButton {
           ),
           color: Colors.white,
           shape: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(300))),
+              borderRadius: BorderRadius.all(Radius.circular(12))),
         );
 }
