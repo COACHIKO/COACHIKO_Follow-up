@@ -35,7 +35,7 @@ class _RoutineWeightLogScreenState extends State<RoutineWeightLogScreen> {
         if (state is RoutineWeightLogLoaded) {
           return _buildUI(state);
         }
-        return Container(); // Return an empty container for initial state
+        return Container();
       },
     );
   }
