@@ -15,6 +15,7 @@ import 'core/utils/constants/text_strings.dart';
 import 'core/utils/theme/theme.dart';
 import 'features/auth/login/ui/login_screen.dart';
 import 'features/auth/signup/ui/signup_screen.dart';
+import 'features/modules/client/navigation_bar/ui/client_navigation_bar.dart';
 import 'features/modules/client/phases_cases/form_completion/ui/form_completion.dart';
 import 'features/modules/client/phases_cases/waiting_phase/logic/cubit/current_stage_cubit.dart';
 import 'features/modules/client/phases_cases/waiting_phase/ui/current_stage_page.dart';
@@ -71,7 +72,7 @@ Map<String, Widget Function(BuildContext)> allAppRoutes = {
           ..getCurrentStage(),
         child: const CurrentStage(),
       ),
-  "/ClientHome": (context) => const CoachNavigationBar(),
+  "/ClientHome": (context) => const ClientNavigationBar(),
   "/CoachHome": (context) => const CoachNavigationBar(),
 };
 
