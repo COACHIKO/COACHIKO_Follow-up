@@ -5,6 +5,7 @@ import '../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../all_clients_display/data/models/clients_response.dart';
 import '../../../../../main.dart';
+import '../../navigation_bar/ui/coach_navigation_bar.dart';
 import '../../workout_routine_making_features/display_client_routine/ui/client_routines_display.dart';
 
 class ClientProfilePage extends StatelessWidget {
@@ -19,6 +20,11 @@ class ClientProfilePage extends StatelessWidget {
     // var dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Get.offAll(const CoachNavigationBar(initialIndex: 2));
+            },
+            icon: const Icon(Icons.arrow_back)),
         centerTitle: true,
         title: Text(
           "${clientData.firstName} ${clientData.secondName}",

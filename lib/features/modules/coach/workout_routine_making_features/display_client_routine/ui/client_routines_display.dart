@@ -6,10 +6,12 @@ import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/models/routine_response.dart';
+import 'package:followupapprefactored/features/modules/coach/all_clients_display/ui/all_clients_display.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/display_client_routine/data/repository/client_routines_repo_impl.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/ui/exercises_assignment_to_routine.dart';
 import 'package:get/get.dart';
 import '../../../all_clients_display/data/models/clients_response.dart';
+import '../../../specific_client_profile/ui/client_profile_page.dart';
 import '../../exercises_selection/data/models/exercisesDataBase.dart';
 import '../../exercises_selection/ui/exercises_selection_page.dart';
 import '../logic/cubit/client_routines_cubit.dart';
@@ -29,6 +31,11 @@ class ClientRoutineDisplay extends StatelessWidget {
           centerTitle: true,
           title: Text("${clientData.firstName}'s Routines"),
           iconTheme: const IconThemeData(color: Colors.blueAccent),
+          leading: IconButton(
+              onPressed: () {
+                Get.offAll(const MyClients());
+              },
+              icon: const Icon(Icons.arrow_back)),
         ),
         body: BlocProvider(
           create: (context) => ClientRoutinsCubit(
@@ -124,83 +131,93 @@ class ClientRoutineDisplayBody extends StatelessWidget {
                                     height: 20.h,
                                   ),
                                   SizedBox(
-                                      height: 55,
-                                      width: double.maxFinite,
-                                      child: routine.exercises[index]
-                                                  .exerciseName ==
-                                              ""
-                                          ? ElevatedButton(
-                                              onPressed: () async {
-                                                Get.to(ExercisesSelection(
-                                                  lastSelectedExercises: const [],
-                                                  clientData: clientData,
-                                                  routine: routine,
-                                                ));
-                                              },
-                                              child: const Text(
-                                                'Add Exercise to The Routine',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )
-                                          : ElevatedButton(
-                                              onPressed: () async {
+                                    height: 55,
+                                    width: double.maxFinite,
+                                    child: routine.exercises[0].exerciseName ==
+                                            ""
+                                        ? ElevatedButton(
+                                            onPressed: () async {
+                                              Get.to(ExercisesSelection(
+                                                lastSelectedExercises: const [],
+                                                clientData: clientData,
+                                                routine: routine,
+                                              ));
+                                            },
+                                            child: const Text(
+                                              'Add Exercise to The Routine',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          )
+                                        : ElevatedButton(
+                                            onPressed: () async {
+                                              List<Exercises>
+                                                  addExercisesToList(
+                                                      List<Exercise>
+                                                          routineExercises) {
                                                 List<Exercises>
-                                                    addExercisesToList(
-                                                        List<Exercise>
-                                                            routineExercises) {
-                                                  List<Exercises>
-                                                      selectedExercises = [];
+                                                    selectedExercises = [];
 
-                                                  for (int i = 0;
-                                                      i <
-                                                          routineExercises
-                                                              .length;
-                                                      i++) {
-                                                    selectedExercises
-                                                        .add(Exercises(
-                                                      exerciseID:
-                                                          routineExercises[i]
-                                                              .exerciseId
-                                                              .toString(),
-                                                      exerciseName:
-                                                          routineExercises[i]
-                                                              .exerciseName,
-                                                      targetMuscles:
-                                                          routineExercises[i]
-                                                              .targetMuscles,
-                                                      exerciseImage:
-                                                          routineExercises[i]
-                                                              .exerciseImage,
-                                                      usedEquipment:
-                                                          routineExercises[i]
-                                                              .usedEquipment,
-                                                      isSelected: true,
-                                                    ));
-                                                  }
-
-                                                  return selectedExercises;
+                                                for (int i = 0;
+                                                    i < routineExercises.length;
+                                                    i++) {
+                                                  selectedExercises
+                                                      .add(Exercises(
+                                                    exerciseID:
+                                                        routineExercises[i]
+                                                            .exerciseId
+                                                            .toString(),
+                                                    exerciseName:
+                                                        routineExercises[i]
+                                                            .exerciseName,
+                                                    targetMuscles:
+                                                        routineExercises[i]
+                                                            .targetMuscles,
+                                                    exerciseImage:
+                                                        routineExercises[i]
+                                                            .exerciseImage,
+                                                    usedEquipment:
+                                                        routineExercises[i]
+                                                            .usedEquipment,
+                                                    isSelected: true,
+                                                  ));
                                                 }
 
-                                                Get.to(Exercisesassignment(
-                                                  clientData: clientData,
-                                                  routine: routine,
-                                                  selectedExercises:
-                                                      addExercisesToList(
-                                                          routine.exercises),
-                                                ));
-                                              },
-                                              child: const Text(
-                                                'Preview Routine',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            ))
+                                                return selectedExercises;
+                                              }
+
+                                              Get.to(Exercisesassignment(
+                                                clientData: clientData,
+                                                routine: routine,
+                                                selectedExercises:
+                                                    addExercisesToList(
+                                                        routine.exercises),
+                                              ));
+                                            },
+                                            child: const Text(
+                                              'Preview Routine',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
+                        state.routines.length - 1 == index
+                            ? Center(
+                                child: OutlinedButton(
+                                  onPressed: () {
+                                    var cubit =
+                                        context.read<ClientRoutinsCubit>();
+                                    cubit.showMyBottomSheet(context, id);
+                                  },
+                                  child: const Text("Add Routine"),
+                                ),
+                              )
+                            : Container()
                       ],
                     ),
                   );

@@ -36,9 +36,10 @@ class DietData {
     required this.targetProtein,
   });
 
-  factory DietData.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  factory DietData.fromJson(Map<String, dynamic> json) =>
+      _$DietDataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DataToJson(this);
+  Map<String, dynamic> toJson() => _$DietDataToJson(this);
 }
 
 @JsonSerializable()

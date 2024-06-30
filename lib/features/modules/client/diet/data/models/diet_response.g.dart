@@ -23,7 +23,7 @@ Map<String, dynamic> _$DietResponseToJson(DietResponse instance) =>
       'code': instance.code,
     };
 
-DietData _$DataFromJson(Map<String, dynamic> json) => DietData(
+DietData _$DietDataFromJson(Map<String, dynamic> json) => DietData(
       dietData: (json['diet_data'] as List<dynamic>?)
           ?.map((e) => DietItem.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -31,7 +31,7 @@ DietData _$DataFromJson(Map<String, dynamic> json) => DietData(
       targetProtein: (json['targetProtien'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$DataToJson(DietData instance) => <String, dynamic>{
+Map<String, dynamic> _$DietDataToJson(DietData instance) => <String, dynamic>{
       'diet_data': instance.dietData,
       'tdee': instance.tdee,
       'targetProtien': instance.targetProtein,

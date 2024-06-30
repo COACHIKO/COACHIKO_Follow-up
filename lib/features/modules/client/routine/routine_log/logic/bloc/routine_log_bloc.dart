@@ -1,17 +1,23 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:followupapprefactored/features/modules/client/routine/routine_log/data/models/routine_log_request_body.dart';
 import '../../../routine_get/data/models/routine_response.dart';
+import '../../data/repository/routine_log_repo_impl.dart';
 
 part 'routine_log_event.dart';
 part 'routine_log_state.dart';
 
 class RoutineWeightLogCubit extends Cubit<RoutineWeightLogState> {
-  RoutineWeightLogCubit() : super(RoutineWeightLogInitial());
+  RoutineWeightLogCubit(this.routineLogRepoImp)
+      : super(RoutineWeightLogInitial());
+  final RoutineLogRepoImp routineLogRepoImp;
 
   late Routine _routine;
   List<List<bool>> isFinishedLists = [];
+  List<List<String>> weights = [];
+  List<List<String>> reps = [];
   Timer? restTimer;
   int restTimeLeft = 0;
   int focused = -1;
@@ -23,6 +29,20 @@ class RoutineWeightLogCubit extends Cubit<RoutineWeightLogState> {
       (exerciseIndex) => List.generate(
         routine.exercises[exerciseIndex].sets,
         (setIndex) => false,
+      ),
+    );
+    weights = List.generate(
+      routine.exercises.length,
+      (exerciseIndex) => List.generate(
+        routine.exercises[exerciseIndex].sets,
+        (setIndex) => '',
+      ),
+    );
+    reps = List.generate(
+      routine.exercises.length,
+      (exerciseIndex) => List.generate(
+        routine.exercises[exerciseIndex].sets,
+        (setIndex) => '',
       ),
     );
     emit(
@@ -37,7 +57,7 @@ class RoutineWeightLogCubit extends Cubit<RoutineWeightLogState> {
   void startRestTimer(int restDuration) {
     restTimeLeft = restDuration * 60;
     restTimer?.cancel();
-    restTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    restTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (restTimeLeft > 0) {
         restTimeLeft--;
       } else {
@@ -72,10 +92,66 @@ class RoutineWeightLogCubit extends Cubit<RoutineWeightLogState> {
     );
   }
 
+  void updateWeight(int exerciseIndex, int setIndex, String weight) {
+    weights[exerciseIndex][setIndex] = weight;
+  }
+
+  void updateReps(int exerciseIndex, int setIndex, String rep) {
+    reps[exerciseIndex][setIndex] = rep;
+  }
+
   String printRestTime() {
     int minutes = restTimeLeft ~/ 60;
     int seconds = restTimeLeft % 60;
     return ' Time left: $minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.grey[800],
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+
+  Future<void> submitAndLogRoutine(int userId) async {
+    try {
+      // Collect all routine log entries
+      List<RoutineLogRequestBody> exerciseLogs = [];
+      for (var exerciseIndex = 0;
+          exerciseIndex < _routine.exercises.length;
+          exerciseIndex++) {
+        var exercise = _routine.exercises[exerciseIndex];
+        for (var setIndex = 0; setIndex < exercise.sets; setIndex++) {
+          if (isFinishedLists[exerciseIndex][setIndex] &&
+              weights[exerciseIndex][setIndex].isNotEmpty &&
+              reps[exerciseIndex][setIndex].isNotEmpty) {
+            exerciseLogs.add(
+              RoutineLogRequestBody(
+                userId: userId,
+                exerciseId: exercise.exerciseId,
+                weight: weights[exerciseIndex][setIndex],
+                reps: reps[exerciseIndex][setIndex],
+              ),
+            );
+          }
+        }
+      }
+
+      // Submit each log entry
+      for (var log in exerciseLogs) {
+        var response = await routineLogRepoImp.routineLog(log);
+        if (response.status == true) {
+          showToast(response.message);
+        }
+      }
+    } catch (e) {
+      showToast(e.toString());
+    }
   }
 
   @override
@@ -84,3 +160,24 @@ class RoutineWeightLogCubit extends Cubit<RoutineWeightLogState> {
     return super.close();
   }
 }
+
+// class ExerciseLog {
+//   final int userId;
+//   final int exerciseId;
+//   final String weight;
+//   final String reps;
+
+//   ExerciseLog({
+//     required this.userId,
+//     required this.exerciseId,
+//     required this.weight,
+//     required this.reps,
+//   });
+
+//   Map<String, dynamic> toJson() => {
+//         "user_id": userId,
+//         "exercise_id": exerciseId,
+//         "weight": weight,
+//         "reps": reps,
+//       };
+// }

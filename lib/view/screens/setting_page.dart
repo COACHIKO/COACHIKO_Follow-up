@@ -72,12 +72,7 @@ class SettingScreen extends StatelessWidget {
                               color: Colors.white),
                         ),
                         trailing: IconButton(
-                          onPressed: () async {
-                            // var response = await _apiService.getFoodsData();
-                            // (response.forEach((element) {
-                            //   print(element.foodName);
-                            // }));
-                          },
+                          onPressed: () async {},
                           icon: const Icon(Icons.edit,
                               size: 18, color: Colors.white),
                         ),

@@ -16,6 +16,7 @@
 import 'package:dio/dio.dart';
 import 'package:followupapprefactored/features/auth/login/data/models/login_request_body.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/models/routine_request_body.dart';
+import 'package:followupapprefactored/features/modules/client/routine/routine_log/data/models/routine_log_request_body.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/data/models/exercises_assignment_request_body.dart';
 import '../../features/auth/signup/data/models/signup_request_model.dart';
 import '../../features/modules/client/diet/data/models/diet_request_body.dart';
@@ -75,6 +76,14 @@ class ApiService {
     var response = await _dio.post(
         "$baseUrl/CoachikoFollowUpApp_Back_End/client_area/get_routine_data.php",
         data: routineRequestBody.toJson());
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> routineLog(
+      {required RoutineLogRequestBody routineLogRequestBody}) async {
+    var response = await _dio.post(
+        "$baseUrl/CoachikoFollowUpApp_Back_End/client_area/routine_log.php",
+        data: routineLogRequestBody.toJson());
     return response.data;
   }
 

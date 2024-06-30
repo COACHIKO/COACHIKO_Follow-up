@@ -4,7 +4,6 @@ import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:icons_flutter/icons_flutter.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../core/utils/helpers/helper_functions.dart';
 import 'package:dio/dio.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/features/modules/client/diet/data/repository/diet_repo_impl.dart';
@@ -17,12 +16,15 @@ import 'package:followupapprefactored/features/modules/client/routine/routine_ge
 import 'package:followupapprefactored/features/modules/coach/all_clients_display/logic/cubit/clients_cubit.dart';
 import 'package:followupapprefactored/features/modules/coach/all_clients_display/ui/all_clients_display.dart';
 import 'package:followupapprefactored/view/screens/setting_page.dart';
+import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
 
 import '../cubit/coach_navigation_bar_cubit.dart';
 import '../cubit/coach_navigation_bar_state.dart';
 
 class CoachNavigationBar extends StatelessWidget {
-  const CoachNavigationBar({super.key});
+  final int initialIndex;
+
+  const CoachNavigationBar({super.key, this.initialIndex = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class CoachNavigationBar extends StatelessWidget {
     ];
 
     return BlocProvider(
-      create: (_) => CoachHomeCubit(),
+      create: (_) => CoachHomeCubit(initialIndex: initialIndex),
       child: Scaffold(
         body: RefreshIndicator(
           onRefresh: () async {

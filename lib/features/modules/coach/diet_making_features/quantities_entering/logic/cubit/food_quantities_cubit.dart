@@ -91,7 +91,7 @@ class FoodQuantitiesCubit extends Cubit<FoodQuantitiesStates> {
     try {
       var foods = await foodQuantitiesRepoImp
           .enterQuantites(quantityInsertionRequestBody);
-      if (foods.message == "Data inserted successfully!") {
+      if (foods.message == "Diet inserted successfully!") {
         showToast(foods.message);
       }
     } catch (e) {
