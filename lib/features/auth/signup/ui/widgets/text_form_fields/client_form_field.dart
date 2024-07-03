@@ -30,7 +30,7 @@ class ClientFormField extends StatelessWidget {
             width: 150,
             child: TextFormField(
               onChanged: (value) =>
-              signUpController.coachUserName.value = value,
+                  signUpController.coachUserName.value = value,
               keyboardType: TextInputType.name,
               onSaved: (value) {},
               validator: (value) {
@@ -72,7 +72,6 @@ class ClientFormField extends StatelessWidget {
                     splashColor: Colors.transparent,
                     onTap: () {
                       signUpController.toggleCoach();
-
                     },
                     child: Container(
                       decoration: BoxDecoration(

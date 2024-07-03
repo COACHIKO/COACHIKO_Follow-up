@@ -59,6 +59,7 @@ class ApiService {
     var response = await _dio.post(
         "$baseUrl/CoachikoFollowUpApp_Back_End/auth/register.php",
         data: signupRequestBody.toJson());
+
     return response.data;
   }
 

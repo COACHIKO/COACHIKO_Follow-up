@@ -10,7 +10,11 @@ import 'text_form_fields/names_form_fields.dart';
 import 'text_form_fields/password_form_field.dart';
 
 class SignUpForm extends StatelessWidget {
-  const SignUpForm({super.key,required this.dark,required this.signUpController,});
+  const SignUpForm({
+    super.key,
+    required this.dark,
+    required this.signUpController,
+  });
   final bool dark;
   final SignUpController signUpController;
   @override
@@ -29,9 +33,15 @@ class SignUpForm extends StatelessWidget {
           PasswordTextFormField(signUpController: signUpController, dark: dark),
           SizedBox(height: 8.h),
           GetX<SignUpController>(
-                builder: (controller) => controller.isCoach.isFalse
-                ? ClientFormField(dark: dark, signUpController: signUpController,)
-                : CoachFormField(dark: dark,signUpController: signUpController,),
+            builder: (controller) => controller.isCoach.isFalse
+                ? ClientFormField(
+                    dark: dark,
+                    signUpController: signUpController,
+                  )
+                : CoachFormField(
+                    dark: dark,
+                    signUpController: signUpController,
+                  ),
           ),
         ],
       ),

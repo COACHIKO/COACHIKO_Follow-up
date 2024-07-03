@@ -6,7 +6,8 @@ import '../../logic/signup_controller.dart';
 
 class RegisterButton extends StatelessWidget {
   const RegisterButton({
-    super.key, required this.signUpController,
+    super.key,
+    required this.signUpController,
   });
   final SignUpController signUpController;
 

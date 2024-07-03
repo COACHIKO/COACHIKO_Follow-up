@@ -11,6 +11,7 @@ class SignupRepoImp implements SignupRepo {
     try {
       var response =
           await _apiService.register(signupRequestBody: signupRequestBody);
+
       var parsedData = SignUpResponse.fromJson(response);
       return parsedData;
     } catch (e) {

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
+import 'package:followupapprefactored/features/modules/client/navigation_bar/ui/client_navigation_bar.dart';
+import 'package:followupapprefactored/features/modules/client/phases_cases/form_completion/ui/form_completion.dart';
 import 'package:followupapprefactored/features/modules/coach/navigation_bar/ui/coach_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -15,6 +17,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:followupapprefactored/main.dart';
 
+import '../../../modules/client/phases_cases/waiting_phase/ui/current_stage_page.dart';
 import '../data/models/login_request_body.dart';
 import '../data/repository/login_repo_impl.dart';
 
@@ -281,8 +284,15 @@ class LoginController extends GetxController {
             .setInt("isCoach", response.userData!.isCoach == "Coach" ? 1 : 0);
         myServices.sharedPreferences.setBool("rememberMe", rememberMe.value);
 
-        if (response.userData!.isCoach == "Client") {
-          Get.offAll(const CoachNavigationBar());
+        if (response.userData!.isCoach == "Client" &&
+            response.userData!.currentStep == 0) {
+          Get.offAll(const FormComplectionView());
+        } else if (response.userData!.isCoach == "Client" &&
+            response.userData!.currentStep == 1) {
+          Get.offAll(const CurrentStage());
+        } else if (response.userData!.isCoach == "Client" &&
+            response.userData!.currentStep == 2) {
+          Get.offAll(const ClientNavigationBar());
         } else {
           Get.offAll(const CoachNavigationBar());
         }

@@ -66,16 +66,3 @@ class SignUpController extends GetxController {
     }
   }
 }
-
-
-
-
-  // await apiCalls.register(
-  //         firstName.toString(),
-  //         secondName.toString(),
-  //         isCoach==true.obs?"1":"0",
-  //         coachUserName.toString(),
-  //         username.toString(),
-  //         password.toString(),
-  //         email.toString(),
-  //       );
