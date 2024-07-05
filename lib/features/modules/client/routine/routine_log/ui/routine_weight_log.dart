@@ -251,7 +251,7 @@ class RoutineWeightLogScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   var cubit = context.read<RoutineWeightLogCubit>();
-                  await cubit.submitAndLogRoutine(1);
+                  await cubit.submitAndLogRoutine(1, (routine.routineId));
                 },
                 child: const Text('Submit'),
               ),

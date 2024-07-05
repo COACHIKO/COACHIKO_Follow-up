@@ -118,7 +118,7 @@ class RoutineWeightLogCubit extends Cubit<RoutineWeightLogState> {
     );
   }
 
-  Future<void> submitAndLogRoutine(int userId) async {
+  Future<void> submitAndLogRoutine(int userId, routineId) async {
     try {
       // Collect all routine log entries
       List<RoutineLogRequestBody> exerciseLogs = [];
@@ -134,6 +134,7 @@ class RoutineWeightLogCubit extends Cubit<RoutineWeightLogState> {
               RoutineLogRequestBody(
                 userId: userId,
                 exerciseId: exercise.exerciseId,
+                routineId: routineId,
                 weight: weights[exerciseIndex][setIndex],
                 reps: reps[exerciseIndex][setIndex],
               ),

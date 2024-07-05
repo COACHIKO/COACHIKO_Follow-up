@@ -9,13 +9,15 @@ class RoutineLogRequestBody {
 
   @JsonKey(name: 'exercise_id')
   final int exerciseId;
-
+  @JsonKey(name: 'routine_id')
+  final String routineId;
   final String weight;
   final String reps;
 
   RoutineLogRequestBody({
     required this.userId,
     required this.exerciseId,
+    required this.routineId,
     required this.weight,
     required this.reps,
   });

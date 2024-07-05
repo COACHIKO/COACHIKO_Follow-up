@@ -12,7 +12,7 @@ Exercises _$ExercisesFromJson(Map<String, dynamic> json) => Exercises(
       targetMuscles: json['targetMuscles'] as String,
       exerciseImage: json['excersiseImage'] as String,
       usedEquipment: json['usedEquipment'] as String,
-      isSelected: false,
+      isSelected: json['isSelected'] as bool,
     );
 
 Map<String, dynamic> _$ExercisesToJson(Exercises instance) => <String, dynamic>{
