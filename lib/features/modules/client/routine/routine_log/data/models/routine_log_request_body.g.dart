@@ -11,7 +11,7 @@ RoutineLogRequestBody _$RoutineLogRequestBodyFromJson(
     RoutineLogRequestBody(
       userId: (json['user_id'] as num).toInt(),
       exerciseId: (json['exercise_id'] as num).toInt(),
-      routineId: (json['routine_id'] as String),
+      routineId: json['routine_id'] as String,
       weight: json['weight'] as String,
       reps: json['reps'] as String,
     );
