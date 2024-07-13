@@ -35,9 +35,13 @@ class MyClients extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      Get.to(() => ClientProfilePage(
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ClientProfilePage(
                             clientData: state.clients[index],
-                          ));
+                          ),
+                        ),
+                      );
                     },
                     splashColor: Colors.green,
                     splashFactory: InkRipple.splashFactory,

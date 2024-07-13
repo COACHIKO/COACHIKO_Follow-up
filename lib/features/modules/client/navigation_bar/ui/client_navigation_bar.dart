@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
+import 'package:followupapprefactored/features/client_log_history/data/repository/get_log_history_repo_imp.dart';
+import 'package:followupapprefactored/features/client_log_history/ui/logs_history.dart';
+import 'package:followupapprefactored/main.dart';
 import 'package:get/get.dart';
 import 'package:icons_flutter/icons_flutter.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,15 +12,13 @@ import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/features/modules/client/diet/data/repository/diet_repo_impl.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/repository/routine_repo_impl.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/ui/workout_plan_page.dart';
-import 'package:followupapprefactored/features/modules/coach/all_clients_display/data/repository/clients_repo_impl.dart';
 import 'package:followupapprefactored/features/modules/client/diet/logic/cubit/diet_cubit.dart';
 import 'package:followupapprefactored/features/modules/client/diet/ui/diet_plan.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/logic/cubit/routine_cubit.dart';
-import 'package:followupapprefactored/features/modules/coach/all_clients_display/logic/cubit/clients_cubit.dart';
-import 'package:followupapprefactored/features/modules/coach/all_clients_display/ui/all_clients_display.dart';
 import 'package:followupapprefactored/view/screens/setting_page.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
 
+import '../../../../client_log_history/logic/cubit/log_history_cubit.dart';
 import '../logic/cubit/client_navigation_bar_cubit.dart';
 import '../logic/cubit/client_navigation_bar_state.dart';
 
@@ -32,27 +33,28 @@ class ClientNavigationBar extends StatelessWidget {
 
     final screens = [
       BlocProvider(
-        create: (context) {
-          return RoutineCubit(routineRepoImp: RoutineRepoImp(ApiService(Dio())))
-            ..getRoutine(); // Ensure initial data fetch
-        },
-        child: const WorkoutPlanPage(),
-      ),
+          create: (context) {
+            return LogHistoryCubit(
+                getLogHistoryRepoImp: GetLogHistoryRepoImp(ApiService(Dio())))
+              ..getLogsHistory(myServices.sharedPreferences.getInt("user"));
+          },
+          child: LogsHistoryPage(
+            name:
+                myServices.sharedPreferences.getString("first_name").toString(),
+          )),
       BlocProvider(
-        create: (context) {
-          return DietCubit(dietRepoImp: DietRepoImp(ApiService(Dio())))
-            ..getDietData(); // Ensure initial data fetch
-        },
-        child: const DietPlanPage(),
-      ),
+          create: (context) {
+            return RoutineCubit(
+                routineRepoImp: RoutineRepoImp(ApiService(Dio())))
+              ..getRoutine();
+          },
+          child: const WorkoutPlanPage()),
       BlocProvider(
-        create: (context) {
-          return ClientsCubit(
-              clientsRepoImp: ClientsDataRepoImp(ApiService(Dio())))
-            ..getAllClientsData(); // Ensure initial data fetch
-        },
-        child: const MyClients(),
-      ),
+          create: (context) {
+            return DietCubit(dietRepoImp: DietRepoImp(ApiService(Dio())))
+              ..getDietData();
+          },
+          child: const DietPlanPage()),
       const SettingScreen(),
     ];
 

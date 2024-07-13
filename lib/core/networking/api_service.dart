@@ -1,24 +1,10 @@
-// import 'package:dio/dio.dart';
-// import 'package:followupapprefactored/features/auth/login/data/models/login_request_body.dart';
-// import 'package:followupapprefactored/features/auth/login/data/models/login_response.dart';
-// import 'package:followupapprefactored/features/modules/client/features/routine/routine_get/data/models/routine_response.dart';
-// import 'package:followupapprefactored/features/modules/coach/clients_display/data/models/clients_response.dart';
-// import 'package:followupapprefactored/linkapi.dart';
-// import 'package:retrofit/retrofit.dart';
-
-// import '../../features/food_data_get/data/models/food_model.dart';
-// import '../../features/modules/client/features/diet/data/models/diet_request_body.dart';
-// import '../../features/modules/client/features/diet/data/models/diet_response.dart';
-// import '../../features/modules/client/features/routine/routine_get/data/models/routine_request_body.dart';
-// import '../../features/modules/coach/clients_display/data/models/clients_data_request_body.dart';
-// part 'api_service.g.dart';
-
 import 'package:dio/dio.dart';
 import 'package:followupapprefactored/features/auth/login/data/models/login_request_body.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/models/routine_request_body.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_log/data/models/routine_log_request_body.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/data/models/exercises_assignment_request_body.dart';
 import '../../features/auth/signup/data/models/signup_request_model.dart';
+import '../../features/client_log_history/data/models/client_log_history_request_body.dart';
 import '../../features/modules/client/diet/data/models/diet_request_body.dart';
 import '../../features/modules/client/phases_cases/form_completion/data/models/form_completion_request_body.dart';
 import '../../features/modules/client/phases_cases/waiting_phase/data/models/current_stage_request_body.dart';
@@ -151,6 +137,15 @@ class ApiService {
     var response = await _dio.post(
         "$baseUrl/CoachikoFollowUpApp_Back_End/coach_area/excersise_assign_to_routine.php",
         data: exerciseAssignmentRequestBody.toJson());
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> getLogsHistory(
+      {required ClientLogsRequestBody clientLogsRequestBody}) async {
+    var response = await _dio.post(
+        "$baseUrl/CoachikoFollowUpApp_Back_End/client_area/get_logs_history.php",
+        data: clientLogsRequestBody.toJson());
+
     return response.data;
   }
 }

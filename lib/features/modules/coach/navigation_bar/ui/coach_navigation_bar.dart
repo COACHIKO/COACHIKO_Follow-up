@@ -15,9 +15,8 @@ import 'package:followupapprefactored/features/modules/client/diet/ui/diet_plan.
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/logic/cubit/routine_cubit.dart';
 import 'package:followupapprefactored/features/modules/coach/all_clients_display/logic/cubit/clients_cubit.dart';
 import 'package:followupapprefactored/features/modules/coach/all_clients_display/ui/all_clients_display.dart';
-import 'package:followupapprefactored/view/screens/setting_page.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
-
+import '../../../../../view/screens/setting_page.dart';
 import '../cubit/coach_navigation_bar_cubit.dart';
 import '../cubit/coach_navigation_bar_state.dart';
 
@@ -34,14 +33,14 @@ class CoachNavigationBar extends StatelessWidget {
       BlocProvider(
         create: (context) {
           return RoutineCubit(routineRepoImp: RoutineRepoImp(ApiService(Dio())))
-            ..getRoutine(); // Ensure initial data fetch
+            ..getRoutine();
         },
         child: const WorkoutPlanPage(),
       ),
       BlocProvider(
         create: (context) {
           return DietCubit(dietRepoImp: DietRepoImp(ApiService(Dio())))
-            ..getDietData(); // Ensure initial data fetch
+            ..getDietData();
         },
         child: const DietPlanPage(),
       ),
@@ -49,7 +48,7 @@ class CoachNavigationBar extends StatelessWidget {
         create: (context) {
           return ClientsCubit(
               clientsRepoImp: ClientsDataRepoImp(ApiService(Dio())))
-            ..getAllClientsData(); // Ensure initial data fetch
+            ..getAllClientsData();
         },
         child: const MyClients(),
       ),
@@ -84,10 +83,7 @@ class CoachNavigationBar extends StatelessWidget {
                   : CColors.black.withOpacity(0.1),
               destinations: [
                 NavigationDestination(
-                  icon: const Icon(
-                    FlutterIcons.dumbbell_faw5s,
-                    size: 22,
-                  ),
+                  icon: const Icon(FlutterIcons.dumbbell_faw5s, size: 22),
                   label: "47".tr,
                 ),
                 NavigationDestination(
