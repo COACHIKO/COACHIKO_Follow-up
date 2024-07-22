@@ -48,6 +48,7 @@ class ClientRoutinsCubit extends Cubit<ClientRoutinesState> {
       emit(RoutineLoading());
       var response = await clientRoutinesRepoImp
           .deleteRoutine(RoutineDeleteRequestBody(routineId: routineId));
+
       showToast(response.message);
     } catch (e) {
       emit(RoutineError(e.toString()));
@@ -150,7 +151,8 @@ class ClientRoutinsCubit extends Cubit<ClientRoutinesState> {
             ),
             CupertinoActionSheetAction(
               onPressed: () async {
-                await deleteRoutine(int.parse(routineId));
+                print("routine od = $routineId , user id = $userId");
+                await deleteRoutine(int.parse(routineId.toString()));
                 await getRoutine(userId);
                 Get.back();
               },

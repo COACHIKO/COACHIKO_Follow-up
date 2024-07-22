@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/ui/exercises_assignment_to_routine.dart';
 import 'package:get/get.dart';
+import '../../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../../core/utils/constants/sizes.dart';
 import '../../../../client/routine/routine_get/data/models/routine_response.dart';
 import '../../../all_clients_display/data/models/clients_response.dart';
@@ -99,11 +100,25 @@ class ExercisesDataWidget extends StatelessWidget {
                             ? Colors.blueAccent.withOpacity(0.5)
                             : null,
                         child: ListTile(
-                          title: Text(
-                            food.exerciseName,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
+                            leading: CircleAvatar(
+                              radius: 25,
+                              child: ClipOval(
+                                child: Image(
+                                  image: AssetImage(
+                                    TImages.excersiseDirectory +
+                                        food.exerciseImage,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              "${food.usedEquipment} ${food.exerciseName}",
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            subtitle: Text(
+                              food.targetMuscles,
+                              style: const TextStyle(color: Colors.white),
+                            )),
                       ),
                     );
                   },

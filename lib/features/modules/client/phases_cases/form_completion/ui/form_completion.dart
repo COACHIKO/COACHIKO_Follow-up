@@ -145,7 +145,7 @@ class FormComplectionBody extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "5".tr,
+                                    "female",
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                       color: Colors.white,
@@ -154,7 +154,7 @@ class FormComplectionBody extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.only(right: 10.w),
                                     child: Text(
-                                      "6".tr,
+                                      "male",
                                       style: TextStyle(
                                           fontSize: 20.sp, color: Colors.white),
                                     ),
@@ -1613,7 +1613,8 @@ class FormComplectionBody extends StatelessWidget {
                             duration: const Duration(milliseconds: 500),
                             curve: Curves.easeInOut);
                       },
-                      icon: getIconBasedOnLanguage(),
+                      icon: const Icon(CupertinoIcons
+                          .chevron_back), // getIconBasedOnLanguage(),
                       color: dark ? CColors.light : CColors.dark,
                     ),
                     SmoothPageIndicator(
@@ -1683,7 +1684,8 @@ class FormComplectionBody extends StatelessWidget {
                           }
                         }
                       },
-                      icon: getIconBackchervon(),
+                      icon: const Icon(CupertinoIcons
+                          .chevron_forward), //getIconBackchervon(),
                       color: dark ? CColors.light : CColors.dark,
                     )
                   ],
@@ -1743,18 +1745,18 @@ class ChooseCard extends StatelessWidget {
   }
 }
 
-Icon getIconBasedOnLanguage() {
-  if (localeController.language == const Locale("en")) {
-    return const Icon(CupertinoIcons.chevron_forward);
-  } else {
-    return const Icon(CupertinoIcons.chevron_back);
-  }
-}
+// Icon getIconBasedOnLanguage() {
+//   if (localeController.language == const Locale("en")) {
+//     return const Icon(CupertinoIcons.chevron_forward);
+//   } else {
+//     return const Icon(CupertinoIcons.chevron_back);
+//   }
+// }
 
-Icon getIconBackchervon() {
-  if (localeController.language == const Locale("en")) {
-    return const Icon(CupertinoIcons.chevron_back);
-  } else {
-    return const Icon(CupertinoIcons.chevron_forward);
-  }
-}
+// Icon getIconBackchervon() {
+//   if (localeController.language == const Locale("en")) {
+//     return const Icon(CupertinoIcons.chevron_back);
+//   } else {
+//     return const Icon(CupertinoIcons.chevron_forward);
+//   }
+// }

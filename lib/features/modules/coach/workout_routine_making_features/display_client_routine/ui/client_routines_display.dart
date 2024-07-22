@@ -33,7 +33,12 @@ class ClientRoutineDisplay extends StatelessWidget {
           iconTheme: const IconThemeData(color: Colors.blueAccent),
           leading: IconButton(
               onPressed: () {
-                Get.offAll(const MyClients());
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ClientProfilePage(
+                              clientData: clientData,
+                            )));
               },
               icon: const Icon(Icons.arrow_back)),
         ),
@@ -137,11 +142,16 @@ class ClientRoutineDisplayBody extends StatelessWidget {
                                             ""
                                         ? ElevatedButton(
                                             onPressed: () async {
-                                              Get.to(ExercisesSelection(
-                                                lastSelectedExercises: const [],
-                                                clientData: clientData,
-                                                routine: routine,
-                                              ));
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ExercisesSelection(
+                                                            lastSelectedExercises: const [],
+                                                            clientData:
+                                                                clientData,
+                                                            routine: routine,
+                                                          )));
                                             },
                                             child: const Text(
                                               'Add Exercise to The Routine',

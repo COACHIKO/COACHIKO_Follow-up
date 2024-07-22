@@ -43,8 +43,6 @@ class ClientRoutinesRepoImp implements ClientRoutinesRepo {
     try {
       var response = await _apiService.routineDelete(
           routineDeleteRequestBody: routineDeleteRequestBody);
-      print(response);
-
       var parsedData = RoutineCrudResponse.fromJson(response);
       return parsedData;
     } catch (e) {

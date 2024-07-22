@@ -48,17 +48,18 @@ class ExercisesCubit extends Cubit<ExercisesState> {
     if (searchController.text.isEmpty) {
       emit(LoadedSuccessfullyFoodsState(_allExercises));
     } else {
-      List<Exercises> filteredFoods = _allExercises
-          .where((food) => food.exerciseName
-              .toLowerCase()
-              .contains(searchController.text.toLowerCase()))
-          .toList();
+      String query = searchController.text.toLowerCase();
+      List<Exercises> filteredFoods = _allExercises.where((exercise) {
+        return exercise.exerciseName.toLowerCase().contains(query) ||
+            exercise.targetMuscles.toLowerCase().contains(query) ||
+            exercise.usedEquipment.toLowerCase().contains(query);
+      }).toList();
       emit(LoadedSuccessfullyFoodsState(filteredFoods));
     }
   }
 
-  void toggleFoodSelection(Exercises food) {
-    final index = _allExercises.indexOf(food);
+  void toggleFoodSelection(Exercises exercise) {
+    final index = _allExercises.indexOf(exercise);
     if (index != -1) {
       _allExercises[index].isSelected = !_allExercises[index].isSelected;
       searchFoods();

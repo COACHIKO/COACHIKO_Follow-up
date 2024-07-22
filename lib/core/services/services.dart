@@ -1,34 +1,44 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../localization/changelocal.dart';
 import '../notification/notfication.dart';
 
-class MyServices extends GetxService {
-   late  SharedPreferences sharedPreferences ;
-   NotificationService notificationService = NotificationService();
-  Future<MyServices> init() async {
-   sharedPreferences =  await SharedPreferences.getInstance() ;
-   notificationService.initializeNotification();
-   FirebaseMessaging.onMessage.listen((event) {
-     if(event.notification!=null){
-       //print("======= Forground Message =======");
+class MyServices {
+  static final MyServices _instance = MyServices._internal();
 
-        notificationService.showNotification(title: event.notification!.title.toString(), body: event.notification!.body.toString());
+  late SharedPreferences sharedPreferences;
+  NotificationService notificationService = NotificationService();
 
-     }
-   });
-  return this ;
+  factory MyServices() {
+    return _instance;
   }
 
+  MyServices._internal();
+
+  Future<void> init() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    notificationService.initializeNotification();
+    FirebaseMessaging.onMessage.listen((event) {
+      if (event.notification != null) {
+        notificationService.showNotification(
+          title: event.notification!.title.toString(),
+          body: event.notification!.body.toString(),
+        );
+      }
+    });
+  }
 }
-LocaleController localeController = LocaleController();
 
-
-initialServices() async  {
-  await Get.putAsync(() => MyServices().init()) ;
-  Get.put(()=>localeController.onInit());
-
-
+class LocaleController {
+  void onInit() {
+    // Add your locale initialization logic here
+  }
 }
 
+Future<void> initialServices() async {
+  MyServices myServices = MyServices();
+  await myServices.init();
+
+  LocaleController localeController = LocaleController();
+  localeController.onInit();
+}

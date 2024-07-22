@@ -7,9 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/features/modules/client/phases_cases/waiting_phase/data/repository/current_state_repo_impl.dart';
 import 'package:followupapprefactored/view/screens/fork_usering_page.dart';
-import 'package:get/get.dart';
-import 'core/localization/changelocal.dart';
-import 'core/localization/translation.dart';
 import 'core/services/services.dart';
 import 'core/utils/constants/text_strings.dart';
 import 'core/utils/theme/theme.dart';
@@ -22,8 +19,7 @@ import 'features/modules/client/phases_cases/waiting_phase/ui/current_stage_page
 import 'features/modules/coach/navigation_bar/ui/coach_navigation_bar.dart';
 import 'firebase_options.dart';
 
-LocaleController localeController = LocaleController();
-final myServices = Get.put(MyServices());
+final myServices = MyServices();
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,12 +28,11 @@ void main() async {
   );
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await initialServices();
-  runApp(COACHIKOFollowApp());
+  runApp(const COACHIKOFollowApp());
 }
 
 class COACHIKOFollowApp extends StatelessWidget {
-  COACHIKOFollowApp({super.key});
-  final LocaleController langController = Get.put(LocaleController());
+  const COACHIKOFollowApp({super.key});
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -45,13 +40,11 @@ class COACHIKOFollowApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, child) {
-        return GetMaterialApp(
+        return MaterialApp(
           title: CTexts.appName,
           themeMode: ThemeMode.system,
           theme: TAppTheme.lightTheme,
           darkTheme: TAppTheme.darkTheme,
-          locale: langController.language,
-          translations: MyTranslation(),
           initialRoute: initialRoute,
           routes: allAppRoutes,
           debugShowCheckedModeBanner: false,
