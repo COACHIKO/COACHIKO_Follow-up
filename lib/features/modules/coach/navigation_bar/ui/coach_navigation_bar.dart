@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
-import 'package:get/get.dart';
 import 'package:icons_flutter/icons_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:dio/dio.dart';
@@ -16,6 +15,7 @@ import 'package:followupapprefactored/features/modules/client/routine/routine_ge
 import 'package:followupapprefactored/features/modules/coach/all_clients_display/logic/cubit/clients_cubit.dart';
 import 'package:followupapprefactored/features/modules/coach/all_clients_display/ui/all_clients_display.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
+import '../../../../../core/localization/app_localizations.dart';
 import '../../../../../view/screens/setting_page.dart';
 import '../cubit/coach_navigation_bar_cubit.dart';
 import '../cubit/coach_navigation_bar_state.dart';
@@ -84,19 +84,19 @@ class CoachNavigationBar extends StatelessWidget {
               destinations: [
                 NavigationDestination(
                   icon: const Icon(FlutterIcons.dumbbell_faw5s, size: 22),
-                  label: "47".tr,
+                  label: AppLocalizations.of(context).translate('workout'),
                 ),
                 NavigationDestination(
                   icon: const Icon(FlutterIcons.food_apple_outline_mco),
-                  label: "54".tr,
+                  label: AppLocalizations.of(context).translate('diet'),
                 ),
                 NavigationDestination(
                   icon: const Icon(Iconsax.people),
-                  label: "51".tr,
+                  label: AppLocalizations.of(context).translate('clients'),
                 ),
                 NavigationDestination(
                   icon: const Icon(Iconsax.user),
-                  label: "50".tr,
+                  label: AppLocalizations.of(context).translate('settings'),
                 ),
               ],
             );

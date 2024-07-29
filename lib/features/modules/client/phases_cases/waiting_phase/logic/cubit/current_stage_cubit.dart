@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/features/modules/client/phases_cases/waiting_phase/data/models/current_stage_request_body.dart';
+import '../../../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../../../../../../core/utils/constants/colors.dart';
-import '../../../../../../../main.dart';
 import '../../data/repository/current_state_repo_impl.dart';
 import 'current_stage_state.dart';
 
@@ -18,8 +18,7 @@ class CurrentStageCubit extends Cubit<CurrentStageState> {
     try {
       emit(CurrentStageLoading());
       var response = await currentStateRepoImpl.getCurrentStage(
-          CurrentStageRequestBody(
-              id: myServices.sharedPreferences.getInt("user")!.toInt()));
+          CurrentStageRequestBody(id: SharedPref().getInt("user")!.toInt()));
       emit(CurrentStageUpdate(response));
     } catch (e) {
       emit(CurrentStageError(e.toString()));

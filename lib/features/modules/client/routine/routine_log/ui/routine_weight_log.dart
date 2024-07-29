@@ -141,7 +141,9 @@ class RoutineWeightLogScreen extends StatelessWidget {
                               color: state.isFinishedLists[exerciseIndex]
                                       [setIndex]
                                   ? const Color(0xFF2C6111)
-                                  : Colors.black,
+                                  : dark
+                                      ? Colors.black
+                                      : Colors.white,
                               child: Row(
                                 children: [
                                   Text("${setIndex + 1}"),

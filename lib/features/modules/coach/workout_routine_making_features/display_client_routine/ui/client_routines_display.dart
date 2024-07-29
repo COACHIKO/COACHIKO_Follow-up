@@ -6,10 +6,8 @@ import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/models/routine_response.dart';
-import 'package:followupapprefactored/features/modules/coach/all_clients_display/ui/all_clients_display.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/display_client_routine/data/repository/client_routines_repo_impl.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/ui/exercises_assignment_to_routine.dart';
-import 'package:get/get.dart';
 import '../../../all_clients_display/data/models/clients_response.dart';
 import '../../../specific_client_profile/ui/client_profile_page.dart';
 import '../../exercises_selection/data/models/exercisesDataBase.dart';
@@ -196,13 +194,19 @@ class ClientRoutineDisplayBody extends StatelessWidget {
                                                 return selectedExercises;
                                               }
 
-                                              Get.to(Exercisesassignment(
-                                                clientData: clientData,
-                                                routine: routine,
-                                                selectedExercises:
-                                                    addExercisesToList(
-                                                        routine.exercises),
-                                              ));
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Exercisesassignment(
+                                                    clientData: clientData,
+                                                    routine: routine,
+                                                    selectedExercises:
+                                                        addExercisesToList(
+                                                            routine.exercises),
+                                                  ),
+                                                ),
+                                              );
                                             },
                                             child: const Text(
                                               'Preview Routine',

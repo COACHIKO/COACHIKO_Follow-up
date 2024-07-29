@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/ui/exercises_assignment_to_routine.dart';
-import 'package:get/get.dart';
 import '../../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../../core/utils/constants/sizes.dart';
+import '../../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../client/routine/routine_get/data/models/routine_response.dart';
 import '../../../all_clients_display/data/models/clients_response.dart';
+import '../data/models/exercisesDataBase.dart';
 import '../data/repository/exercises_repo_impl.dart';
 import '../logic/cubit/exercises_cubit.dart';
 import '../logic/cubit/exercises_state.dart';
@@ -64,6 +65,8 @@ class ExercisesDataWidget extends StatelessWidget {
         } else if (state is FoodsStateError) {
           return Center(child: Text('Error: ${state.error}'));
         } else if (state is LoadedSuccessfullyFoodsState) {
+          List<Exercises> selectedFoods =
+              context.read<ExercisesCubit>().selectedFoods();
           return Column(
             children: [
               TextFormField(
@@ -88,6 +91,8 @@ class ExercisesDataWidget extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: state.exercises.length,
                   itemBuilder: (context, index) {
+                    var dark = THelperFunctions.isDarkMode(context);
+
                     final food = state.exercises[index];
                     return GestureDetector(
                       onTap: () {
@@ -113,11 +118,13 @@ class ExercisesDataWidget extends StatelessWidget {
                             ),
                             title: Text(
                               "${food.usedEquipment} ${food.exerciseName}",
-                              style: const TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                  color: dark ? Colors.white : Colors.black),
                             ),
                             subtitle: Text(
                               food.targetMuscles,
-                              style: const TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                  color: dark ? Colors.white : Colors.black),
                             )),
                       ),
                     );
@@ -130,12 +137,16 @@ class ExercisesDataWidget extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Get.off(Exercisesassignment(
-                              routine: routine,
-                              clientData: clientData,
-                              selectedExercises: context
-                                  .read<ExercisesCubit>()
-                                  .selectedFoods()));
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Exercisesassignment(
+                                routine: routine,
+                                clientData: clientData,
+                                selectedExercises: selectedFoods,
+                              ),
+                            ),
+                          );
                         },
                         child: const Text("Set Exercises"),
                       ),

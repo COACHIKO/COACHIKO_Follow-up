@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import '../../../routine_log/ui/routine_weight_log.dart';
@@ -26,10 +27,27 @@ class RoutineCubit extends Cubit<RoutineState> {
     }
   }
 
-  void startRoutine(Routine routine) {
-    Get.to(
-      () => RoutineWeightLogScreen(routine: routine),
-      duration: const Duration(milliseconds: 250),
+  void startRoutine(Routine routine, context) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            RoutineWeightLogScreen(routine: routine),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          var begin = Offset(1.0, 0.0);
+          var end = Offset.zero;
+          var curve = Curves.ease;
+
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 250),
+      ),
     );
   }
 }

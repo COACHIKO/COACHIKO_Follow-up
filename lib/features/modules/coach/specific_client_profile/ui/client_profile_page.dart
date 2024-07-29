@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:followupapprefactored/features/modules/coach/diet_making_features/food_selection/ui/food_selection_page.dart';
-import 'package:get/get.dart';
 import '../../../../../core/networking/api_service.dart';
+import '../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
 import '../../../../client_log_history/data/repository/get_log_history_repo_imp.dart';
@@ -11,7 +11,6 @@ import '../../../../client_log_history/logic/cubit/log_history_cubit.dart';
 import '../../../../client_log_history/ui/logs_history.dart';
 import '../../../client/phases_cases/form_completion/ui/form_completion.dart';
 import '../../all_clients_display/data/models/clients_response.dart';
-import '../../../../../main.dart';
 import '../../navigation_bar/ui/coach_navigation_bar.dart';
 import '../../workout_routine_making_features/display_client_routine/ui/client_routines_display.dart';
 
@@ -29,7 +28,12 @@ class ClientProfilePage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Get.offAll(const CoachNavigationBar(initialIndex: 2));
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) =>
+                        const CoachNavigationBar(initialIndex: 2)),
+                (route) => false,
+              );
             },
             icon: const Icon(Icons.arrow_back)),
         centerTitle: true,
@@ -147,8 +151,7 @@ class ClientProfilePage extends StatelessWidget {
                 clientData.currentStep! > 1
                     ? SizedBox(
                         width: double.infinity,
-                        child: myServices.sharedPreferences.getInt("user") ==
-                                clientData.id
+                        child: SharedPref().getInt("user") == clientData.id
                             ? ElevatedButton(
                                 onPressed: () {
                                   Navigator.pushReplacement(
@@ -197,7 +200,7 @@ class ClientProfilePage extends StatelessWidget {
                       )
                     : const SizedBox.shrink(),
                 const SizedBox(height: TSizes.spaceBtwItems),
-                myServices.sharedPreferences.getInt("user") == clientData.id
+                SharedPref().getInt("user") == clientData.id
                     ? Column(
                         children: [
                           SizedBox(

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 
 class TDeviceUtils {
   static void hideKeyboard(BuildContext context) {
@@ -26,23 +25,12 @@ class TDeviceUtils {
   }
 
   static void setFullScreen(bool enable) {
-    SystemChrome.setEnabledSystemUIMode(enable ? SystemUiMode.immersiveSticky : SystemUiMode.edgeToEdge);
-  }
-
-  static double getScreenHeight() {
-    return MediaQuery.of(Get.context!).size.height;
+    SystemChrome.setEnabledSystemUIMode(
+        enable ? SystemUiMode.immersiveSticky : SystemUiMode.edgeToEdge);
   }
 
   static double getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
-  }
-
-  static double getPixelRatio() {
-    return MediaQuery.of(Get.context!).devicePixelRatio;
-  }
-
-  static double getStatusBarHeight() {
-    return MediaQuery.of(Get.context!).padding.top;
   }
 
   static double getBottomNavigationBarHeight() {
@@ -53,18 +41,9 @@ class TDeviceUtils {
     return kToolbarHeight;
   }
 
-  static double getKeyboardHeight() {
-    final viewInsets = MediaQuery.of(Get.context!).viewInsets;
-    return viewInsets.bottom;
-  }
-
-  static Future<bool> isKeyboardVisible() async {
-    final viewInsets = View.of(Get.context!).viewInsets;
-    return viewInsets.bottom > 0;
-  }
-
   static Future<bool> isPhysicalDevice() async {
-    return defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS;
+    return defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS;
   }
 
   static void vibrate(Duration duration) {
@@ -72,7 +51,8 @@ class TDeviceUtils {
     Future.delayed(duration, () => HapticFeedback.vibrate());
   }
 
-  static Future<void> setPreferredOrientations(List<DeviceOrientation> orientations) async {
+  static Future<void> setPreferredOrientations(
+      List<DeviceOrientation> orientations) async {
     await SystemChrome.setPreferredOrientations(orientations);
   }
 
@@ -81,7 +61,8 @@ class TDeviceUtils {
   }
 
   static void showStatusBar() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
   }
 
   static Future<bool> hasInternetConnection() async {
@@ -108,7 +89,6 @@ class TDeviceUtils {
   //     throw 'Could not launch $url';
   //   }
   // }
-
 
 // Add more device utility methods as per your specific requirements.
 }

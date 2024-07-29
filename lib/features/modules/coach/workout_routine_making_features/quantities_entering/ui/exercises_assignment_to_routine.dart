@@ -7,7 +7,6 @@ import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/display_client_routine/ui/client_routines_display.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/exercises_selection/ui/exercises_selection_page.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/data/repository/exercises_assignment_repo_imp.dart';
-import 'package:get/get.dart';
 import '../../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../../core/utils/validators/validation.dart';
 import '../../../../client/routine/routine_get/data/models/routine_response.dart';
@@ -21,11 +20,11 @@ class Exercisesassignment extends StatelessWidget {
   final List<Exercises> selectedExercises;
 
   const Exercisesassignment({
-    Key? key,
+    super.key,
     required this.clientData,
     required this.selectedExercises,
     required this.routine,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -404,11 +403,16 @@ class ExercisesassignmentBody extends StatelessWidget {
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () async {
-                    Get.to(ExercisesSelection(
-                      clientData: cubit.clientData,
-                      routine: cubit.routine,
-                      lastSelectedExercises: cubit.getSelectedExerciseIds(),
-                    ));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ExercisesSelection(
+                          clientData: cubit.clientData,
+                          routine: cubit.routine,
+                          lastSelectedExercises: cubit.getSelectedExerciseIds(),
+                        ),
+                      ),
+                    );
                   },
                   child: const Text("Add Exercise to The Routine"),
                 ),
@@ -421,9 +425,16 @@ class ExercisesassignmentBody extends StatelessWidget {
                     onPressed: () async {
                       if (cubit.areTextFormFieldsValid() == true) {
                         await cubit.assignExercises();
-                        Get.offAll(ClientRoutineDisplay(
-                            id: cubit.clientData.id!,
-                            clientData: cubit.clientData));
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ClientRoutineDisplay(
+                              id: cubit.clientData.id!,
+                              clientData: cubit.clientData,
+                            ),
+                          ),
+                          (route) => false,
+                        );
                       } else {}
                     },
                     child: const Text("Submit Routine"),

@@ -1,13 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../core/utils/helpers/helper_functions.dart';
 import '../../../core/utils/constants/colors.dart';
 import '../../core/networking/api_service.dart';
+import '../../core/services/shared_pref/shared_pref.dart';
 import '../../core/utils/constants/image_strings.dart';
 import '../../core/utils/constants/sizes.dart';
-import '../../main.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -56,16 +55,14 @@ class SettingScreen extends StatelessWidget {
                         ),
                         contentPadding: const EdgeInsets.all(0),
                         title: Text(
-                          "${myServices.sharedPreferences.getString("first_name")} ${myServices.sharedPreferences.getString("second_name")}",
+                          "${SharedPref().getString("first_name")} ${SharedPref().getString("second_name")}",
                           style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
                         subtitle: Text(
-                          myServices.sharedPreferences
-                              .getString("email")
-                              .toString(),
+                          SharedPref().getString("email").toString(),
                           style: const TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w400,
@@ -132,8 +129,9 @@ class SettingScreen extends StatelessWidget {
                     width: double.infinity,
                     child: OutlinedButton(
                       onPressed: () async {
-                        myServices.sharedPreferences.clear();
-                        Get.offAllNamed(("/forkUsering"));
+                        SharedPref().clearPreferences();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            "/forkUsering", (route) => false);
                       },
                       child: const Text("Log Out"),
                     ),

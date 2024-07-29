@@ -1,6 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../localization/changelocal.dart';
 import '../notification/notfication.dart';
 
 class MyServices {
@@ -29,16 +28,7 @@ class MyServices {
   }
 }
 
-class LocaleController {
-  void onInit() {
-    // Add your locale initialization logic here
-  }
-}
-
 Future<void> initialServices() async {
   MyServices myServices = MyServices();
   await myServices.init();
-
-  LocaleController localeController = LocaleController();
-  localeController.onInit();
 }

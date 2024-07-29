@@ -78,7 +78,7 @@ class ClientRoutinsCubit extends Cubit<ClientRoutinesState> {
                   onPressed: () async {
                     await insertRoutine(routineName.text, userId);
                     await getRoutine(userId);
-                    Get.back();
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Insert'),
                 ),

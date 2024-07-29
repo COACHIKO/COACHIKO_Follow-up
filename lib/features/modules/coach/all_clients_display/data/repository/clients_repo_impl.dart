@@ -1,5 +1,5 @@
-import 'package:followupapprefactored/main.dart';
 import '../../../../../../core/networking/api_service.dart';
+import '../../../../../../core/services/shared_pref/shared_pref.dart';
 import '../models/clients_data_request_body.dart';
 import '../models/clients_response.dart';
 import 'client_repo.dart';
@@ -14,7 +14,7 @@ class ClientsDataRepoImp implements ClientsDataRepo {
     try {
       var response = await _apiService.getClients(
           clientsDataRequestBody: ClientsDataRequestBody(
-              user: myServices.sharedPreferences.getInt("user").toString()));
+              user: SharedPref().getInt("user").toString()));
 
       var parsedData = ClientsDataResponse.fromJson(response);
       return parsedData.clients!;

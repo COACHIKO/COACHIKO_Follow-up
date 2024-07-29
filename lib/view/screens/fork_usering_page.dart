@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import '../../core/utils/constants/image_strings.dart';
-import '../../core/utils/constants/text_strings.dart';
 
 class ForkUseringPage extends StatelessWidget {
   const ForkUseringPage({super.key});
   @override
   Widget build(BuildContext context) {
-    // AuthService authService = AuthService();
     return Scaffold(
         body: Scaffold(
       backgroundColor: Colors.black,
@@ -35,25 +32,25 @@ class ForkUseringPage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.white),
+                    backgroundColor: WidgetStatePropertyAll(Colors.white),
                   ),
                   onPressed: () async => () {},
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Image(
+                          Image(
                             width: 20,
                             image: AssetImage(TImages.google),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 5,
                           ),
                           Text(
-                            CTexts.signInWithGoogle,
-                            style: const TextStyle(
+                            "Sign up With Google",
+                            style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -67,13 +64,13 @@ class ForkUseringPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Get.toNamed("/signup");
+                    Navigator.pushNamed(context, "/signup");
                   },
-                  child: SizedBox(
+                  child: const SizedBox(
                     width: double.infinity,
                     child: Text(
                       textAlign: TextAlign.center,
-                      CTexts.signInWithEmail,
+                      "Sign up with Email",
                     ),
                   ),
                 ),
@@ -82,10 +79,10 @@ class ForkUseringPage extends StatelessWidget {
                 ),
                 InkWell(
                     onTap: () {
-                      Get.toNamed("/login");
+                      Navigator.pushNamed(context, "/login");
                     },
                     child: Text(
-                      CTexts.haveAccLogin,
+                      "Have an account? Log in",
                       style: Theme.of(context)
                           .textTheme
                           .labelLarge!

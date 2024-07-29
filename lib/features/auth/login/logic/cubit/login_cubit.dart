@@ -2,12 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:followupapprefactored/features/modules/client/navigation_bar/ui/client_navigation_bar.dart';
-import 'package:followupapprefactored/features/modules/client/phases_cases/form_completion/ui/form_completion.dart';
-import 'package:followupapprefactored/features/modules/client/phases_cases/waiting_phase/ui/current_stage_page.dart';
-import 'package:get/get.dart';
-import '../../../../../main.dart';
-import '../../../../modules/coach/navigation_bar/ui/coach_navigation_bar.dart';
+import '../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../data/models/login_request_body.dart';
 import '../../data/repository/login_repo_impl.dart';
 import 'login_state.dart';
@@ -33,55 +28,55 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(rememberMe: value ?? false));
   }
 
-  void getToken() async {
+  Future<String?> getToken() async {
     String? token = await FirebaseMessaging.instance.getToken();
-    emit(state.copyWith(firebaseToken: token ?? ''));
+    return token;
   }
 
-  void signIn() async {
+  void signIn(context) async {
     if (state.formKey.currentState!.validate()) {
+      var token = await getToken();
       var response = await loginRepoImp.login(
         LoginRequestBody(
           username: state.username,
           password: state.password,
-          token: state.firebaseToken,
+          token: token!,
         ),
         state.rememberMe,
       );
 
       if (response.status == "Success") {
-        myServices.sharedPreferences.setInt("user", response.userData!.id);
-        myServices.sharedPreferences
-            .setString("first_name", response.userData!.firstName);
-        myServices.sharedPreferences
-            .setString("second_name", response.userData!.secondName);
-        myServices.sharedPreferences
-            .setString("email", response.userData!.email);
-        myServices.sharedPreferences
+        SharedPref().setInt("user", response.userData!.id);
+        SharedPref().setString("first_name", response.userData!.firstName);
+        SharedPref().setString("second_name", response.userData!.secondName);
+        SharedPref().setString("email", response.userData!.email);
+        SharedPref()
             .setInt("RelatedtoCoachID", response.userData!.relatedToCoachID);
-        myServices.sharedPreferences
-            .setInt("currentStep", response.userData!.currentStep);
-        myServices.sharedPreferences
+        SharedPref().setInt("currentStep", response.userData!.currentStep);
+        SharedPref()
             .setInt("isCoach", response.userData!.isCoach == "Coach" ? 1 : 0);
-        myServices.sharedPreferences.setBool("rememberMe", state.rememberMe);
+        SharedPref().setBool("rememberMe", state.rememberMe);
 
         if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 0) {
-          Get.offAll(const FormComplectionView());
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/formComplection", (route) => false);
         } else if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 1) {
-          Get.offAll(const CurrentStage());
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/currentStage", (route) => false);
         } else if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 2) {
-          Get.offAll(const ClientNavigationBar());
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/CoachHome", (route) => false);
         } else {
-          Get.offAll(const CoachNavigationBar());
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/CoachHome", (route) => false);
         }
 
         // Show welcome message
         Fluttertoast.showToast(
-          msg:
-              'Welcome, ${myServices.sharedPreferences.getString("first_name")}',
+          msg: 'Welcome, ${SharedPref().getString("first_name")}',
           backgroundColor: Colors.green,
           textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,

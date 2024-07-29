@@ -127,7 +127,10 @@ class LoginPage extends StatelessWidget {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: cubit.signIn,
+                                onPressed: () async {
+                                  // cubit.getToken();
+                                  cubit.signIn(context);
+                                },
                                 child: Text(CTexts.signIn),
                               ),
                             ),

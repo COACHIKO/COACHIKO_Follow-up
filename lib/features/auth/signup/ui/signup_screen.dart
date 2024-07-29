@@ -352,7 +352,7 @@ class NamesTextFormFields extends StatelessWidget {
             onChanged: signUpCubit.setFirstName,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              labelText: CTexts.firstName,
+              labelText: "First Name",
               fillColor: CColors.secondary,
               filled: dark ? true : false,
               hintStyle: TextStyle(color: Colors.white, fontSize: 14.sp),
@@ -367,7 +367,7 @@ class NamesTextFormFields extends StatelessWidget {
             onChanged: signUpCubit.setSecondName,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              labelText: CTexts.secondName,
+              labelText: "Second Name",
               fillColor: CColors.secondary,
               filled: dark ? true : false,
               hintStyle: TextStyle(color: Colors.white, fontSize: 14.sp),

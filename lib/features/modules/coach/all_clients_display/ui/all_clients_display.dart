@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:followupapprefactored/view/widgets/custom_appbar.dart';
-import 'package:get/get.dart';
 import '../../../../../../core/utils/constants/colors.dart';
 import '../../../../../../core/utils/helpers/helper_functions.dart';
-import '../../../../../../main.dart';
+import '../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../specific_client_profile/ui/client_profile_page.dart';
 import '../logic/cubit/clients_cubit.dart';
 import '../logic/cubit/clients_state.dart';
@@ -52,7 +51,7 @@ class MyClients extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              myServices.sharedPreferences.getInt("user") !=
+                              SharedPref().getInt("user") !=
                                       state.clients[index].id
                                   ? "Client: ${state.clients[index].firstName}${state.clients[index].secondName}"
                                   : "Its You",

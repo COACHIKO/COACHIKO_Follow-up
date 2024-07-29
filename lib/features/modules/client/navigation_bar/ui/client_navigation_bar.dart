@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:followupapprefactored/features/client_log_history/data/repository/get_log_history_repo_imp.dart';
 import 'package:followupapprefactored/features/client_log_history/ui/logs_history.dart';
-import 'package:followupapprefactored/main.dart';
 import 'package:get/get.dart';
 import 'package:icons_flutter/icons_flutter.dart';
 import 'package:iconsax/iconsax.dart';
@@ -18,6 +17,7 @@ import 'package:followupapprefactored/features/modules/client/routine/routine_ge
 import 'package:followupapprefactored/view/screens/setting_page.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
 
+import '../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../../../client_log_history/logic/cubit/log_history_cubit.dart';
 import '../logic/cubit/client_navigation_bar_cubit.dart';
 import '../logic/cubit/client_navigation_bar_state.dart';
@@ -36,11 +36,10 @@ class ClientNavigationBar extends StatelessWidget {
           create: (context) {
             return LogHistoryCubit(
                 getLogHistoryRepoImp: GetLogHistoryRepoImp(ApiService(Dio())))
-              ..getLogsHistory(myServices.sharedPreferences.getInt("user"));
+              ..getLogsHistory(SharedPref().getInt("user"));
           },
           child: LogsHistoryPage(
-            name:
-                myServices.sharedPreferences.getString("first_name").toString(),
+            name: SharedPref().getString("first_name").toString(),
           )),
       BlocProvider(
           create: (context) {

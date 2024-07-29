@@ -17,7 +17,7 @@ class ApiService {
 //
   ApiService(this._dio);
   // String baseUrl = "https://d200-156-204-91-232.ngrok-free.app";
-  String baseUrl = "http://192.168.1.6";
+  String baseUrl = "http://192.168.1.7";
 
   Future<List<dynamic>> getFoodsData() async {
     var response = await _dio.get(

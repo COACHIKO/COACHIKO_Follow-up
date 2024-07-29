@@ -2,7 +2,6 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 class NotificationService {
-
   Future<void> initializeNotification() async {
     await AwesomeNotifications().initialize(
       null,
@@ -31,10 +30,9 @@ class NotificationService {
     );
 
     await AwesomeNotifications().isNotificationAllowed().then(
-          (isAllowed) async {
+      (isAllowed) async {
         if (!isAllowed) {
-          await AwesomeNotifications()
-              .requestPermissionToSendNotifications();
+          await AwesomeNotifications().requestPermissionToSendNotifications();
         }
       },
     );
@@ -62,7 +60,8 @@ class NotificationService {
     debugPrint('onDismissActionReceivedMethod');
   }
 
-  static Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {}
+  static Future<void> onActionReceivedMethod(
+      ReceivedAction receivedAction) async {}
 
   Future<void> showNotification({
     required final String title,
@@ -97,11 +96,11 @@ class NotificationService {
       actionButtons: actionButtons,
       schedule: scheduled
           ? NotificationInterval(
-        interval: interval,
-        timeZone:
-        await AwesomeNotifications().getLocalTimeZoneIdentifier(),
-        preciseAlarm: true,
-      )
+              interval: interval,
+              timeZone:
+                  await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+              preciseAlarm: true,
+            )
           : null,
     );
   }

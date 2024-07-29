@@ -265,6 +265,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.1"
+  day_night_switch:
+    dependency: "direct main"
+    description:
+      name: day_night_switch
+      sha256: a9ff6a54533cf46bbb1edea1267f9c02b1c9e9d6240017db8e7b8e9ba844666f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
+  day_night_switcher:
+    dependency: "direct main"
+    description:
+      name: day_night_switcher
+      sha256: "37354e55fdc0b49d1bea863121cc5a99ab952669f4f349cdd7fe78de2e62a72a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0+1"
   dbus:
     dependency: transitive
     description:
@@ -590,6 +606,19 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.1.0"
+  flutter_localization:
+    dependency: "direct main"
+    description:
+      name: flutter_localization
+      sha256: faaeb1eba307473032e2c2af737f36ced61fc98735608410d0a6d9c231b50912
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_native_splash:
     dependency: "direct main"
     description:
@@ -673,7 +702,7 @@ packages:
     source: hosted
     version: "4.0.0"
   get:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: get
       sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e

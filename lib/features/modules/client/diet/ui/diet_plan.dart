@@ -80,22 +80,14 @@ class LoadedDataUi extends StatelessWidget {
         .map((e) => e.carbohydrates * e.quantity)
         .reduce((value, element) => value + element);
     double carbohydrateNeed = (state.dietData.tdee! * 0.30) / 4;
-
     double carbohydratePercentage =
         (totalCarbohydrate / carbohydrateNeed) * 100;
 
     double totalFat = state.dietData.dietData!
         .map((e) => e.fats * e.quantity)
         .reduce((value, element) => value + element);
-
-    // Calculate fat need (30% of TDEE divided by 9)
     double fatNeed = (state.dietData.tdee! * 0.30) / 9;
-
-    // Calculate the percentage of fat need met
     double fatPercentage = (totalFat / fatNeed) * 100;
-
-    // Ensure the percentage does not exceed 100%
-    double displayFatPercentage = fatPercentage > 100 ? 1 : fatPercentage / 100;
 
     return Scaffold(
       body: Column(
@@ -138,7 +130,7 @@ class LoadedDataUi extends StatelessWidget {
                             Text(
                                 "Energy - ${selectedFood != null ? selectedFood['calories'].floor() : totalCalories.toInt()} / ${state.dietData.tdee} kcal"),
                             Text(
-                                "${selectedFood != null ? selectedFood['caloriesPercentage'].floor() : energyPercentage.floor()} %"),
+                                "${selectedFood != null ? (selectedFood['caloriesPercentage'].isFinite ? selectedFood['caloriesPercentage'].floor() : 0) : (energyPercentage.isFinite ? energyPercentage.floor() : 0)} %"),
                           ],
                         ),
                       ),
@@ -150,11 +142,15 @@ class LoadedDataUi extends StatelessWidget {
                         percent: selectedFood != null
                             ? (selectedFood['caloriesPercentage'] > 100
                                 ? 1
-                                : selectedFood['caloriesPercentage'] / 100)
+                                : (selectedFood['caloriesPercentage'].isFinite
+                                    ? selectedFood['caloriesPercentage'] / 100
+                                    : 0))
                             : (energyPercentage > 100
                                 ? 1
-                                : energyPercentage / 100),
-                        progressColor: dark ? Colors.white : CColors.dark,
+                                : (energyPercentage.isFinite
+                                    ? energyPercentage / 100
+                                    : 0)),
+                        progressColor: dark ? Colors.white : Colors.blueAccent,
                       ),
                       SizedBox(height: 5.h),
                       Column(
@@ -169,7 +165,7 @@ class LoadedDataUi extends StatelessWidget {
                                 Text(
                                     "Protein - ${selectedFood != null ? selectedFood['protein'].floor() : totalProtein.toInt()} / ${state.dietData.targetProtein} g"),
                                 Text(
-                                    "${selectedFood != null ? selectedFood['proteinPercentage'].floor() : proteinPercentage.floor()} %"),
+                                    "${selectedFood != null ? (selectedFood['proteinPercentage'].isFinite ? selectedFood['proteinPercentage'].floor() : 0) : (proteinPercentage.isFinite ? proteinPercentage.floor() : 0)} %"),
                               ],
                             ),
                           ),
@@ -181,10 +177,16 @@ class LoadedDataUi extends StatelessWidget {
                             percent: selectedFood != null
                                 ? (selectedFood['proteinPercentage'] > 100
                                     ? 1
-                                    : selectedFood['proteinPercentage'] / 100)
+                                    : (selectedFood['proteinPercentage']
+                                            .isFinite
+                                        ? selectedFood['proteinPercentage'] /
+                                            100
+                                        : 0))
                                 : (proteinPercentage > 100
                                     ? 1
-                                    : proteinPercentage / 100),
+                                    : (proteinPercentage.isFinite
+                                        ? proteinPercentage / 100
+                                        : 0)),
                             progressColor: dark ? Colors.green : Colors.green,
                           ),
                         ],
@@ -202,7 +204,7 @@ class LoadedDataUi extends StatelessWidget {
                                 Text(
                                     "Total Carbohydrates - ${selectedFood != null ? selectedFood['carbohydrates'].floor() : totalCarbohydrate.toInt()} g"),
                                 Text(
-                                    "${selectedFood != null ? selectedFood['carbohydratesPercentage'].floor() : carbohydratePercentage.floor()} %"),
+                                    "${selectedFood != null ? (selectedFood['carbohydratesPercentage'].isFinite ? selectedFood['carbohydratesPercentage'].floor() : 0) : (carbohydratePercentage.isFinite ? carbohydratePercentage.floor() : 0)} %"),
                               ],
                             ),
                           ),
@@ -214,11 +216,17 @@ class LoadedDataUi extends StatelessWidget {
                             percent: selectedFood != null
                                 ? (selectedFood['carbohydratesPercentage'] > 100
                                     ? 1
-                                    : selectedFood['carbohydratesPercentage'] /
-                                        100)
+                                    : (selectedFood['carbohydratesPercentage']
+                                            .isFinite
+                                        ? selectedFood[
+                                                'carbohydratesPercentage'] /
+                                            100
+                                        : 0))
                                 : (carbohydratePercentage > 100
                                     ? 1
-                                    : carbohydratePercentage / 100),
+                                    : (carbohydratePercentage.isFinite
+                                        ? carbohydratePercentage / 100
+                                        : 0)),
                             progressColor: dark ? Colors.yellow : Colors.yellow,
                           )
                         ],
@@ -236,7 +244,7 @@ class LoadedDataUi extends StatelessWidget {
                                 Text(
                                     "Total Fats - ${selectedFood != null ? selectedFood['fats'].floor() : totalFat.toInt()} g"),
                                 Text(
-                                    "${selectedFood != null ? selectedFood['fatPercentage'].floor() : fatPercentage.floor()} %"),
+                                    "${selectedFood != null ? (selectedFood['fatPercentage'].isFinite ? selectedFood['fatPercentage'].floor() : 0) : (fatPercentage.isFinite ? fatPercentage.floor() : 0)} %"),
                               ],
                             ),
                           ),
@@ -248,8 +256,14 @@ class LoadedDataUi extends StatelessWidget {
                             percent: selectedFood != null
                                 ? (selectedFood['fatPercentage'] > 100
                                     ? 1
-                                    : selectedFood['fatPercentage'] / 100)
-                                : displayFatPercentage,
+                                    : (selectedFood['fatPercentage'].isFinite
+                                        ? selectedFood['fatPercentage'] / 100
+                                        : 0))
+                                : (fatPercentage > 100
+                                    ? 1
+                                    : (fatPercentage.isFinite
+                                        ? fatPercentage / 100
+                                        : 0)),
                             progressColor: dark ? Colors.red : Colors.red,
                           ),
                         ],
@@ -321,19 +335,20 @@ class _FoodsListViewState extends State<FoodsListView> {
                 onPressed: (context) {
                   final selectedFood = widget.state.dietData.dietData![index];
                   selectedFood.isSelected = true;
-
-                  Get.to(
-                    BlocProvider(
-                      create: (context) => FoodCubit(
-                        foodsRepoImpl: FoodsRepoImpl(ApiService(Dio())),
-                        selectedfoods: [],
-                      )..getFoods(),
-                      child: ConvertFooods(
-                        diet: widget.state.dietData.dietData,
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                        create: (context) => FoodCubit(
+                          foodsRepoImpl: FoodsRepoImpl(ApiService(Dio())),
+                          selectedfoods: [],
+                        )..getFoods(),
+                        child: ConvertFooods(
+                          diet: widget.state.dietData.dietData,
+                        ),
                       ),
                     ),
-                  )!
-                      .then((_) {
+                  ).then((_) {
                     selectedFood.isSelected = false;
                   });
                 },
@@ -397,7 +412,7 @@ class _FoodsListViewState extends State<FoodsListView> {
               setState(() {});
             },
             child: SizedBox(
-              height: 50.h,
+              height: 52.h,
               child: Card(
                 color: foodItem.isSelected
                     ? Colors.blueAccent
@@ -409,7 +424,9 @@ class _FoodsListViewState extends State<FoodsListView> {
                       Text(
                         foodItem.foodName,
                         style: TextStyle(
-                            fontSize: 12.sp, fontWeight: FontWeight.normal),
+                            color: CColors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.normal),
                       ),
                       const Spacer(),
                       Text(
@@ -476,7 +493,7 @@ class ConvertFooods extends StatelessWidget {
               title: const Text("Foods Exchange"),
               leading: IconButton(
                 onPressed: () {
-                  Get.back();
+                  Navigator.pop(context);
                 },
                 icon: Icon(
                   Icons.arrow_back,
@@ -496,8 +513,7 @@ class ConvertFooods extends StatelessWidget {
                           hint: const Text('Choose food to substitute'),
                           onChanged: (DietItem? newValue) {
                             selectedDietItem = newValue!;
-                            quantityController.text =
-                                ''; // Clear the TextField when a new item is selected
+                            quantityController.text = '';
                             context.read<FoodCubit>().updateUi();
                           },
                           items: diet?.map((DietItem dietItem) {

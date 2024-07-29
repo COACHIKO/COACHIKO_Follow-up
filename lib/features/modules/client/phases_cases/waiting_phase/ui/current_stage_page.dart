@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/main.dart';
-import 'package:get/get.dart';
+import '../../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../../../../../core/utils/constants/colors.dart';
 import '../../../../coach/navigation_bar/ui/coach_navigation_bar.dart';
 import '../logic/cubit/current_stage_cubit.dart';
@@ -121,9 +120,7 @@ class CurrentStage extends StatelessWidget {
                           child: context
                                   .read<CurrentStageCubit>()
                                   .logSettingsExpanded
-                              ? myServices.sharedPreferences
-                                          .getInt("numberOfLogs") ==
-                                      null
+                              ? SharedPref().getInt("numberOfLogs") == null
                                   ? Center(
                                       child: SizedBox(
                                           width: 400.w,
@@ -138,9 +135,8 @@ class CurrentStage extends StatelessWidget {
                                                   maxValue: 7,
                                                   fontColor: CColors.primary,
                                                   onSelected: (int value) {
-                                                    myServices.sharedPreferences
-                                                        .setInt("numberOfLogs",
-                                                            value);
+                                                    SharedPref().setInt(
+                                                        "numberOfLogs", value);
 
                                                     context
                                                         .read<
@@ -158,11 +154,11 @@ class CurrentStage extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                                "You're logging your weight ${myServices.sharedPreferences.getInt("numberOfLogs")} times weekly"),
+                                                "You're logging your weight ${SharedPref().getInt("numberOfLogs")} times weekly"),
                                             GestureDetector(
                                               onTap: () {
-                                                myServices.sharedPreferences
-                                                    .remove("numberOfLogs");
+                                                SharedPref().removePreference(
+                                                    "numberOfLogs");
                                                 context
                                                     .read<CurrentStageCubit>()
                                                     .toggleUpdateLogSettingsExpanded(
@@ -183,8 +179,7 @@ class CurrentStage extends StatelessWidget {
                                           ],
                                         ),
                                         SizedBox(height: 10.h),
-                                        myServices.sharedPreferences
-                                                    .getString("timeToLog") ==
+                                        SharedPref().getString("timeToLog") ==
                                                 null
                                             ? Center(
                                                 child: SizedBox(
@@ -199,12 +194,10 @@ class CurrentStage extends StatelessWidget {
                                                             onSelected:
                                                                 (TimeOfDay
                                                                     value) {
-                                                              myServices
-                                                                  .sharedPreferences
-                                                                  .setString(
-                                                                      "timeToLog",
-                                                                      value.format(
-                                                                          context));
+                                                              SharedPref().setString(
+                                                                  "timeToLog",
+                                                                  value.format(
+                                                                      context));
 
                                                               context
                                                                   .read<
@@ -223,12 +216,12 @@ class CurrentStage extends StatelessWidget {
                                             : Row(
                                                 children: [
                                                   Text(
-                                                      "You're logging your weight at ${myServices.sharedPreferences.getString("timeToLog")}"),
+                                                      "You're logging your weight at ${SharedPref().getString("timeToLog")}"),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      myServices
-                                                          .sharedPreferences
-                                                          .remove("timeToLog");
+                                                      SharedPref()
+                                                          .removePreference(
+                                                              "timeToLog");
                                                       context
                                                           .read<
                                                               CurrentStageCubit>()
@@ -266,18 +259,14 @@ class CurrentStage extends StatelessWidget {
                         SizedBox(height: 5.h),
                         context.read<CurrentStageCubit>().logSettingsExpanded ==
                                     false ||
-                                myServices.sharedPreferences
-                                            .getInt("numberOfLogs") !=
-                                        null &&
-                                    myServices.sharedPreferences
-                                            .getString("timeToLog") !=
-                                        null
+                                SharedPref().getInt("numberOfLogs") != null &&
+                                    SharedPref().getString("timeToLog") != null
                             ? Center(
                                 child: CustomMaterialButton(
                                     onPressed: () {},
                                     buttonText: "Notifiy Coach"),
                               )
-                            : SizedBox.shrink()
+                            : const SizedBox.shrink()
                       ],
                     ),
                   ],
@@ -285,7 +274,12 @@ class CurrentStage extends StatelessWidget {
               );
             } else {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                Get.to(() => const CoachNavigationBar());
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CoachNavigationBar()),
+                  (Route<dynamic> route) => false,
+                );
               });
               return const SizedBox.shrink(); // Return an empty widget
             }

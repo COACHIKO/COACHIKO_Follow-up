@@ -7,8 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
 import 'package:followupapprefactored/features/modules/client/phases_cases/form_completion/data/models/form_completion_request_body.dart';
+import 'package:followupapprefactored/features/modules/client/phases_cases/waiting_phase/ui/current_stage_page.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../../../../../core/utils/constants/colors.dart';
 import '../../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../../core/utils/constants/sizes.dart';
@@ -16,6 +18,7 @@ import '../../../../../../main.dart';
 import '../../../../coach/diet_making_features/food_selection/data/repository/foods_repo_impl.dart';
 import '../../../../coach/diet_making_features/food_selection/logic/cubit/food_cubit.dart';
 import '../../../../coach/diet_making_features/food_selection/ui/food_selection_page.dart';
+import '../../../../coach/navigation_bar/ui/coach_navigation_bar.dart';
 import '../data/repository/form_completion_repo_imp.dart';
 import '../logic/cubit/form_completion_cubit.dart';
 import '../logic/cubit/form_completion_state.dart';
@@ -1510,15 +1513,15 @@ class FormComplectionBody extends StatelessWidget {
                                           onPressed: () async {
                                             await controllerget.completeForm(
                                                 FormCompletionRequestBody(
-                                                    id: myServices.sharedPreferences
+                                                    id: SharedPref()
                                                         .getInt("user")!
                                                         .toInt(),
                                                     preferedFoods: controllerget
                                                         .getFoodNames(),
-                                                    genderSelect:
-                                                        controllerget.isSelectedMan
-                                                            ? 0
-                                                            : 1,
+                                                    genderSelect: controllerget
+                                                            .isSelectedMan
+                                                        ? 0
+                                                        : 1,
                                                     goalSelect: controllerget
                                                             .isSelectedLoseWeight
                                                         ? 0
@@ -1545,12 +1548,13 @@ class FormComplectionBody extends StatelessWidget {
                                                     tall: double.parse(
                                                         controllerget
                                                             .tall.text),
-                                                    costSelect: controllerget
-                                                            .poorMoney
-                                                        ? 0
-                                                        : controllerget.mediumMoney
-                                                            ? 1
-                                                            : 2,
+                                                    costSelect:
+                                                        controllerget.poorMoney
+                                                            ? 0
+                                                            : controllerget
+                                                                    .mediumMoney
+                                                                ? 1
+                                                                : 2,
                                                     waist: double.parse(controllerget.waist.text),
                                                     neck: double.parse(controllerget.neck.text),
                                                     hip: controllerget.hip.text.isEmpty ? 0.0 : double.parse(controllerget.hip.text),
@@ -1564,14 +1568,25 @@ class FormComplectionBody extends StatelessWidget {
                                                     targetFat: controllerget.targetFat.toDouble(),
                                                     currentStep: 1,
                                                     birthdayDate: controllerget.birthdayDate.toUtc()));
-                                            myServices.sharedPreferences
+                                            SharedPref()
                                                 .setInt("currentStep", 1);
-                                            myServices.sharedPreferences
-                                                        .getInt("isCoach") ==
-                                                    0
-                                                ? Get.offAllNamed(
-                                                    "/currentStage")
-                                                : Get.offAllNamed("/CoachHome");
+                                            SharedPref().getInt("isCoach") == 0
+                                                ? Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const CurrentStage()),
+                                                    (Route<dynamic> route) =>
+                                                        false,
+                                                  )
+                                                : Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const CoachNavigationBar()),
+                                                    (Route<dynamic> route) =>
+                                                        false,
+                                                  );
                                           },
                                           child: const Text("Next",
                                               style: TextStyle(
