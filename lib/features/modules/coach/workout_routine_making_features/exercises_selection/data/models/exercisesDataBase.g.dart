@@ -12,7 +12,7 @@ Exercises _$ExercisesFromJson(Map<String, dynamic> json) => Exercises(
       targetMuscles: json['targetMuscles'] as String,
       exerciseImage: json['excersiseImage'] as String,
       usedEquipment: json['usedEquipment'] as String,
-      isSelected: false,
+      isSelected: json['isSelected'] as bool,
     );
 
 Map<String, dynamic> _$ExercisesToJson(Exercises instance) => <String, dynamic>{
@@ -21,5 +21,5 @@ Map<String, dynamic> _$ExercisesToJson(Exercises instance) => <String, dynamic>{
       'targetMuscles': instance.targetMuscles,
       'excersiseImage': instance.exerciseImage,
       'usedEquipment': instance.usedEquipment,
-      'isSelected': false,
+      'isSelected': instance.isSelected,
     };

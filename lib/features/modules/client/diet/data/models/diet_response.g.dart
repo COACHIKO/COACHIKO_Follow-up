@@ -46,7 +46,7 @@ DietItem _$DietItemFromJson(Map<String, dynamic> json) => DietItem(
       protein: (json['protein'] as num).toDouble(),
       carbohydrates: (json['carbohydrates'] as num).toDouble(),
       fats: (json['fats'] as num).toDouble(),
-    )..isSelected = false;
+    )..isSelected = json['isSelected'] as bool;
 
 Map<String, dynamic> _$DietItemToJson(DietItem instance) => <String, dynamic>{
       'id': instance.id,

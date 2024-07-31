@@ -14,9 +14,7 @@ import '../../features/modules/coach/workout_routine_making_features/display_cli
 
 class ApiService {
   final Dio _dio;
-//
   ApiService(this._dio);
-  // String baseUrl = "https://d200-156-204-91-232.ngrok-free.app";
   String baseUrl = "http://192.168.1.7";
 
   Future<List<dynamic>> getFoodsData() async {

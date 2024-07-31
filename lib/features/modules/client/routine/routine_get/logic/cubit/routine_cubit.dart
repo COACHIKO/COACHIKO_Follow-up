@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import '../../../routine_log/ui/routine_weight_log.dart';
 import '../../data/models/routine_request_body.dart';
 import '../../data/models/routine_response.dart';
@@ -34,7 +33,7 @@ class RoutineCubit extends Cubit<RoutineState> {
         pageBuilder: (context, animation, secondaryAnimation) =>
             RoutineWeightLogScreen(routine: routine),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          var begin = Offset(1.0, 0.0);
+          var begin = const Offset(1.0, 0.0);
           var end = Offset.zero;
           var curve = Curves.ease;
 
