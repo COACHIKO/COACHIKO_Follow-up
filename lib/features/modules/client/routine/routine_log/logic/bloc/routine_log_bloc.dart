@@ -21,6 +21,18 @@ class RoutineWeightLogCubit extends Cubit<RoutineWeightLogState> {
   Timer? restTimer;
   int restTimeLeft = 0;
   int focused = -1;
+  String formattedTime = "-";
+
+  String formatTimeInput(String value) {
+    value = value.padLeft(6, '0'); // Ensure the string has at least 6 digits
+    int length = value.length;
+
+    String seconds = value.substring(length - 2, length);
+    String minutes = value.substring(length - 4, length - 2);
+    String hours = value.substring(length - 6, length - 4);
+
+    return "$hours:$minutes:$seconds";
+  }
 
   void initializeRoutine(Routine routine) {
     _routine = routine;

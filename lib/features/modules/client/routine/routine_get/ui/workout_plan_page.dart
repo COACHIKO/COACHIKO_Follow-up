@@ -15,12 +15,6 @@ class WorkoutPlanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.green,
-      //   centerTitle: true,
-      //   title: const Text('Workout'),
-      //   iconTheme: const IconThemeData(color: Colors.blueAccent),
-      // ),
       appBar: CustomAppBar(
         showBackArrow: false,
         title: AppLocalizations.of(context).translate('workout'),

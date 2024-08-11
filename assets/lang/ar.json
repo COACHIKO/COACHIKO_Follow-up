@@ -2,6 +2,13 @@
   "workout": "التمرين",
   "diet": "الدايت",
   "clients": "المُتدربين",
-  "settings": "الإعدادات"
+  "settings": "الإعدادات",
+  "password": "كلمة المرور",
+  "rememberme": "تذكرني",
+  "forgotpassword": "نسيت كلمة السر؟",
+  "usernameoremail": "ألأيميل أو أسم المستخدم",
+  "signin": "تسجيل دخول"
+
+
 
  }

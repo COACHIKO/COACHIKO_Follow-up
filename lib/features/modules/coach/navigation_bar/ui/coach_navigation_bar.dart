@@ -3,20 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:icons_flutter/icons_flutter.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:dio/dio.dart';
-import 'package:followupapprefactored/core/networking/api_service.dart';
-import 'package:followupapprefactored/features/modules/client/diet/data/repository/diet_repo_impl.dart';
-import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/repository/routine_repo_impl.dart';
-import 'package:followupapprefactored/features/modules/client/routine/routine_get/ui/workout_plan_page.dart';
-import 'package:followupapprefactored/features/modules/coach/all_clients_display/data/repository/clients_repo_impl.dart';
 import 'package:followupapprefactored/features/modules/client/diet/logic/cubit/diet_cubit.dart';
 import 'package:followupapprefactored/features/modules/client/diet/ui/diet_plan.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/logic/cubit/routine_cubit.dart';
+import 'package:followupapprefactored/features/modules/client/routine/routine_get/ui/workout_plan_page.dart';
 import 'package:followupapprefactored/features/modules/coach/all_clients_display/logic/cubit/clients_cubit.dart';
 import 'package:followupapprefactored/features/modules/coach/all_clients_display/ui/all_clients_display.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
-import '../../../../../core/localization/app_localizations.dart';
+import 'package:followupapprefactored/core/localization/app_localizations.dart';
+import 'package:get_it/get_it.dart';
+
 import '../../../../../view/screens/setting_page.dart';
+import '../../../client/diet/data/repository/diet_repo_impl.dart';
+import '../../../client/routine/routine_get/data/repository/routine_repo_impl.dart';
+import '../../all_clients_display/data/repository/clients_repo_impl.dart';
 import '../cubit/coach_navigation_bar_cubit.dart';
 import '../cubit/coach_navigation_bar_state.dart';
 
@@ -30,43 +30,19 @@ class CoachNavigationBar extends StatelessWidget {
     final darkMode = THelperFunctions.isDarkMode(context);
 
     final screens = [
-      BlocProvider(
-        create: (context) {
-          return RoutineCubit(routineRepoImp: RoutineRepoImp(ApiService(Dio())))
-            ..getRoutine();
-        },
-        child: const WorkoutPlanPage(),
-      ),
-      BlocProvider(
-        create: (context) {
-          return DietCubit(dietRepoImp: DietRepoImp(ApiService(Dio())))
-            ..getDietData();
-        },
-        child: const DietPlanPage(),
-      ),
-      BlocProvider(
-        create: (context) {
-          return ClientsCubit(
-              clientsRepoImp: ClientsDataRepoImp(ApiService(Dio())))
-            ..getAllClientsData();
-        },
-        child: const MyClients(),
-      ),
+      _buildWorkoutPlanPage(),
+      _buildDietPlanPage(),
+      _buildClientsPage(),
       const SettingScreen(),
     ];
 
     return BlocProvider(
       create: (_) => CoachHomeCubit(initialIndex: initialIndex),
       child: Scaffold(
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await Future.delayed(const Duration(milliseconds: 300));
+        body: BlocBuilder<CoachHomeCubit, CoachHomeState>(
+          builder: (context, state) {
+            return screens[state.selectedIndex];
           },
-          child: BlocBuilder<CoachHomeCubit, CoachHomeState>(
-            builder: (context, state) {
-              return screens[state.selectedIndex];
-            },
-          ),
         ),
         bottomNavigationBar: BlocBuilder<CoachHomeCubit, CoachHomeState>(
           builder: (context, state) {
@@ -103,6 +79,32 @@ class CoachNavigationBar extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  Widget _buildWorkoutPlanPage() {
+    return BlocProvider(
+      create: (_) =>
+          RoutineCubit(routineRepoImp: GetIt.instance<RoutineRepoImp>())
+            ..getRoutine(),
+      child: const WorkoutPlanPage(),
+    );
+  }
+
+  Widget _buildDietPlanPage() {
+    return BlocProvider(
+      create: (_) =>
+          DietCubit(dietRepoImp: GetIt.instance<DietRepoImp>())..getDietData(),
+      child: const DietPlanPage(),
+    );
+  }
+
+  Widget _buildClientsPage() {
+    return BlocProvider(
+      create: (_) =>
+          ClientsCubit(clientsRepoImp: GetIt.instance<ClientsDataRepoImp>())
+            ..getAllClientsData(),
+      child: const MyClients(),
     );
   }
 }

@@ -102,7 +102,11 @@ class RoutineWeightLogScreen extends StatelessWidget {
                                 ? context
                                     .read<RoutineWeightLogCubit>()
                                     .printRestTime()
-                                : " Rest Timer: ${routine.exercises[exerciseIndex].rest} Mins",
+                                : routine.exercises[exerciseIndex]
+                                            .targetMuscles ==
+                                        "cardio"
+                                    ? " Cardio Time : ${routine.exercises[exerciseIndex].rest} Mins"
+                                    : " Rest Timer: ${routine.exercises[exerciseIndex].rest} Mins",
                             style:
                                 TextStyle(color: Colors.blue, fontSize: 15.sp),
                           ),
@@ -112,16 +116,22 @@ class RoutineWeightLogScreen extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("SET"),
-                          Text("PREVIOUS"),
-                          Text("KG"),
-                          Text("REPS"),
-                          Icon(
+                          const Text("SET"),
+                          const Text("PREVIOUS"),
+                          routine.exercises[exerciseIndex].targetMuscles ==
+                                  "cardio"
+                              ? const Text("Distance")
+                              : const Text("KG"),
+                          routine.exercises[exerciseIndex].targetMuscles ==
+                                  "cardio"
+                              ? const Text("Time")
+                              : const Text("REPS"),
+                          const Icon(
                             Icons.check,
                             size: 18,
                           ),
@@ -150,7 +160,7 @@ class RoutineWeightLogScreen extends StatelessWidget {
                                   const Spacer(),
                                   SizedBox(width: 37.w),
                                   Text(
-                                      "${routine.exercises[exerciseIndex].lastWeight} KG"),
+                                      "${routine.exercises[exerciseIndex].lastWeight} ${routine.exercises[exerciseIndex].targetMuscles == "cardio" ? "KM" : "KG"}"),
                                   const Spacer(),
                                   SizedBox(width: 22.w),
                                   Flexible(
@@ -179,31 +189,38 @@ class RoutineWeightLogScreen extends StatelessWidget {
                                     ),
                                   ),
                                   const Spacer(),
-                                  Flexible(
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (value) {
-                                        context
-                                            .read<RoutineWeightLogCubit>()
-                                            .updateReps(
-                                                exerciseIndex, setIndex, value);
-                                      },
-                                      decoration: const InputDecoration(
-                                        // Remove the border and outline
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        errorBorder: InputBorder.none,
-                                        disabledBorder: InputBorder.none,
-                                        contentPadding: EdgeInsets.zero,
-                                        // Adjust hint style
-                                        hintStyle: TextStyle(
-                                          fontSize: 20,
+                                  routine.exercises[exerciseIndex]
+                                              .targetMuscles ==
+                                          "cardio"
+                                      ? TimeLogButton(
+                                          exerciseIndex: exerciseIndex,
+                                          setIndex: setIndex,
+                                        )
+                                      : Flexible(
+                                          child: TextFormField(
+                                            keyboardType: TextInputType.number,
+                                            onChanged: (value) {
+                                              context
+                                                  .read<RoutineWeightLogCubit>()
+                                                  .updateReps(exerciseIndex,
+                                                      setIndex, value);
+                                            },
+                                            decoration: const InputDecoration(
+                                              // Remove the border and outline
+                                              border: InputBorder.none,
+                                              enabledBorder: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              errorBorder: InputBorder.none,
+                                              disabledBorder: InputBorder.none,
+                                              contentPadding: EdgeInsets.zero,
+                                              // Adjust hint style
+                                              hintStyle: TextStyle(
+                                                fontSize: 20,
+                                              ),
+                                              hintText: "-",
+                                            ),
+                                          ),
                                         ),
-                                        hintText: "-",
-                                      ),
-                                    ),
-                                  ),
                                   const Spacer(),
                                   InkWell(
                                     onTap: () {
@@ -263,4 +280,189 @@ class RoutineWeightLogScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class TimeLogButton extends StatelessWidget {
+  final int exerciseIndex;
+  final int setIndex;
+  const TimeLogButton({
+    super.key,
+    required this.exerciseIndex,
+    required this.setIndex,
+  });
+
+  formatedTime(BuildContext context) {
+    return context.read<RoutineWeightLogCubit>().formattedTime;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        showMyBottomSheet(
+          context,
+          context.read<RoutineWeightLogCubit>(),
+          exerciseIndex,
+          setIndex,
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.only(right: 10),
+        child: Text(
+          formatedTime(context),
+          style: TextStyle(
+              fontSize: formatedTime(context) != '-' ? 14 : 22,
+              color: Colors.grey),
+        ),
+      ),
+    );
+  }
+}
+
+void showMyBottomSheet(BuildContext context, RoutineWeightLogCubit cubit,
+    int exerciseIndex, int setIndex) {
+  int selectedHour = 0;
+  int selectedMinute = 0;
+  int selectedSecond = 0;
+
+  showModalBottomSheet(
+    context: context,
+    isDismissible: true,
+    builder: (BuildContext context) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const SizedBox(height: 16),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  "Hours",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blueAccent,
+                    decorationThickness: 2.0,
+                  ),
+                ),
+                Text(
+                  "Minutes",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blueAccent,
+                    decorationThickness: 2.0,
+                  ),
+                ),
+                Text(
+                  "Seconds",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blueAccent,
+                    decorationThickness: 2.0,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Flexible(
+                  child: CupertinoPicker(
+                    scrollController:
+                        FixedExtentScrollController(initialItem: selectedHour),
+                    itemExtent: 32.0,
+                    onSelectedItemChanged: (int value) {
+                      selectedHour = value;
+                    },
+                    children: List<Widget>.generate(24, (int index) {
+                      return Center(
+                        child: Text(
+                          index.toString().padLeft(2, '0'),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+                Flexible(
+                  child: CupertinoPicker(
+                    scrollController: FixedExtentScrollController(
+                        initialItem: selectedMinute),
+                    itemExtent: 32.0,
+                    onSelectedItemChanged: (int value) {
+                      selectedMinute = value;
+                    },
+                    children: List<Widget>.generate(60, (int index) {
+                      return Center(
+                        child: Text(
+                          index.toString().padLeft(2, '0'),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+                Flexible(
+                  child: CupertinoPicker(
+                    scrollController: FixedExtentScrollController(
+                        initialItem: selectedSecond),
+                    itemExtent: 32.0,
+                    onSelectedItemChanged: (int value) {
+                      selectedSecond = value;
+                    },
+                    children: List<Widget>.generate(60, (int index) {
+                      return Center(
+                        child: Text(
+                          index.toString().padLeft(2, '0'),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CupertinoButton(
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                CupertinoButton(
+                  child: const Text('Confirm'),
+                  onPressed: () {
+                    // Set the selected time in the cubit
+                    cubit.formattedTime =
+                        '${selectedHour.toString().padLeft(2, '0')}:'
+                        '${selectedMinute.toString().padLeft(2, '0')}:'
+                        '${selectedSecond.toString().padLeft(2, '0')}';
+
+                    cubit.updateReps(
+                        exerciseIndex,
+                        setIndex,
+                        selectedHour.toString().padLeft(2, '0') +
+                            selectedMinute.toString().padLeft(2, '0') +
+                            selectedSecond.toString().padLeft(2, '0'));
+
+                    Navigator.of(context).pop(cubit.formattedTime);
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      );
+    },
+  ).then((value) {
+    if (value != null) {
+      (context as Element).markNeedsBuild();
+    }
+  });
 }

@@ -22,6 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     var dark = THelperFunctions.isDarkMode(context);
 
     return AppBar(
+      automaticallyImplyLeading: false,
       centerTitle: true,
       leading: showBackArrow
           ? IconButton(

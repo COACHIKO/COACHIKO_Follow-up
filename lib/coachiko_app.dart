@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/app_router.dart';
 import 'core/utils/constants/text_strings.dart';
 import 'core/utils/theme/cubit/theme_cubit.dart';
 import 'core/utils/theme/theme.dart';
@@ -10,7 +11,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'main.dart';
 
 class COACHIKOFollowApp extends StatelessWidget {
-  const COACHIKOFollowApp({super.key});
+  COACHIKOFollowApp({super.key});
+
+  final AppRouter _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +42,8 @@ class COACHIKOFollowApp extends StatelessWidget {
                       themeMode: themeState,
                       theme: TAppTheme.lightTheme,
                       darkTheme: TAppTheme.darkTheme,
-                      initialRoute: initialRoute,
-                      routes: allAppRoutes,
+                      initialRoute: determineInitialRoute(),
+                      onGenerateRoute: _appRouter.generateRoute,
                       debugShowCheckedModeBanner: false,
                     );
                   },

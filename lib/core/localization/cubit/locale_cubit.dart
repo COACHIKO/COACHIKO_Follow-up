@@ -23,7 +23,7 @@ class LocaleCubit extends Cubit<ChangeLocaleState> {
   void _restartApp() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(navigatorKey.currentContext!).pushReplacement(
-          MaterialPageRoute(builder: (_) => const COACHIKOFollowApp()));
+          MaterialPageRoute(builder: (_) => COACHIKOFollowApp()));
     });
   }
 }

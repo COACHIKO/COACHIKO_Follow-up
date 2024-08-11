@@ -10,23 +10,13 @@ import 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   final LoginRepoImp loginRepoImp;
 
-  LoginCubit(this.loginRepoImp) : super(LoginState());
-
-  void setUsername(String value) {
-    emit(state.copyWith(username: value));
-  }
-
-  void setPassword(String value) {
-    emit(state.copyWith(password: value));
-  }
-
-  void togglePasswordVisibility() {
-    emit(state.copyWith(obscurePassword: !state.obscurePassword));
-  }
-
-  void toggleRememberMe(bool? value) {
-    emit(state.copyWith(rememberMe: value ?? false));
-  }
+  LoginCubit(
+    this.loginRepoImp,
+  ) : super(LoginState());
+  late String username;
+  late String password;
+  bool rememberMe = false;
+  bool passwordVisibility = false;
 
   Future<String?> getToken() async {
     String? token = await FirebaseMessaging.instance.getToken();
@@ -38,11 +28,11 @@ class LoginCubit extends Cubit<LoginState> {
       var token = await getToken();
       var response = await loginRepoImp.login(
         LoginRequestBody(
-          username: state.username,
-          password: state.password,
+          username: username,
+          password: password,
           token: token!,
         ),
-        state.rememberMe,
+        rememberMe,
       );
 
       if (response.status == "Success") {
@@ -55,7 +45,7 @@ class LoginCubit extends Cubit<LoginState> {
         SharedPref().setInt("currentStep", response.userData!.currentStep);
         SharedPref()
             .setInt("isCoach", response.userData!.isCoach == "Coach" ? 1 : 0);
-        SharedPref().setBool("rememberMe", state.rememberMe);
+        SharedPref().setBool("rememberMe", rememberMe);
 
         if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 0) {
@@ -74,7 +64,6 @@ class LoginCubit extends Cubit<LoginState> {
               context, "/CoachHome", (route) => false);
         }
 
-        // Show welcome message
         Fluttertoast.showToast(
           msg: 'Welcome, ${SharedPref().getString("first_name")}',
           backgroundColor: Colors.green,

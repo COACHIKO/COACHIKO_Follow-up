@@ -2,6 +2,14 @@
   "workout": "Workout",
   "diet": "Diet",
   "clients": "Clients",
-  "settings": "Settings"
+  "settings": "Settings",
+  "password": "Password",
+  "rememberme": "Remember me",
+  "forgotpassword": "Forgot Password?",
+  "usernameoremail": "Username or Email",
+  "signin": "Sign in"
+
+
+  
 
  }
