@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'core/app_router.dart';
+import 'core/routing/app_router.dart';
 import 'core/utils/constants/text_strings.dart';
 import 'core/utils/theme/cubit/theme_cubit.dart';
 import 'core/utils/theme/theme.dart';

@@ -429,7 +429,6 @@ class ExercisesassignmentBody extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => ClientRoutineDisplay(
-                              id: cubit.clientData.id!,
                               clientData: cubit.clientData,
                             ),
                           ),

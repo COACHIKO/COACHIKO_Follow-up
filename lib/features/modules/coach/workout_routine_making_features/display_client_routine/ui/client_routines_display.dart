@@ -9,18 +9,15 @@ import 'package:followupapprefactored/features/modules/client/routine/routine_ge
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/display_client_routine/data/repository/client_routines_repo_impl.dart';
 import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/ui/exercises_assignment_to_routine.dart';
 import '../../../all_clients_display/data/models/clients_response.dart';
-import '../../../specific_client_profile/ui/client_profile_page.dart';
 import '../../exercises_selection/data/models/exercisesDataBase.dart';
 import '../../exercises_selection/ui/exercises_selection_page.dart';
 import '../logic/cubit/client_routines_cubit.dart';
 import '../logic/cubit/client_routines_state.dart';
 
 class ClientRoutineDisplay extends StatelessWidget {
-  final int id;
   final ClientData clientData;
 
-  const ClientRoutineDisplay(
-      {super.key, required this.id, required this.clientData});
+  const ClientRoutineDisplay({super.key, required this.clientData});
 
   @override
   Widget build(BuildContext context) {
@@ -29,24 +26,14 @@ class ClientRoutineDisplay extends StatelessWidget {
           centerTitle: true,
           title: Text("${clientData.firstName}'s Routines"),
           iconTheme: const IconThemeData(color: Colors.blueAccent),
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ClientProfilePage(
-                              clientData: clientData,
-                            )));
-              },
-              icon: const Icon(Icons.arrow_back)),
         ),
         body: BlocProvider(
           create: (context) => ClientRoutinsCubit(
               clientRoutinesRepoImp: ClientRoutinesRepoImp(ApiService(Dio())))
-            ..getRoutine(id),
+            ..getRoutine(clientData.id),
           child: ClientRoutineDisplayBody(
             clientData: clientData,
-            id: id,
+            id: clientData.id!.toInt(),
           ),
         ));
   }

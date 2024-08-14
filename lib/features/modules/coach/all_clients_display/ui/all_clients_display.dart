@@ -5,7 +5,7 @@ import 'package:followupapprefactored/view/widgets/custom_appbar.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../core/utils/constants/colors.dart';
 import '../../../../../../core/utils/helpers/helper_functions.dart';
-import '../../../../../core/app_router.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/services/shared_pref/shared_pref.dart';
 import '../logic/cubit/clients_cubit.dart';
 import '../logic/cubit/clients_state.dart';
@@ -136,11 +136,14 @@ class MyClients extends StatelessWidget {
                                                   Icon(
                                                     Icons.notifications,
                                                     size: 20,
+                                                    color: Colors.white,
                                                   ),
                                                   Text(
                                                     "Notifiy Client",
-                                                    style:
-                                                        TextStyle(fontSize: 11),
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: Colors.white,
+                                                    ),
                                                   )
                                                 ],
                                               ))

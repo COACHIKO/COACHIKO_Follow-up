@@ -1,54 +1,22 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
- import '../../../all_clients_display/data/models/clients_response.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/routing/routes.dart';
+import '../../../all_clients_display/data/models/clients_response.dart';
 import '../../food_selection/data/models/food_model.dart';
-import '../data/repository/food_quantities_repo_imp.dart';
 import 'package:followupapprefactored/features/modules/coach/diet_making_features/quantities_entering/data/models/quantity_insertion_request_body.dart';
 import '../logic/cubit/food_quantities_cubit.dart';
 import '../logic/cubit/food_quantities_state.dart';
 
 class FoodQuantitiesEntering extends StatelessWidget {
   final ClientData clientData;
+
   final List<FoodDataModel> selectedFoods;
   const FoodQuantitiesEntering(
-      {super.key, required this.clientData, required this.selectedFoods});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Enter Quantities'),
-        iconTheme: const IconThemeData(color: Colors.blueAccent),
-      ),
-      body: BlocProvider(
-        create: (context) => FoodQuantitiesCubit(
-            foodQuantitiesRepoImp: FoodQuantitiesRepoImp(ApiService(Dio())),
-            lenth: selectedFoods.length),
-        child: FoodQuantitiesBody(
-          id: clientData.id!,
-          selectedFoods: selectedFoods,
-          clientData: clientData,
-        ),
-      ),
-    );
-  }
-}
-
-class FoodQuantitiesBody extends StatelessWidget {
-  final int id;
-  final ClientData clientData;
-
-  final List<FoodDataModel> selectedFoods;
-  const FoodQuantitiesBody(
-      {super.key,
-      required this.id,
-      required this.selectedFoods,
-      required this.clientData});
+      {super.key, required this.selectedFoods, required this.clientData});
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FoodQuantitiesCubit, FoodQuantitiesStates>(
@@ -57,6 +25,11 @@ class FoodQuantitiesBody extends StatelessWidget {
       final dark = THelperFunctions.isDarkMode(context);
 
       return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Enter Quantities'),
+          iconTheme: const IconThemeData(color: Colors.blueAccent),
+        ),
         body: Column(
           children: [
             Column(children: [
@@ -70,7 +43,7 @@ class FoodQuantitiesBody extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "${"Calories" }\n ${clientData.tdee}",
+                      "${"Calories"}\n ${clientData.tdee}",
                       style: TextStyle(
                         color: dark ? Colors.black : Colors.white,
                         fontSize: 11.sp,
@@ -121,21 +94,21 @@ class FoodQuantitiesBody extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${"Protien" }\n ${cubit.calculateTotalProtien(selectedFoods).toStringAsFixed(1)}",
+                      "${"Protien"}\n ${cubit.calculateTotalProtien(selectedFoods).toStringAsFixed(1)}",
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "${"Carbohydrate" }\n ${cubit.calculateTotalCarbohydrate(selectedFoods).toStringAsFixed(1)}",
+                      "${"Carbohydrate"}\n ${cubit.calculateTotalCarbohydrate(selectedFoods).toStringAsFixed(1)}",
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "${"Fat" }\n ${cubit.calculateTotalFat(selectedFoods).toStringAsFixed(1)}",
+                      "${"Fat"}\n ${cubit.calculateTotalFat(selectedFoods).toStringAsFixed(1)}",
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
@@ -214,7 +187,11 @@ class FoodQuantitiesBody extends StatelessWidget {
                   String foodNames = foodNamesAndQuantities.value1;
                   String quantities = foodNamesAndQuantities.value2;
                   await cubit.enterQuantities(QuantityInsertionRequestBody(
-                      clientId: id, foodId: foodNames, quantity: quantities));
+                      clientId: clientData.id!,
+                      foodId: foodNames,
+                      quantity: quantities));
+
+                  context.go(Routes.coachHome);
                 },
                 child: const Text("Submit Quantities"),
               ),

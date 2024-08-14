@@ -1,17 +1,11 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:followupapprefactored/features/modules/coach/diet_making_features/food_selection/ui/food_selection_page.dart';
-import '../../../../../core/networking/api_service.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/routing/routes.dart';
+import '../../../../../core/routing/routing_model/routing_model.dart';
 import '../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../core/utils/constants/sizes.dart';
-import '../../../../client_log_history/data/repository/get_log_history_repo_imp.dart';
-import '../../../../client_log_history/logic/cubit/log_history_cubit.dart';
-import '../../../../client_log_history/ui/logs_history.dart';
-import '../../../client/phases_cases/form_completion/ui/form_completion.dart';
 import '../../all_clients_display/data/models/clients_response.dart';
-import '../../workout_routine_making_features/display_client_routine/ui/client_routines_display.dart';
 
 class ClientProfilePage extends StatelessWidget {
   final ClientData clientData;
@@ -22,7 +16,6 @@ class ClientProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -143,46 +136,22 @@ class ClientProfilePage extends StatelessWidget {
                         child: SharedPref().getInt("user") == clientData.id
                             ? ElevatedButton(
                                 onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => BlocProvider(
-                                          create: (context) {
-                                            return LogHistoryCubit(
-                                                getLogHistoryRepoImp:
-                                                    GetLogHistoryRepoImp(
-                                                        ApiService(Dio())))
-                                              ..getLogsHistory(clientData
-                                                  .id); // Ensure initial data fetch
-                                          },
-                                          child: LogsHistoryPage(
-                                            name:
-                                                clientData.firstName.toString(),
-                                          ),
-                                        ),
-                                      ));
+                                  context.push(Routes.trackHistory, extra: {
+                                    'id': clientData.id!,
+                                    'firstName': clientData.firstName!,
+                                  });
                                 },
                                 child: const Text("Track History"),
                               )
                             : OutlinedButton(
                                 onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => BlocProvider(
-                                          create: (context) {
-                                            return LogHistoryCubit(
-                                                getLogHistoryRepoImp:
-                                                    GetLogHistoryRepoImp(
-                                                        ApiService(Dio())))
-                                              ..getLogsHistory(clientData.id);
-                                          },
-                                          child: LogsHistoryPage(
-                                            name:
-                                                clientData.firstName.toString(),
-                                          ),
-                                        ),
-                                      ));
+                                  context.push(
+                                    Routes.trackHistory,
+                                    extra: TrackHistoryParams(
+                                      userId: clientData.id!,
+                                      name: clientData.firstName!,
+                                    ),
+                                  );
                                 },
                                 child: const Text("Track History"),
                               ),
@@ -196,13 +165,8 @@ class ClientProfilePage extends StatelessWidget {
                             width: double.infinity,
                             child: OutlinedButton(
                               onPressed: () {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const FormComplectionView(),
-                                  ),
-                                  (route) => false,
+                                context.push(
+                                  Routes.formComplection,
                                 );
                               },
                               child: const Text("Complete Form"),
@@ -216,11 +180,10 @@ class ClientProfilePage extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  FoodSelection(clientData: clientData)));
+                      context.push(
+                        Routes.foodSelection,
+                        extra: clientData,
+                      );
                     },
                     child: const Text("Set Diet Plan"),
                   ),
@@ -230,13 +193,10 @@ class ClientProfilePage extends StatelessWidget {
                   width: double.infinity,
                   child: OutlinedButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ClientRoutineDisplay(
-                                      id: clientData.id!,
-                                      clientData: clientData,
-                                    )));
+                        context.push(
+                          Routes.exerciseSelection,
+                          extra: clientData,
+                        );
                       },
                       child: const Text("Set Workout Plan")),
                 ),

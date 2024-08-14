@@ -1,46 +1,20 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/core/networking/api_service.dart';
-import 'package:followupapprefactored/features/modules/coach/diet_making_features/quantities_entering/ui/food_quantities_insertion.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/routing/routes.dart';
+import '../../../../../../core/routing/routing_model/routing_model.dart';
 import '../../../../../../core/utils/constants/sizes.dart';
 import '../../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../client/phases_cases/form_completion/logic/cubit/form_completion_cubit.dart';
 import '../../../all_clients_display/data/models/clients_response.dart';
 import '../data/models/food_model.dart';
-import '../data/repository/foods_repo_impl.dart';
 import '../logic/cubit/food_cubit.dart';
 import '../logic/cubit/food_state.dart';
 
 class FoodSelection extends StatelessWidget {
   final ClientData clientData;
-
   const FoodSelection({super.key, required this.clientData});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Foods'),
-        iconTheme: const IconThemeData(color: Colors.blueAccent),
-      ),
-      body: BlocProvider(
-        create: (context) => FoodCubit(
-            foodsRepoImpl: FoodsRepoImpl(ApiService(Dio())), selectedfoods: [])
-          ..getFoods(),
-        child: FoodDataWidget(
-          clientData: clientData,
-        ),
-      ),
-    );
-  }
-}
-
-class FoodDataWidget extends StatelessWidget {
-  final ClientData clientData;
-  const FoodDataWidget({super.key, required this.clientData});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +25,12 @@ class FoodDataWidget extends StatelessWidget {
         } else if (state is FoodsStateError) {
           return Center(child: Text('Error: ${state.error}'));
         } else if (state is LoadedSuccessfullyFoodsState) {
-          return _buildFoodList(context, state);
+          return Scaffold(
+              appBar: AppBar(
+                  centerTitle: true,
+                  title: const Text('Foods'),
+                  iconTheme: const IconThemeData(color: Colors.blueAccent)),
+              body: _buildFoodList(context, state));
         } else {
           return const Center(child: Text('No data found'));
         }
@@ -116,15 +95,10 @@ class FoodDataWidget extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FoodQuantitiesEntering(
-                          clientData: clientData,
-                          selectedFoods: selectedFoods,
-                        ),
-                      ),
-                    );
+                    context.push(Routes.quantitiesEntering,
+                        extra: SelectedFoodsParams(
+                            clientData: clientData,
+                            selectedFoods: selectedFoods));
                   },
                   child: const Text("Add Quantities"),
                 ),
@@ -135,13 +109,11 @@ class FoodDataWidget extends StatelessWidget {
   }
 }
 
-class FoodDataWidget2 extends StatelessWidget {
-    const FoodDataWidget2({
-    super.key,
-  });
+class FormFoodSelection extends StatelessWidget {
+  const FormFoodSelection({super.key});
   @override
   Widget build(BuildContext context) {
-      final bool dark = THelperFunctions.isDarkMode(context);
+    final bool dark = THelperFunctions.isDarkMode(context);
 
     return BlocBuilder<FoodCubit, FoodsState>(
       builder: (context, state) {
@@ -189,7 +161,8 @@ class FoodDataWidget2 extends StatelessWidget {
                         child: ListTile(
                           title: Text(
                             food.foodName,
-                            style:   TextStyle(color:dark? Colors.white:Colors.black),
+                            style: TextStyle(
+                                color: dark ? Colors.white : Colors.black),
                           ),
                         ),
                       ),

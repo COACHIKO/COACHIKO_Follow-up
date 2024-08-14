@@ -143,6 +143,6 @@ class ApiService {
     var response = await _dio.post(
         "$baseUrl/CoachikoFollowUpApp_Back_End/client_area/get_logs_history.php",
         data: clientLogsRequestBody.toJson());
-     return response.data;
+    return response.data;
   }
 }

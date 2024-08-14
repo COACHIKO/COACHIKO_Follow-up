@@ -7,17 +7,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
 import 'package:followupapprefactored/features/modules/client/phases_cases/form_completion/data/models/form_completion_request_body.dart';
-import 'package:followupapprefactored/features/modules/client/phases_cases/waiting_phase/ui/current_stage_page.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../../../../../core/utils/constants/colors.dart';
 import '../../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../../core/utils/constants/sizes.dart';
- import '../../../../coach/diet_making_features/food_selection/data/repository/foods_repo_impl.dart';
+import '../../../../coach/diet_making_features/food_selection/data/repository/foods_repo_impl.dart';
 import '../../../../coach/diet_making_features/food_selection/logic/cubit/food_cubit.dart';
 import '../../../../coach/diet_making_features/food_selection/ui/food_selection_page.dart';
-import '../../../../coach/navigation_bar/ui/coach_navigation_bar.dart';
 import '../data/repository/form_completion_repo_imp.dart';
 import '../logic/cubit/form_completion_cubit.dart';
 import '../logic/cubit/form_completion_state.dart';
@@ -28,11 +26,10 @@ class FormComplectionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => FormCompletionCubit(
-          formCompletionRepoImp: FormCompletionRepoImp(ApiService(Dio())),
-        ),
-        child: const FormComplectionBody() 
-      ),
+          create: (context) => FormCompletionCubit(
+                formCompletionRepoImp: FormCompletionRepoImp(ApiService(Dio())),
+              ),
+          child: const FormComplectionBody()),
     );
   }
 }
@@ -56,7 +53,7 @@ class FormComplectionBody extends StatelessWidget {
                 children: [
                   /// GENDER SELECT ///
                   Scaffold(
-                    appBar: AppBar( 
+                    appBar: AppBar(
                       title: const Text("Gender Select",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       centerTitle: true,
@@ -80,7 +77,7 @@ class FormComplectionBody extends StatelessWidget {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: dark ?CColors.black: CColors.white,
+                                color: dark ? CColors.black : CColors.white,
                               ),
                               alignment: Alignment.topCenter,
                               child: Row(
@@ -417,9 +414,9 @@ class FormComplectionBody extends StatelessWidget {
                         children: [
                           Container(
                               padding: EdgeInsets.only(top: 25.h),
-                              child:   Text("Choose Your Available Budget",
+                              child: Text("Choose Your Available Budget",
                                   style: TextStyle(
-                                      color:dark? Colors.white : Colors.black,
+                                      color: dark ? Colors.white : Colors.black,
                                       fontWeight: FontWeight.bold))),
                           SizedBox(height: 22.h),
                           Column(
@@ -488,9 +485,8 @@ class FormComplectionBody extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                          const  Text("Enter Your Measurements",
-                                style:   TextStyle(
-                                    fontWeight: FontWeight.bold)),
+                            const Text("Enter Your Measurements",
+                                style: TextStyle(fontWeight: FontWeight.bold)),
                             SizedBox(
                               height: 10.h,
                             ),
@@ -697,7 +693,7 @@ class FormComplectionBody extends StatelessWidget {
                                                           0xff1f1f1F),
                                                       filled:
                                                           dark ? true : false,
-                                                      hintText: 'Waist' ,
+                                                      hintText: 'Waist',
                                                       hintStyle: TextStyle(
                                                           fontSize: 14.sp),
                                                     ),
@@ -817,7 +813,7 @@ class FormComplectionBody extends StatelessWidget {
                                                 fillColor:
                                                     const Color(0xff1f1f1F),
                                                 filled: dark ? true : false,
-                                                hintText:'Arms',
+                                                hintText: 'Arms',
                                                 hintStyle:
                                                     TextStyle(fontSize: 14.sp),
                                               ),
@@ -1303,7 +1299,7 @@ class FormComplectionBody extends StatelessWidget {
                         foodsRepoImpl: FoodsRepoImpl(ApiService(Dio())),
                         selectedfoods: controllerget.selectedFoods,
                       )..getFoods(),
-                      child: const FoodDataWidget2(),
+                      child: const FormFoodSelection(),
                     ),
                   ),
                   SafeArea(
@@ -1569,21 +1565,22 @@ class FormComplectionBody extends StatelessWidget {
                                                     birthdayDate: controllerget.birthdayDate.toUtc()));
                                             SharedPref()
                                                 .setInt("currentStep", 1);
-                                            
-                                                  if (SharedPref().getInt("isCoach") == 0) {
-  Navigator.pushNamedAndRemoveUntil(
-    context,
-    "/currentStage",
-    (route) => true,
-  );
-} else {
-  Navigator.pushNamedAndRemoveUntil(
-    context,
-    "/CoachHome",
-    (route) => true,
-  );
-}
 
+                                            if (SharedPref()
+                                                    .getInt("isCoach") ==
+                                                0) {
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                context,
+                                                "/currentStage",
+                                                (route) => true,
+                                              );
+                                            } else {
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                context,
+                                                "/CoachHome",
+                                                (route) => true,
+                                              );
+                                            }
                                           },
                                           child: const Text("Next",
                                               style: TextStyle(

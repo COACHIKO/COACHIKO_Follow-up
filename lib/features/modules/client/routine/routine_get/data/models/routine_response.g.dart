@@ -69,8 +69,7 @@ class ExerciseAdapter extends TypeAdapter<Exercise> {
       reps: fields[6] as int,
       rir: fields[7] as int,
       lastWeight: fields[8] as double,
-      rest: fields[9] as int,
-      isSelected: false,
+      rest: fields[9] as int, isSelected: false,
     );
   }
 

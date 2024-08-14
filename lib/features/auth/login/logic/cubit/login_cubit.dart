@@ -2,7 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../../../../core/app_router.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../data/models/login_request_body.dart';
 import '../../data/repository/login_repo_impl.dart';
