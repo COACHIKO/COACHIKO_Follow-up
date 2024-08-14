@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:followupapprefactored/view/widgets/custom_appbar.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../core/utils/constants/colors.dart';
 import '../../../../../../core/utils/helpers/helper_functions.dart';
+import '../../../../../core/app_router.dart';
 import '../../../../../core/services/shared_pref/shared_pref.dart';
-import '../../specific_client_profile/ui/client_profile_page.dart';
 import '../logic/cubit/clients_cubit.dart';
 import '../logic/cubit/clients_state.dart';
 
@@ -34,12 +35,9 @@ class MyClients extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ClientProfilePage(
-                            clientData: state.clients[index],
-                          ),
-                        ),
+                      context.push(
+                        Routes.clientProfile,
+                        extra: state.clients[index],
                       );
                     },
                     splashColor: Colors.green,

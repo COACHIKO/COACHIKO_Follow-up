@@ -11,7 +11,6 @@ import '../../../../client_log_history/logic/cubit/log_history_cubit.dart';
 import '../../../../client_log_history/ui/logs_history.dart';
 import '../../../client/phases_cases/form_completion/ui/form_completion.dart';
 import '../../all_clients_display/data/models/clients_response.dart';
-import '../../navigation_bar/ui/coach_navigation_bar.dart';
 import '../../workout_routine_making_features/display_client_routine/ui/client_routines_display.dart';
 
 class ClientProfilePage extends StatelessWidget {
@@ -26,16 +25,6 @@ class ClientProfilePage extends StatelessWidget {
     // var dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (context) =>
-                        const CoachNavigationBar(initialIndex: 2)),
-                (route) => false,
-              );
-            },
-            icon: const Icon(Icons.arrow_back)),
         centerTitle: true,
         title: Text("${clientData.firstName} ${clientData.secondName}"),
         iconTheme: const IconThemeData(color: Colors.blueAccent),

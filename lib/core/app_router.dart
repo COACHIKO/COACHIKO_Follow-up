@@ -13,7 +13,9 @@ import '../features/modules/client/phases_cases/waiting_phase/logic/cubit/curren
 import '../features/modules/client/phases_cases/waiting_phase/ui/current_stage_page.dart';
 import '../features/modules/client/routine/routine_get/data/models/routine_response.dart';
 import '../features/modules/client/routine/routine_log/ui/routine_weight_log.dart';
+import '../features/modules/coach/all_clients_display/data/models/clients_response.dart';
 import '../features/modules/coach/navigation_bar/ui/coach_navigation_bar.dart';
+import '../features/modules/coach/specific_client_profile/ui/client_profile_page.dart';
 import '../view/screens/fork_usering_page.dart';
 import 'di/dependency_injection.dart';
 import 'services/shared_pref/shared_pref.dart';
@@ -88,7 +90,14 @@ class AppRouter {
             ),
           );
         },
-      )
+      ),
+      GoRoute(
+        path: Routes.clientProfile,
+        builder: (context, state) {
+          final clientData = state.extra as ClientData;
+          return ClientProfilePage(clientData: clientData);
+        },
+      ),
     ];
   }
 
@@ -123,4 +132,5 @@ class Routes {
   static const String clientHome = '/clientHome';
   static const String routineLog = '/routineLog';
   static const String dietExchange = '/dietExchange';
+  static const String clientProfile = '/clientProfile';
 }
