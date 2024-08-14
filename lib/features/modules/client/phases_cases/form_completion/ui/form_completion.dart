@@ -31,7 +31,7 @@ class FormComplectionView extends StatelessWidget {
         create: (context) => FormCompletionCubit(
           formCompletionRepoImp: FormCompletionRepoImp(ApiService(Dio())),
         ),
-        child: const FormComplectionBody(),
+        child: const FormComplectionBody() 
       ),
     );
   }
@@ -56,7 +56,7 @@ class FormComplectionBody extends StatelessWidget {
                 children: [
                   /// GENDER SELECT ///
                   Scaffold(
-                    appBar: AppBar(
+                    appBar: AppBar( 
                       title: const Text("Gender Select",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       centerTitle: true,
@@ -80,7 +80,7 @@ class FormComplectionBody extends StatelessWidget {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: CColors.black,
+                                color: dark ?CColors.black: CColors.white,
                               ),
                               alignment: Alignment.topCenter,
                               child: Row(
@@ -273,7 +273,7 @@ class FormComplectionBody extends StatelessWidget {
                             },
                             child: ChooseCard(
                                 controller: controllerget.isLowActivitySelected,
-                                text: "12".tr,
+                                text: "Low Activity (No Physical Activity)",
                                 image: 'assets/6.png'),
                           ),
                           SizedBox(height: 18.h),
@@ -288,7 +288,7 @@ class FormComplectionBody extends StatelessWidget {
                             child: ChooseCard(
                                 controller:
                                     controllerget.isLightActivitySelected,
-                                text: "13".tr,
+                                text: "Light Activity (1:3 Times/Week)",
                                 image: 'assets/8.png'),
                           ),
                           SizedBox(height: 18.h),
@@ -304,7 +304,7 @@ class FormComplectionBody extends StatelessWidget {
                             child: ChooseCard(
                                 controller:
                                     controllerget.isModerateActivitySelected,
-                                text: "14".tr,
+                                text: "Moderate Activity (3:5 Times/Week)",
                                 image: 'assets/7.png'),
                           ),
                           SizedBox(height: 18.h),
@@ -319,7 +319,7 @@ class FormComplectionBody extends StatelessWidget {
                             child: ChooseCard(
                                 controller:
                                     controllerget.isHeavyActivitySelected,
-                                text: "15".tr,
+                                text: "Heavy Activity (6:7 Times/Week)",
                                 image: 'assets/9.png'),
                           ),
                           SizedBox(height: 18.h),
@@ -334,7 +334,7 @@ class FormComplectionBody extends StatelessWidget {
                             child: ChooseCard(
                                 controller:
                                     controllerget.isExtreemActivitySelected,
-                                text: "16".tr,
+                                text: "Extreme Activity (twice/day)",
                                 image: 'assets/10.png'),
                           ),
                         ],
@@ -359,7 +359,7 @@ class FormComplectionBody extends StatelessWidget {
                           Container(
                               padding:
                                   EdgeInsets.only(top: TSizes.spaceBtwItems.h),
-                              child: Text("17".tr,
+                              child: Text("SELECT YOUR DATE OF BIRTH".tr,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold))),
                           SizedBox(
@@ -417,9 +417,9 @@ class FormComplectionBody extends StatelessWidget {
                         children: [
                           Container(
                               padding: EdgeInsets.only(top: 25.h),
-                              child: Text("25".tr,
-                                  style: const TextStyle(
-                                      color: Colors.white,
+                              child:   Text("Choose Your Available Budget",
+                                  style: TextStyle(
+                                      color:dark? Colors.white : Colors.black,
                                       fontWeight: FontWeight.bold))),
                           SizedBox(height: 22.h),
                           Column(
@@ -434,7 +434,7 @@ class FormComplectionBody extends StatelessWidget {
                                   },
                                   child: ChooseCard(
                                     controller: controllerget.poorMoney,
-                                    text: "22".tr,
+                                    text: "Low Cost Diet",
                                     image: "assets/11.png",
                                   )),
                               SizedBox(height: 22.h),
@@ -448,7 +448,7 @@ class FormComplectionBody extends StatelessWidget {
                                 },
                                 child: ChooseCard(
                                   controller: controllerget.mediumMoney,
-                                  text: "23".tr,
+                                  text: "Medium Cost Diet",
                                   image: "assets/12.png",
                                 ),
                               ),
@@ -463,7 +463,7 @@ class FormComplectionBody extends StatelessWidget {
                                 },
                                 child: ChooseCard(
                                   controller: controllerget.richMoney,
-                                  text: "24".tr,
+                                  text: "High Cost Diet",
                                   image: "assets/13.png",
                                 ),
                               ),
@@ -488,8 +488,8 @@ class FormComplectionBody extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("26".tr,
-                                style: const TextStyle(
+                          const  Text("Enter Your Measurements",
+                                style:   TextStyle(
                                     fontWeight: FontWeight.bold)),
                             SizedBox(
                               height: 10.h,
@@ -697,7 +697,7 @@ class FormComplectionBody extends StatelessWidget {
                                                           0xff1f1f1F),
                                                       filled:
                                                           dark ? true : false,
-                                                      hintText: "27".tr,
+                                                      hintText: 'Waist' ,
                                                       hintStyle: TextStyle(
                                                           fontSize: 14.sp),
                                                     ),
@@ -761,7 +761,7 @@ class FormComplectionBody extends StatelessWidget {
                                                           0xff1f1f1F),
                                                       filled:
                                                           dark ? true : false,
-                                                      hintText: "28".tr,
+                                                      hintText: 'Neck',
                                                       hintStyle: TextStyle(
                                                           fontSize: 14.sp),
                                                     ),
@@ -817,7 +817,7 @@ class FormComplectionBody extends StatelessWidget {
                                                 fillColor:
                                                     const Color(0xff1f1f1F),
                                                 filled: dark ? true : false,
-                                                hintText: "29".tr,
+                                                hintText:'Arms',
                                                 hintStyle:
                                                     TextStyle(fontSize: 14.sp),
                                               ),
@@ -872,7 +872,7 @@ class FormComplectionBody extends StatelessWidget {
                                                   fillColor:
                                                       const Color(0xff1f1f1F),
                                                   filled: dark ? true : false,
-                                                  hintText: "30".tr,
+                                                  hintText: 'Calve',
                                                   hintStyle: TextStyle(
                                                       fontSize: 14.sp),
                                                 ),
@@ -1569,23 +1569,21 @@ class FormComplectionBody extends StatelessWidget {
                                                     birthdayDate: controllerget.birthdayDate.toUtc()));
                                             SharedPref()
                                                 .setInt("currentStep", 1);
-                                            SharedPref().getInt("isCoach") == 0
-                                                ? Navigator.pushAndRemoveUntil(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const CurrentStage()),
-                                                    (Route<dynamic> route) =>
-                                                        false,
-                                                  )
-                                                : Navigator.pushAndRemoveUntil(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const CoachNavigationBar()),
-                                                    (Route<dynamic> route) =>
-                                                        false,
-                                                  );
+                                            
+                                                  if (SharedPref().getInt("isCoach") == 0) {
+  Navigator.pushNamedAndRemoveUntil(
+    context,
+    "/currentStage",
+    (route) => true,
+  );
+} else {
+  Navigator.pushNamedAndRemoveUntil(
+    context,
+    "/CoachHome",
+    (route) => true,
+  );
+}
+
                                           },
                                           child: const Text("Next",
                                               style: TextStyle(

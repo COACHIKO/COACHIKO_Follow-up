@@ -136,11 +136,13 @@ class FoodDataWidget extends StatelessWidget {
 }
 
 class FoodDataWidget2 extends StatelessWidget {
-  const FoodDataWidget2({
+    const FoodDataWidget2({
     super.key,
   });
   @override
   Widget build(BuildContext context) {
+      final bool dark = THelperFunctions.isDarkMode(context);
+
     return BlocBuilder<FoodCubit, FoodsState>(
       builder: (context, state) {
         if (state is FoodsStateLoading) {
@@ -187,7 +189,7 @@ class FoodDataWidget2 extends StatelessWidget {
                         child: ListTile(
                           title: Text(
                             food.foodName,
-                            style: const TextStyle(color: Colors.white),
+                            style:   TextStyle(color:dark? Colors.white:Colors.black),
                           ),
                         ),
                       ),

@@ -8,8 +8,6 @@ import 'core/localization/app_localizations_setup.dart';
 import 'core/localization/cubit/locale_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'main.dart';
-
 class COACHIKOFollowApp extends StatelessWidget {
   COACHIKOFollowApp({super.key});
 
@@ -30,20 +28,18 @@ class COACHIKOFollowApp extends StatelessWidget {
                   minTextAdapt: true,
                   splitScreenMode: true,
                   builder: (BuildContext context, child) {
-                    return MaterialApp(
+                    return MaterialApp.router(
                       locale: localeState.locale,
                       supportedLocales: AppLocalizationsSetup.supportedLocales,
                       localizationsDelegates:
                           AppLocalizationsSetup.localizationsDelegates,
                       localeResolutionCallback:
                           AppLocalizationsSetup.localeResolutionCallback,
-                      navigatorKey: navigatorKey,
                       title: CTexts.appName,
                       themeMode: themeState,
                       theme: TAppTheme.lightTheme,
                       darkTheme: TAppTheme.darkTheme,
-                      initialRoute: determineInitialRoute(),
-                      onGenerateRoute: _appRouter.generateRoute,
+                      routerConfig: _appRouter.router,
                       debugShowCheckedModeBanner: false,
                     );
                   },

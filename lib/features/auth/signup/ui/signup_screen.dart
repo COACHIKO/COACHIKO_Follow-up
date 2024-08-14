@@ -1,129 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/features/auth/signup/data/repository/signup_repo_impl.dart';
-import 'package:get/get.dart';
-
 import '../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../core/utils/constants/colors.dart';
 import '../../../../core/utils/constants/text_strings.dart';
 import '../../../../core/utils/validators/validation.dart';
-import '../../../../view/screens/fork_usering_page.dart';
+ import '../logic/cubit/sign_up_cubit.dart';
+import '../logic/cubit/sign_up_state.dart';
 import 'widgets/sign_up_header.dart';
-import '../data/models/signup_request_model.dart';
+ 
+ 
 
-// Cubit State
-class SignUpState {
-  final bool isCoach;
-  final String firstName;
-  final String secondName;
-  final String username;
-  final String email;
-  final String password;
-  final String coachUserName;
-
-  SignUpState({
-    this.isCoach = false,
-    this.firstName = '',
-    this.secondName = '',
-    this.username = '',
-    this.email = '',
-    this.password = '',
-    this.coachUserName = '',
-  });
-
-  SignUpState copyWith({
-    bool? isCoach,
-    String? firstName,
-    String? secondName,
-    String? username,
-    String? email,
-    String? password,
-    String? coachUserName,
-  }) {
-    return SignUpState(
-      isCoach: isCoach ?? this.isCoach,
-      firstName: firstName ?? this.firstName,
-      secondName: secondName ?? this.secondName,
-      username: username ?? this.username,
-      email: email ?? this.email,
-      password: password ?? this.password,
-      coachUserName: coachUserName ?? this.coachUserName,
-    );
-  }
-}
-
-// Cubit
-class SignUpCubit extends Cubit<SignUpState> {
-  final SignupRepoImp signupRepoImp;
-
-  SignUpCubit(this.signupRepoImp) : super(SignUpState());
-
-  void toggleCoach() {
-    emit(state.copyWith(isCoach: !state.isCoach));
-  }
-
-  void setFirstName(String value) {
-    emit(state.copyWith(firstName: value));
-  }
-
-  void setSecondName(String value) {
-    emit(state.copyWith(secondName: value));
-  }
-
-  void setUsername(String value) {
-    emit(state.copyWith(username: value));
-  }
-
-  void setEmail(String value) {
-    emit(state.copyWith(email: value));
-  }
-
-  void setPassword(String value) {
-    emit(state.copyWith(password: value));
-  }
-
-  void setCoachUserName(String value) {
-    emit(state.copyWith(coachUserName: value));
-  }
-
-  Future<void> signUp() async {
-    final formState = _signupFormKey.currentState;
-
-    if (formState!.validate()) {
-      var response = await signupRepoImp.register(SignupRequestBody(
-        username: state.username,
-        password: state.password,
-        email: state.email,
-        firstName: state.firstName,
-        secondName: state.secondName,
-        isCoach: state.isCoach ? 1 : 0,
-        coachUserName: state.coachUserName,
-      ));
-      if (response.status == "success") {
-        Fluttertoast.showToast(
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          msg: response.message.toString(),
-          toastLength: Toast.LENGTH_SHORT,
-        );
-      } else {
-        Fluttertoast.showToast(
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          msg: response.message.toString(),
-          toastLength: Toast.LENGTH_SHORT,
-        );
-      }
-    }
-  }
-}
-
-// SignUpPage
-class SignUpPage extends StatelessWidget {
+ class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
 
   @override
@@ -163,7 +54,6 @@ class SignUpPage extends StatelessWidget {
 }
 
 // GlobalKey for Form
-final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
 
 class ClientFormField extends StatelessWidget {
   const ClientFormField({
@@ -193,7 +83,7 @@ class ClientFormField extends StatelessWidget {
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "33".tr;
+                  return "Coach username is required" ;
                 }
                 return null;
               },
@@ -202,7 +92,7 @@ class ClientFormField extends StatelessWidget {
                 focusedErrorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0xff1f1f1F)),
                 ),
-                labelText: CTexts.coachUser,
+                labelText: "Coach Username",
                 border: const OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -218,10 +108,10 @@ class ClientFormField extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Column(
+               const   Column(
                     children: [
-                      Text(CTexts.coachOrClient),
-                      Text(CTexts.youClient),
+                       Text("Coach or client"),
+                       Text("You're client"),
                     ],
                   ),
                   InkWell(
@@ -277,7 +167,7 @@ class CoachFormField extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(CTexts.youCoach),
+              const Text("You're coach"),
               InkWell(
                 enableFeedback: false,
                 splashColor: Colors.transparent,
@@ -454,9 +344,8 @@ class RegisterButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       onPressed: () async {
-        await signUpCubit.signUp();
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ForkUseringPage()));
+        await signUpCubit.signUp(context);
+      
       },
       child: Text(
         CTexts.register,
@@ -479,7 +368,7 @@ class SignUpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _signupFormKey,
+      key: signUpCubit.signupFormKey,
       child: Column(
         children: [
           const SizedBox(height: 16),

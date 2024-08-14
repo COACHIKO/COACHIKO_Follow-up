@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../../../../../core/utils/constants/colors.dart';
+import '../../../../../../core/utils/helpers/helper_functions.dart';
 import '../../../../coach/navigation_bar/ui/coach_navigation_bar.dart';
 import '../logic/cubit/current_stage_cubit.dart';
 import '../logic/cubit/current_stage_state.dart';
@@ -13,11 +14,12 @@ class CurrentStage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      final bool dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar( 
         title: const Text('Current Stage'),
         centerTitle: true,
-        backgroundColor: const Color(0xFF1C1C1E),
+        backgroundColor: dark? const Color(0xFF1C1C1E):CColors.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -25,8 +27,8 @@ class CurrentStage extends StatelessWidget {
               Icons.refresh,
               color: Colors.blueAccent,
             ),
-            onPressed: () {
-              context.read<CurrentStageCubit>().getCurrentStage();
+            onPressed: ()async {
+                 context.read<CurrentStageCubit>().getCurrentStage();
             },
           ),
         ],
@@ -404,7 +406,7 @@ class CustomCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Text(cardText),
+            Text(cardText,style: const TextStyle(color: Colors.white),),
             const SizedBox(height: 10),
             SizedBox(
               width: 200,

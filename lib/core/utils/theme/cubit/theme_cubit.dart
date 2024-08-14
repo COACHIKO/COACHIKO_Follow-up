@@ -6,10 +6,16 @@ import '../../../services/shared_pref/shared_pref.dart';
 class ThemeCubit extends Cubit<ThemeMode> {
   ThemeCubit() : super(_getInitialThemeMode());
 
-  static ThemeMode _getInitialThemeMode() {
-    final isDarkMode = SharedPref().getBool("theme") ?? false;
-    return isDarkMode ? ThemeMode.dark : ThemeMode.light;
+ static ThemeMode _getInitialThemeMode() {
+  final themePreference = SharedPref().getBool("theme");
+  
+  if (themePreference == null) {
+    final brightness = WidgetsBinding.instance.window.platformBrightness;
+    return brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
   }
+  
+  return themePreference ? ThemeMode.dark : ThemeMode.light;
+}
 
   void toggleTheme(bool isDarkMode) {
     final themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;

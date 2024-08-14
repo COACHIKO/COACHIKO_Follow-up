@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/features/auth/login/ui/login_screen.dart';
+import 'package:followupapprefactored/core/app_router.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/utils/constants/image_strings.dart';
 
 class ForkUseringPage extends StatelessWidget {
@@ -65,7 +66,7 @@ class ForkUseringPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/signup");
+                    context.push(Routes.signUpScreen);
                   },
                   child: const SizedBox(
                     width: double.infinity,
@@ -80,7 +81,7 @@ class ForkUseringPage extends StatelessWidget {
                 ),
                 InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, "/login");
+                      context.push(Routes.loginScreen);
                     },
                     child: Text(
                       "Have an account? Log in",

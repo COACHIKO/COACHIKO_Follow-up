@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
+import '../../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../../core/utils/helpers/helper_functions.dart';
 import '../../routine_get/data/models/routine_response.dart';
@@ -270,7 +271,8 @@ class RoutineWeightLogScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   var cubit = context.read<RoutineWeightLogCubit>();
-                  await cubit.submitAndLogRoutine(1, (routine.routineId));
+                  await cubit.submitAndLogRoutine(
+                      SharedPref().getInt("user")!, (routine.routineId));
                 },
                 child: const Text('Submit'),
               ),

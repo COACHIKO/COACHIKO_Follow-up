@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../../../../core/app_router.dart';
 import '../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../data/models/login_request_body.dart';
 import '../../data/repository/login_repo_impl.dart';
@@ -49,19 +50,15 @@ class LoginCubit extends Cubit<LoginState> {
 
         if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 0) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, "/formComplection", (route) => false);
+          context.go(context, Routes.formComplection);
         } else if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 1) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, "/currentStage", (route) => false);
+          context.go(context, Routes.currentStage);
         } else if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 2) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, "/CoachHome", (route) => false);
+          context.go(context, Routes.clientHome);
         } else {
-          Navigator.pushNamedAndRemoveUntil(
-              context, "/CoachHome", (route) => false);
+          context.go(context, Routes.coachHome);
         }
 
         Fluttertoast.showToast(

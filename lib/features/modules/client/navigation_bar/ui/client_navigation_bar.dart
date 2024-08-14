@@ -85,26 +85,26 @@ class ClientNavigationBar extends StatelessWidget {
               indicatorColor: darkMode
                   ? CColors.white.withOpacity(0.1)
                   : CColors.black.withOpacity(0.1),
-              destinations: [
+              destinations: [ NavigationDestination(
+                  icon:   Icon(Icons .show_chart),
+                  label: "Progress",
+                ),
                 NavigationDestination(
                   icon: const Icon(
                     FlutterIcons.dumbbell_faw5s,
                     size: 22,
                   ),
-                  label: "47".tr,
+                  label: "Workout",
                 ),
                 NavigationDestination(
                   icon: const Icon(FlutterIcons.food_apple_outline_mco),
-                  label: "54".tr,
-                ),
-                NavigationDestination(
-                  icon: const Icon(Iconsax.people),
-                  label: "51".tr,
+                  label: "Diet",
                 ),
                 NavigationDestination(
                   icon: const Icon(Iconsax.user),
-                  label: "50".tr,
+                  label: "Settings".tr,
                 ),
+               
               ],
             );
           },

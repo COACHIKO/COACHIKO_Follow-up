@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:followupapprefactored/features/modules/client/diet/data/models/diet_response.dart';
+import '../../../../../core/app_router.dart';
 import '../../../../../core/networking/api_service.dart';
 import '../../../../../core/utils/constants/colors.dart';
 import '../../../../../core/utils/helpers/helper_functions.dart';
@@ -335,20 +337,12 @@ class _FoodsListViewState extends State<FoodsListView> {
                 onPressed: (context) {
                   final selectedFood = widget.state.dietData.dietData![index];
                   selectedFood.isSelected = true;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BlocProvider(
-                        create: (context) => FoodCubit(
-                          foodsRepoImpl: FoodsRepoImpl(ApiService(Dio())),
-                          selectedfoods: [],
-                        )..getFoods(),
-                        child: ConvertFooods(
-                          diet: widget.state.dietData.dietData,
-                        ),
-                      ),
-                    ),
-                  ).then((_) {
+                  context
+                      .push(
+                    Routes.dietExchange,
+                    extra: widget.state.dietData.dietData,
+                  )
+                      .then((_) {
                     selectedFood.isSelected = false;
                   });
                 },

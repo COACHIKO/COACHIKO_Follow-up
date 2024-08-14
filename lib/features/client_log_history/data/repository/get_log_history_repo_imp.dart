@@ -14,7 +14,7 @@ class GetLogHistoryRepoImp implements GetClientLogHistoryRepo {
       var response = await _apiService.getLogsHistory(
           clientLogsRequestBody: clientLogsRequestBody);
       var parsedData = ClientLogsResponseBody.fromJson(response);
-      return parsedData;
+       return parsedData;
     } catch (e) {
       throw Exception('Failed to load log data');
     }

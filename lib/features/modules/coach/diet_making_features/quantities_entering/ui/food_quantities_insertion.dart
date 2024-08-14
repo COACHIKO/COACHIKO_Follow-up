@@ -5,8 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
-import 'package:get/get.dart';
-import '../../../all_clients_display/data/models/clients_response.dart';
+ import '../../../all_clients_display/data/models/clients_response.dart';
 import '../../food_selection/data/models/food_model.dart';
 import '../data/repository/food_quantities_repo_imp.dart';
 import 'package:followupapprefactored/features/modules/coach/diet_making_features/quantities_entering/data/models/quantity_insertion_request_body.dart';
@@ -71,7 +70,7 @@ class FoodQuantitiesBody extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "${"46".tr}\n ${clientData.tdee}",
+                      "${"Calories" }\n ${clientData.tdee}",
                       style: TextStyle(
                         color: dark ? Colors.black : Colors.white,
                         fontSize: 11.sp,
@@ -79,7 +78,7 @@ class FoodQuantitiesBody extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${"42".tr}\n ${clientData.targetProtien}",
+                      "${"Protien"}\n ${clientData.targetProtien}",
                       style: TextStyle(
                         color: dark ? Colors.black : Colors.white,
                         fontSize: 11.sp,
@@ -87,7 +86,7 @@ class FoodQuantitiesBody extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${"43".tr}\n ${clientData.targetCarbohydrate}",
+                      "${"Carbohydrate"}\n ${clientData.targetCarbohydrate}",
                       style: TextStyle(
                         color: dark ? Colors.black : Colors.white,
                         fontSize: 11.sp,
@@ -95,7 +94,7 @@ class FoodQuantitiesBody extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${"44".tr}\n ${clientData.targetFat}",
+                      "${"Fat"}\n ${clientData.targetFat}",
                       style: TextStyle(
                         color: dark ? Colors.black : Colors.white,
                         fontSize: 11.sp,
@@ -115,28 +114,28 @@ class FoodQuantitiesBody extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "${"41".tr}\n ${cubit.calculateTotalCalories(selectedFoods).toStringAsFixed(1)}",
+                      "${"Calories"}\n ${cubit.calculateTotalCalories(selectedFoods).toStringAsFixed(1)}",
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "${"42".tr}\n ${cubit.calculateTotalProtien(selectedFoods).toStringAsFixed(1)}",
+                      "${"Protien" }\n ${cubit.calculateTotalProtien(selectedFoods).toStringAsFixed(1)}",
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "${"43".tr}\n ${cubit.calculateTotalCarbohydrate(selectedFoods).toStringAsFixed(1)}",
+                      "${"Carbohydrate" }\n ${cubit.calculateTotalCarbohydrate(selectedFoods).toStringAsFixed(1)}",
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "${"44".tr}\n ${cubit.calculateTotalFat(selectedFoods).toStringAsFixed(1)}",
+                      "${"Fat" }\n ${cubit.calculateTotalFat(selectedFoods).toStringAsFixed(1)}",
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
