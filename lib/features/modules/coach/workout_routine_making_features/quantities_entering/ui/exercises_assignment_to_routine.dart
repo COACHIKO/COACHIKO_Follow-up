@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../../core/routing/routing_model/routing_model.dart';
 import '../../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../../core/utils/validators/validation.dart';
+import '../../../all_clients_display/data/models/clients_response.dart';
 import '../logic/cubit/exercises_assignment_cubit.dart';
 import '../logic/cubit/exercises_assignment_state.dart';
 
@@ -227,7 +228,7 @@ class Exercisesassignment extends StatelessWidget {
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () {
-                    context.pushReplacement(Routes.exerciseSelection,
+                    context.push(Routes.exerciseSelection,
                         extra: ExerciseSelectionParams(
                           clientData: cubit.clientData,
                           routine: cubit.routine,
@@ -246,15 +247,18 @@ class Exercisesassignment extends StatelessWidget {
                       if (cubit.areTextFormFieldsValid() == true) {
                         await cubit.assignExercises();
 
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ClientRoutineDisplay(
-                              clientData: cubit.clientData,
-                            ),
-                          ),
-                          (route) => false,
+                        context.go(
+                          Routes.coachHome,
                         );
+                        // Navigator.pushAndRemoveUntil(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => ClientRoutineDisplay(
+                        //       clientData: cubit.clientData,
+                        //     ),
+                        //   ),
+                        //   (route) => false,
+                        // );
                       } else {}
                     },
                     child: const Text("Submit Routine"),

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:followupapprefactored/core/routing/app_router.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/routing/routes.dart';
+import '../../../../../../core/routing/routing_model/routing_model.dart';
 import '../../../../../../core/utils/constants/image_strings.dart';
 import '../../../../../../core/utils/constants/sizes.dart';
 import '../../../../../../core/utils/helpers/helper_functions.dart';
@@ -109,6 +113,12 @@ class ExercisesSelection extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
+                            context.push(Routes.exercisesAssignment,
+                                extra: ExerciseAssignmentParams(
+                                  clientData: clientData,
+                                  routine: routine,
+                                  oldExercises: selectedFoods,
+                                ));
                             // Navigator.pushReplacement(
                             //   context,
                             //   MaterialPageRoute(
