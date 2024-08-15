@@ -6,7 +6,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:followupapprefactored/features/modules/client/diet/data/models/diet_response.dart';
-import '../../../../../core/routing/app_router.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/utils/constants/colors.dart';
 import '../../../../../core/utils/helpers/helper_functions.dart';

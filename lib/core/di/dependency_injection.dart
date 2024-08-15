@@ -12,6 +12,10 @@ import '../../features/modules/coach/diet_making_features/food_selection/data/re
 import '../../features/modules/coach/diet_making_features/food_selection/logic/cubit/food_cubit.dart';
 import '../../features/modules/coach/diet_making_features/quantities_entering/data/repository/food_quantities_repo_imp.dart';
 import '../../features/modules/coach/diet_making_features/quantities_entering/logic/cubit/food_quantities_cubit.dart';
+import '../../features/modules/coach/workout_routine_making_features/display_client_routine/data/repository/client_routines_repo_impl.dart';
+import '../../features/modules/coach/workout_routine_making_features/display_client_routine/logic/cubit/client_routines_cubit.dart';
+import '../../features/modules/coach/workout_routine_making_features/exercises_selection/data/repository/exercises_repo_impl.dart';
+import '../../features/modules/coach/workout_routine_making_features/quantities_entering/data/repository/exercises_assignment_repo_imp.dart';
 import '../networking/api_service.dart';
 import '../services/shared_pref/shared_pref.dart';
 
@@ -42,4 +46,13 @@ Future<void> setupInjector() async {
       () => FoodQuantitiesRepoImp(sl<ApiService>()));
   sl.registerFactory<FoodQuantitiesCubit>(() => FoodQuantitiesCubit(
       foodQuantitiesRepoImp: sl<FoodQuantitiesRepoImp>(), lenth: 0));
+
+  sl.registerLazySingleton<ClientRoutinesRepoImp>(
+      () => ClientRoutinesRepoImp(sl<ApiService>()));
+  sl.registerFactory<ClientRoutinsCubit>(() =>
+      ClientRoutinsCubit(clientRoutinesRepoImp: sl<ClientRoutinesRepoImp>()));
+  sl.registerLazySingleton<ExercisesAssignmentRepoImp>(
+      () => ExercisesAssignmentRepoImp(sl<ApiService>()));
+  sl.registerLazySingleton<SelectingExercisesRepoImpl>(
+      () => SelectingExercisesRepoImpl(sl<ApiService>()));
 }

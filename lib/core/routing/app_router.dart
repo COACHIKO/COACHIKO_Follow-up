@@ -23,7 +23,14 @@ import '../../features/modules/coach/diet_making_features/quantities_entering/lo
 import '../../features/modules/coach/diet_making_features/quantities_entering/ui/food_quantities_insertion.dart';
 import '../../features/modules/coach/navigation_bar/ui/coach_navigation_bar.dart';
 import '../../features/modules/coach/specific_client_profile/ui/client_profile_page.dart';
+import '../../features/modules/coach/workout_routine_making_features/display_client_routine/logic/cubit/client_routines_cubit.dart';
 import '../../features/modules/coach/workout_routine_making_features/display_client_routine/ui/client_routines_display.dart';
+import '../../features/modules/coach/workout_routine_making_features/exercises_selection/data/repository/exercises_repo_impl.dart';
+import '../../features/modules/coach/workout_routine_making_features/exercises_selection/logic/cubit/exercises_cubit.dart';
+import '../../features/modules/coach/workout_routine_making_features/exercises_selection/ui/exercises_selection_page.dart';
+import '../../features/modules/coach/workout_routine_making_features/quantities_entering/data/repository/exercises_assignment_repo_imp.dart';
+import '../../features/modules/coach/workout_routine_making_features/quantities_entering/logic/cubit/exercises_assignment_cubit.dart';
+import '../../features/modules/coach/workout_routine_making_features/quantities_entering/ui/exercises_assignment_to_routine.dart';
 import '../../view/screens/fork_usering_page.dart';
 import '../di/dependency_injection.dart';
 import '../services/shared_pref/shared_pref.dart';
@@ -130,24 +137,57 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: Routes.exerciseSelection,
+        path: Routes.clientRoutines,
         builder: (context, state) {
           final clientData = state.extra as ClientData;
-          return ClientRoutineDisplay(clientData: clientData);
+          return BlocProvider(
+            create: (context) =>
+                sl<ClientRoutinsCubit>()..getRoutine(clientData.id),
+            child: ClientRoutineDisplay(clientData: clientData),
+          );
         },
       ),
       GoRoute(
-        path: Routes.quantitiesEntering,
+          path: Routes.quantitiesEntering,
+          builder: (context, state) {
+            final params = state.extra as SelectedFoodsParams;
+            return BlocProvider(
+                create: (context) => FoodQuantitiesCubit(
+                    foodQuantitiesRepoImp: sl<FoodQuantitiesRepoImp>(),
+                    lenth: params.selectedFoods.length),
+                child: FoodQuantitiesEntering(
+                    selectedFoods: params.selectedFoods,
+                    clientData: params.clientData));
+          }),
+      GoRoute(
+        path: Routes.exercisesAssignment,
         builder: (context, state) {
-          final params = state.extra as SelectedFoodsParams;
+          final params = state.extra as ExerciseAssignmentParams;
           return BlocProvider(
-              create: (context) => FoodQuantitiesCubit(
-                  foodQuantitiesRepoImp: sl<FoodQuantitiesRepoImp>(),
-                  lenth: params.selectedFoods.length),
-              child: FoodQuantitiesEntering(
-                selectedFoods: params.selectedFoods,
-                clientData: params.clientData,
-              ));
+            create: (context) => ExerciseAssignmentCubit(
+              clientData: params.clientData,
+              routine: params.routine,
+              selectedExercises: params.oldExercises,
+              exercisesAssignmentRepoImp: sl<ExercisesAssignmentRepoImp>(),
+            ),
+            child: const Exercisesassignment(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.exerciseSelection,
+        builder: (context, state) {
+          final params = state.extra as ExerciseSelectionParams;
+          return BlocProvider(
+            create: (context) => SelectingExercisesCubit(
+                lastSelectedExercises: params.oldExercises,
+                exercisesRepoimpl: sl<SelectingExercisesRepoImpl>())
+              ..getFoods(),
+            child: ExercisesSelection(
+              clientData: params.clientData,
+              routine: params.routine,
+            ),
+          );
         },
       ),
     ];

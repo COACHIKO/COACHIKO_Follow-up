@@ -165,9 +165,7 @@ class ClientProfilePage extends StatelessWidget {
                             width: double.infinity,
                             child: OutlinedButton(
                               onPressed: () {
-                                context.push(
-                                  Routes.formComplection,
-                                );
+                                context.push(Routes.formComplection);
                               },
                               child: const Text("Complete Form"),
                             ),
@@ -194,7 +192,7 @@ class ClientProfilePage extends StatelessWidget {
                   child: OutlinedButton(
                       onPressed: () {
                         context.push(
-                          Routes.exerciseSelection,
+                          Routes.clientRoutines,
                           extra: clientData,
                         );
                       },

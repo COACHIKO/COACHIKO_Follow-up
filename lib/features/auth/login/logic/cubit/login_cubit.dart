@@ -11,9 +11,7 @@ import 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   final LoginRepoImp loginRepoImp;
 
-  LoginCubit(
-    this.loginRepoImp,
-  ) : super(LoginState());
+  LoginCubit(this.loginRepoImp) : super(LoginState());
   late String username;
   late String password;
   bool rememberMe = false;

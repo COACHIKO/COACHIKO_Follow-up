@@ -11,6 +11,8 @@ class Routes {
   static const String clientProfile = '/clientProfile';
   static const String trackHistory = '/trackHistory';
   static const String foodSelection = '/foodSelection';
-  static const String exerciseSelection = '/exerciseSelection';
+  static const String clientRoutines = '/clientRoutines';
   static const String quantitiesEntering = '/quantitiesEntering';
+  static const String exercisesAssignment = '/exercisesAssignment';
+  static const String exerciseSelection = '/exerciseSelection';
 }

@@ -2,17 +2,18 @@ import 'package:followupapprefactored/features/modules/coach/workout_routine_mak
 import '../../../../../../../../../../../core/networking/api_service.dart';
 import 'exercises_repo.dart';
 
-class ExercisesRepoImpl implements ExercisesRepo {
+class SelectingExercisesRepoImpl implements ExercisesRepo {
   final ApiService _apiService;
-  ExercisesRepoImpl(this._apiService);
+  SelectingExercisesRepoImpl(this._apiService);
 
   @override
   Future<List<Exercises>> getExercises() async {
     try {
       var response = await _apiService.getExercisesData();
-      var foodList = response.map((item) => Exercises.fromJson(item)).toList();
+      var exercisesList =
+          response.map((item) => Exercises.fromJson(item)).toList();
 
-      return foodList;
+      return exercisesList;
     } catch (e) {
       throw Exception(e.toString());
     }

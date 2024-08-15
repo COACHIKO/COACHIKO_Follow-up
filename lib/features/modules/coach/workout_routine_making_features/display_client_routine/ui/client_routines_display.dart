@@ -1,13 +1,12 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:followupapprefactored/core/networking/api_service.dart';
 import 'package:followupapprefactored/core/utils/constants/colors.dart';
 import 'package:followupapprefactored/core/utils/helpers/helper_functions.dart';
 import 'package:followupapprefactored/features/modules/client/routine/routine_get/data/models/routine_response.dart';
-import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/display_client_routine/data/repository/client_routines_repo_impl.dart';
-import 'package:followupapprefactored/features/modules/coach/workout_routine_making_features/quantities_entering/ui/exercises_assignment_to_routine.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/routing/routes.dart';
+import '../../../../../../core/routing/routing_model/routing_model.dart';
 import '../../../all_clients_display/data/models/clients_response.dart';
 import '../../exercises_selection/data/models/exercisesDataBase.dart';
 import '../../exercises_selection/ui/exercises_selection_page.dart';
@@ -17,35 +16,8 @@ import '../logic/cubit/client_routines_state.dart';
 class ClientRoutineDisplay extends StatelessWidget {
   final ClientData clientData;
 
-  const ClientRoutineDisplay({super.key, required this.clientData});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("${clientData.firstName}'s Routines"),
-          iconTheme: const IconThemeData(color: Colors.blueAccent),
-        ),
-        body: BlocProvider(
-          create: (context) => ClientRoutinsCubit(
-              clientRoutinesRepoImp: ClientRoutinesRepoImp(ApiService(Dio())))
-            ..getRoutine(clientData.id),
-          child: ClientRoutineDisplayBody(
-            clientData: clientData,
-            id: clientData.id!.toInt(),
-          ),
-        ));
-  }
-}
-
-class ClientRoutineDisplayBody extends StatelessWidget {
-  final int id;
-  final ClientData clientData;
-
-  const ClientRoutineDisplayBody({
+  const ClientRoutineDisplay({
     super.key,
-    required this.id,
     required this.clientData,
   });
 
@@ -59,15 +31,20 @@ class ClientRoutineDisplayBody extends StatelessWidget {
         } else if (state is RoutineError) {
           return Center(child: Text('Error: ${state.error}'));
         } else if (state is RoutineLoadedSuccessfully) {
-          return Column(
-            children: [
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: state.routines.length,
-                itemBuilder: (context, index) {
-                  Routine routine = state.routines[index];
-                  return SafeArea(
-                    child: Column(
+          return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text("${clientData.firstName}'s Routines"),
+              iconTheme: const IconThemeData(color: Colors.blueAccent),
+            ),
+            body: Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.routines.length,
+                  itemBuilder: (context, index) {
+                    Routine routine = state.routines[index];
+                    return Column(
                       children: [
                         SizedBox(
                           height: 160.h,
@@ -98,8 +75,8 @@ class ClientRoutineDisplayBody extends StatelessWidget {
                                         onPressed: () async {
                                           var cubit = context
                                               .read<ClientRoutinsCubit>();
-                                          cubit.showCustomActionSheet(
-                                              context, routine.routineId, id);
+                                          cubit.showCustomActionSheet(context,
+                                              routine.routineId, clientData.id);
                                         },
                                         icon: const Icon(
                                           Icons.more_horiz,
@@ -132,7 +109,6 @@ class ClientRoutineDisplayBody extends StatelessWidget {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           ExercisesSelection(
-                                                            lastSelectedExercises: const [],
                                                             clientData:
                                                                 clientData,
                                                             routine: routine,
@@ -181,19 +157,15 @@ class ClientRoutineDisplayBody extends StatelessWidget {
                                                 return selectedExercises;
                                               }
 
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Exercisesassignment(
-                                                    clientData: clientData,
-                                                    routine: routine,
-                                                    selectedExercises:
-                                                        addExercisesToList(
-                                                            routine.exercises),
-                                                  ),
-                                                ),
-                                              );
+                                              context.push(
+                                                  Routes.exercisesAssignment,
+                                                  extra: ExerciseAssignmentParams(
+                                                      clientData: clientData,
+                                                      routine: routine,
+                                                      oldExercises:
+                                                          addExercisesToList(
+                                                              routine
+                                                                  .exercises)));
                                             },
                                             child: const Text(
                                               'Preview Routine',
@@ -213,25 +185,26 @@ class ClientRoutineDisplayBody extends StatelessWidget {
                                   onPressed: () {
                                     var cubit =
                                         context.read<ClientRoutinsCubit>();
-                                    cubit.showMyBottomSheet(context, id);
+                                    cubit.showMyBottomSheet(
+                                        context, clientData.id!);
                                   },
                                   child: const Text("Add Routine"),
                                 ),
                               )
                             : Container()
                       ],
-                    ),
-                  );
-                },
-              ),
-            ],
+                    );
+                  },
+                ),
+              ],
+            ),
           );
         } else {
           return Center(
             child: MaterialButton(
               onPressed: () {
                 var cubit = context.read<ClientRoutinsCubit>();
-                cubit.showMyBottomSheet(context, id);
+                cubit.showMyBottomSheet(context, clientData.id!);
               },
               child: const Text("Create Routine"),
             ),

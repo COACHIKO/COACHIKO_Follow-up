@@ -4,14 +4,14 @@ import 'package:followupapprefactored/features/modules/coach/workout_routine_mak
 import '../../data/repository/exercises_repo_impl.dart';
 import 'exercises_state.dart';
 
-class ExercisesCubit extends Cubit<ExercisesState> {
-  final ExercisesRepoImpl exercisesRepoimpl;
+class SelectingExercisesCubit extends Cubit<ExercisesState> {
+  final SelectingExercisesRepoImpl exercisesRepoimpl;
 
   List<Exercises> _allExercises = [];
   final TextEditingController searchController = TextEditingController();
   final List<String> lastSelectedExercises;
 
-  ExercisesCubit(
+  SelectingExercisesCubit(
       {required this.exercisesRepoimpl, required this.lastSelectedExercises})
       : super(FoodStateInitial());
 

@@ -1,13 +1,13 @@
-// abstract class ExercisesAssignmentStates {}
+abstract class ExercisesAssignmentStates {}
 
-// class FoodQuantitiesInitialState extends ExercisesAssignmentStates {}
+class FoodQuantitiesInitialState extends ExercisesAssignmentStates {}
 
-// class FoodQuantitiesUpdateState extends ExercisesAssignmentStates {
-//   FoodQuantitiesUpdateState(String text, int index);
-// }
+class ListShrinkedUpdateState extends ExercisesAssignmentStates {
+  ListShrinkedUpdateState();
+}
 
-// class FoodsStateError extends ExercisesAssignmentStates {
-//   final String error;
+class FoodsStateErrors extends ExercisesAssignmentStates {
+  final String error;
 
-//   FoodsStateError(this.error);
-// }
+  FoodsStateErrors(this.error);
+}
