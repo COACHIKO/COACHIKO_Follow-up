@@ -1,107 +1,60 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class NotificationService {
-  Future<void> initializeNotification() async {
-    await AwesomeNotifications().initialize(
-      null,
-      [
-        NotificationChannel(
-          channelGroupKey: 'high_importance_channel',
-          channelKey: 'high_importance_channel',
-          channelName: 'Basic notifications',
-          channelDescription: 'Notification channel for basic tests',
-          defaultColor: const Color(0xFF9D50DD),
-          ledColor: Colors.white,
-          importance: NotificationImportance.Max,
-          channelShowBadge: true,
-          onlyAlertOnce: true,
-          playSound: true,
-          criticalAlerts: true,
-        )
-      ],
-      channelGroups: [
-        NotificationChannelGroup(
-          channelGroupKey: 'high_importance_channel_group',
-          channelGroupName: 'Group 1',
-        )
-      ],
-      debug: true,
+class LocalNotificationService {
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  //initial notification with android and ios
+
+  static Future<void> init() async {
+    const settings = InitializationSettings(
+      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      iOS: DarwinInitializationSettings(),
     );
 
-    await AwesomeNotifications().isNotificationAllowed().then(
-      (isAllowed) async {
-        if (!isAllowed) {
-          await AwesomeNotifications().requestPermissionToSendNotifications();
-        }
-      },
-    );
-
-    await AwesomeNotifications().setListeners(
-      onActionReceivedMethod: onActionReceivedMethod,
-      onNotificationCreatedMethod: onNotificationCreatedMethod,
-      onNotificationDisplayedMethod: onNotificationDisplayedMethod,
-      onDismissActionReceivedMethod: onDismissActionReceivedMethod,
+    await flutterLocalNotificationsPlugin.initialize(
+      settings,
+      onDidReceiveNotificationResponse: onTap,
     );
   }
 
-  Future<void> onNotificationCreatedMethod(
-      ReceivedNotification receivedNotification) async {
-    debugPrint('onNotificationCreatedMethod');
+  static void onTap(NotificationResponse notificationResponse) {
+    // navigator
+    if (int.parse(notificationResponse.payload.toString()) != -1) {
+      // sl<GlobalKey<NavigatorState>>().currentState!.context.pushName(
+      //       AppRoutes.productDetails,
+      //       arguments: int.parse(notificationResponse.payload.toString()),
+      //     );
+    }
   }
 
-  Future<void> onNotificationDisplayedMethod(
-      ReceivedNotification receivedNotification) async {
-    debugPrint('onNotificationDisplayedMethod');
-  }
-
-  Future<void> onDismissActionReceivedMethod(
-      ReceivedAction receivedAction) async {
-    debugPrint('onDismissActionReceivedMethod');
-  }
-
-  static Future<void> onActionReceivedMethod(
-      ReceivedAction receivedAction) async {}
-
-  Future<void> showNotification({
-    required final String title,
-    required final String body,
-    final int? numOfSec,
-    final int? index,
-    final String? summary,
-    final Map<String, String>? payload,
-    final ActionType actionType = ActionType.Default,
-    final NotificationLayout notificationLayout = NotificationLayout.Default,
-    final NotificationCategory? category,
-    final String? bigPicture,
-    final List<NotificationActionButton>? actionButtons,
-    final bool scheduled = false,
-    final int? interval,
+  static Future<void> showSimpleNotification({
+    required String title,
+    required String body,
+    required String payload,
   }) async {
-    assert(!scheduled || (scheduled && interval != null));
-
-    await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: -1,
-        channelKey: 'high_importance_channel',
-        title: title,
-        body: body,
-        actionType: actionType,
-        notificationLayout: notificationLayout,
-        summary: summary,
-        category: category,
-        payload: payload,
-        bigPicture: bigPicture,
+    const notificationDetails = NotificationDetails(
+      android: AndroidNotificationDetails(
+        'asroo-id',
+        'asroo-name',
+        importance: Importance.max,
+        priority: Priority.high,
       ),
-      actionButtons: actionButtons,
-      schedule: scheduled
-          ? NotificationInterval(
-              interval: interval,
-              timeZone:
-                  await AwesomeNotifications().getLocalTimeZoneIdentifier(),
-              preciseAlarm: true,
-            )
-          : null,
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      notificationDetails,
+      payload: payload,
     );
   }
 }

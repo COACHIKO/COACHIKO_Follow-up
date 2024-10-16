@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAahZFS9DL4m2a5gfD_nFCex7XxbtwYGtE',
-    appId: '1:752059871954:android:edcec9e1179f36c191f30b',
-    messagingSenderId: '752059871954',
-    projectId: 'coachikofollowapp-7d892',
-    storageBucket: 'coachikofollowapp-7d892.appspot.com',
+    apiKey: 'AIzaSyDxiKLjaHjZaVhxk2oeGdt_TuMZlXBS8Z8',
+    appId: '1:657243952580:android:1e846c75177e5fdd6ac091',
+    messagingSenderId: '657243952580',
+    projectId: 'coachiko-followup',
+    storageBucket: 'coachiko-followup.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBWCnHxOyfUgGmW-xvt8jdlnxHs_d_lKT4',
-    appId: '1:752059871954:ios:bd85afffc0782d6e91f30b',
-    messagingSenderId: '752059871954',
-    projectId: 'coachikofollowapp-7d892',
-    storageBucket: 'coachikofollowapp-7d892.appspot.com',
+    apiKey: 'AIzaSyDdONdugHNRhEx-TjBqnwUlrDOznd7SB_M',
+    appId: '1:657243952580:ios:6180cbd7db9e4dd76ac091',
+    messagingSenderId: '657243952580',
+    projectId: 'coachiko-followup',
+    storageBucket: 'coachiko-followup.appspot.com',
     iosBundleId: 'com.example.followupapprefactored',
   );
+
 }

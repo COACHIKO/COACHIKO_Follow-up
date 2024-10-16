@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "752059871954",
-    "project_id": "coachikofollowapp-7d892",
-    "storage_bucket": "coachikofollowapp-7d892.appspot.com"
+    "project_number": "657243952580",
+    "project_id": "coachiko-followup",
+    "storage_bucket": "coachiko-followup.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:752059871954:android:edcec9e1179f36c191f30b",
+        "mobilesdk_app_id": "1:657243952580:android:1e846c75177e5fdd6ac091",
         "android_client_info": {
           "package_name": "com.example.followupapprefactored"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAahZFS9DL4m2a5gfD_nFCex7XxbtwYGtE"
+          "current_key": "AIzaSyDxiKLjaHjZaVhxk2oeGdt_TuMZlXBS8Z8"
         }
       ],
       "services": {

@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/services/shared_pref/shared_pref.dart';
 import '../../data/models/login_request_body.dart';
@@ -48,15 +49,16 @@ class LoginCubit extends Cubit<LoginState> {
 
         if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 0) {
-          context.go(context, Routes.formComplection);
+          GoRouter.of(context).go(Routes.formComplection);
         } else if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 1) {
           context.go(context, Routes.currentStage);
+          GoRouter.of(context).go(Routes.currentStage);
         } else if (response.userData!.isCoach == "Client" &&
             response.userData!.currentStep == 2) {
-          context.go(context, Routes.clientHome);
+          GoRouter.of(context).go(Routes.clientHome);
         } else {
-          context.go(context, Routes.coachHome);
+          GoRouter.of(context).go(Routes.coachHome);
         }
 
         Fluttertoast.showToast(
